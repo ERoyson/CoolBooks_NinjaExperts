@@ -10,7 +10,7 @@ namespace CoolBooks_NinjaExperts.Models
         public string Description { get; set; }
         public long ISBN { get; set; }
         public double Rating { get; set; }
-        public Images Image { get; set; }
+        public Images Image { get; set; } // FK ImageId 
         public DateTime Created { get; set; }
         public DateTime Deleted { get; set; }
 
