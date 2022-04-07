@@ -8,3 +8,8 @@ Lucas:
 Eric: 
 Mathias: 
 Pernilla: 
+4/4: Läste in mig på uppgiften, kontaktade grupp medlem
+5/4: Uppdaterade GitHub kunskaper, MVC och gick igenom det gruppen gjort under dagen
+6/4: Fått genomgång och ny kunskap av gruppen kring det de gjort tidigare. Gick igenom Trello och övriga planerings-
+verktyg. Kollat in mer om MVC och Bootstrap. Gjort en Aboutsida och en logga för.
+
