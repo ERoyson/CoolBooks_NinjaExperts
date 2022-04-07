@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using CoolBooks_NinjaExperts.Models;
 
+
 namespace CoolBooks_NinjaExperts.Data;
 
 public class CoolBooks_NinjaExpertsContext : IdentityDbContext<UserInfo>

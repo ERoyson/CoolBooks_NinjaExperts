@@ -1,4 +1,4 @@
-﻿@page
+@page
 @model RegisterModel
 @{
     ViewData["Title"] = "Register";
@@ -13,6 +13,7 @@
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-floating">
+
                 <input asp-for="Input.Firstname" class="form-control" autocomplete="firstname" aria-required="true" />
                 <label asp-for="Input.Firstname"></label>
                 <span asp-validation-for="Input.Firstname" class="text-danger"></span>
@@ -29,6 +30,7 @@
             </div>
             <div class="form-floating">
                 <input asp-for="Input.Email" class="form-control" autocomplete="email" aria-required="true" />
+              
                 <label asp-for="Input.Email"></label>
                 <span asp-validation-for="Input.Email" class="text-danger"></span>
             </div>
