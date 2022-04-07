@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewData["Title"] = "Contact";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>This is the contact page.</p>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="form-floating">
+          <form action="/action_page.php">
+            <label for="name"><b>Name</b></label>
+            <input class="form-control" type="text" id="name" name="name" placeholder="Full name">
+            <br />
+            <label for="email"><b>Email</b></label>
+            <input class="form-control" type="email" id="email" name="email" placeholder="example@abc.com">
+            <br />
+            <label for="subject"><b>Subject</b></label>
+            <input class="form-control" type="text" id="subject" name="subject" placeholder="Enter the subject...">
+            <br />
+            <label for="message"><b>Message</b></label>
+            <textarea class="form-control" id="message" name="message" placeholder="Write your message..." style="height:200px"></textarea>
+            <br />
+            <input class="w-100 btn btn-lg btn-primary" type="submit" value="Submit">
+          </form>
+        </div>
+    </div>
+</div>
