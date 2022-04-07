@@ -73,8 +73,17 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Pages.Account
         {
 
             [Required]
-            [Display(Name = "First Name")]
-            public string FirstName { get; set; }
+            [Display(Name = "First name")]
+            public string Firstname { get; set; }
+
+            [Required]
+            [Display(Name = "Last name")]
+            public string Lastname { get; set; }
+
+            [Required]
+            [Display(Name = "Username")]
+            public string Username { get; set; }
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.

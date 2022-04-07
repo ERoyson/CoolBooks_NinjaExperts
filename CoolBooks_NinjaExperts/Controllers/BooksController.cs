@@ -10,14 +10,14 @@ using CoolBooks_NinjaExperts.Data;
 
 namespace CoolBooks_NinjaExperts.Models
 {
-    public class BooksController : Controller
+    public class BooksController : Controller //Controller start
     {
         private readonly CoolBooks_NinjaExpertsContext _context;
 
         public BooksController(CoolBooks_NinjaExpertsContext context)
         {
             _context = context;
-        }
+        } //Controller end
 
         // GET: Books
         public async Task<IActionResult> Index()
