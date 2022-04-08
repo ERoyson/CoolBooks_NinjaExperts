@@ -13,6 +13,11 @@ Eric:
 		Fortsatt läsa på om Identity och authorization/authentication.
 		Imorgon tänkte jag skapa testanvändare och se hur cookies fungerar.
 
+7/4     Idag börjar vår första SPRINT!
+		Tidsestimerat Sprint-backlog i teamet. Lucas hade redan skapat underlag för att göra burndownchart.
+		Läst på om Identity och authorization samt gjort några tester för att testa rollbaserad authorization.
+		so far so good!
+
 Mathias: 
 Pernilla: 
 4/4: Läste in mig på uppgiften, kontaktade grupp medlem
