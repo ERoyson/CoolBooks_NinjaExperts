@@ -73,8 +73,17 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Pages.Account
         {
 
             [Required]
-            [Display(Name = "First Name")]
-            public string FirstName { get; set; }
+            [Display(Name = "First name")]
+            public string Firstname { get; set; }
+
+            [Required]
+            [Display(Name = "Last name")]
+            public string Lastname { get; set; }
+
+            [Required]
+            [Display(Name = "Username")]
+            public string Username { get; set; }
+
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -118,6 +127,9 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
+                user.FirstName = Input.Firstname;
+                user.LastName = Input.Lastname;
+                user.UserName = Input.Username;
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -126,6 +138,9 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    // Skapa automatiskt en User Role för alla "egen registrerade användare"...
+                    await _userManager.AddToRoleAsync(user, "User");
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

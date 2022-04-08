@@ -1,4 +1,5 @@
 ﻿using CoolBooks_NinjaExperts.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -22,10 +23,20 @@ namespace CoolBooks_NinjaExperts.Controllers
         {
             return View();
         }
+
         public IActionResult Termsofuse()
         {
             return View();
         }
+
+
+        [Authorize (Roles = "User")]
+        public IActionResult Contact()
+        {
+            return View();
+        }
+
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
