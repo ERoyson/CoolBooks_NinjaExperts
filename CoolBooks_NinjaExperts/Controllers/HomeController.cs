@@ -1,4 +1,5 @@
 ﻿using CoolBooks_NinjaExperts.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -23,6 +24,7 @@ namespace CoolBooks_NinjaExperts.Controllers
             return View();
         }
 
+        [Authorize (Roles = "User")]
         public IActionResult Contact()
         {
             return View();

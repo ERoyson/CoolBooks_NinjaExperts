@@ -127,6 +127,9 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
+                user.FirstName = Input.Firstname;
+                user.LastName = Input.Lastname;
+                user.UserName = Input.Username;
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -135,6 +138,9 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
+
+                    // Skapa automatiskt en User Role för alla "egen registrerade användare"...
+                    await _userManager.AddToRoleAsync(user, "User");
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

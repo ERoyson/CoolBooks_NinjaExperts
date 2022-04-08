@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoolBooks_NinjaExperts.Migrations
 {
     [DbContext(typeof(CoolBooks_NinjaExpertsContext))]
-    [Migration("20220406080952_CreateDB")]
-    partial class CreateDB
+    [Migration("20220407173423_updateImagesTable")]
+    partial class updateImagesTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -102,7 +102,6 @@ namespace CoolBooks_NinjaExperts.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
@@ -169,7 +168,7 @@ namespace CoolBooks_NinjaExperts.Migrations
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("Deleted")
+                    b.Property<DateTime?>("Deleted")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -182,12 +181,16 @@ namespace CoolBooks_NinjaExperts.Migrations
                     b.Property<int>("ImageId")
                         .HasColumnType("int");
 
-                    b.Property<double>("Rating")
+                    b.Property<DateTime?>("Published")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double?>("Rating")
                         .HasColumnType("float");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -238,7 +241,6 @@ namespace CoolBooks_NinjaExperts.Migrations
                         .HasColumnType("varbinary(max)");
 
                     b.Property<byte[]>("Thumbnail")
-                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.HasKey("Id");
