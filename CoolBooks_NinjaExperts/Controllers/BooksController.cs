@@ -20,30 +20,13 @@ namespace CoolBooks_NinjaExperts.Models
             _context = context;
         } //Controller end
 
-        // GET: Books
-        //public async Task<IActionResult> Index()
-        //{
-        //    return View(await _context.Books.ToListAsync());
-        //}
-        //public ActionResult Index(string searchString)
-        //{
-           
-        //    var books = from b in _context.Books
-        //                 select b;
-
-        //    if (!String.IsNullOrEmpty(searchString))
-        //    {
-        //        books = books.Where(s => s.Title.Contains(searchString));
-        //    }
-            
-        //    return View(books);
-        //}
         public ActionResult Index(string sortOrder, string searchString)
         {
             ViewBag.TitleSort = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
             ViewBag.AuthorSort = sortOrder == "Author" ? "Author_desc" : "Author";
             var books = from b in _context.Books
                          select b;
+            
             if (!String.IsNullOrEmpty(searchString))
             {
                 books = books.Where(s => s.Title.Contains(searchString));
@@ -53,7 +36,7 @@ namespace CoolBooks_NinjaExperts.Models
                 case "title_desc":
                     books = books.OrderByDescending(b => b.Title);
                     break;
-                
+          
                 default:
                     books = books.OrderBy(b =>b.Title);
                     break;

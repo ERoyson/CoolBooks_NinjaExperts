@@ -37,9 +37,8 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
                         </li>
-
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Books" asp-action="Index">Books</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Books" asp-action="Create">Create book</a>
@@ -47,25 +46,20 @@
                        
                     </ul>
                 </div>
-                @using (Html.BeginForm())
-                            {    
-                            <p> Search Title/Author: @Html.TextBox("SearchString")   
-                            <input type="submit" value="Search" /></p> 
-                            }
-                <partial name="_LoginPartial" />
+                
+                
 
             </div>
     </div>
+    @using (Html.BeginForm())
+        {    
+        <p> Search Title/Author: @Html.TextBox("SearchString")   
+        <input type="submit" value="Search" /></p> 
+        }
     <partial name="_LoginPartial"/>
 </nav>
 <!-- Header-->
-<header class="bg-transparent d-flex">
-    <div class="container">
-        <div class="">
-            <img class="card-img-top" src="~/img/Logo_CoolBooks_Large.png"> 
-        </div>
-    </div>
-</header>
+
 
     <div class="container">
         <main role="main" class="pb-3">
