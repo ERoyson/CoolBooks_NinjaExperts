@@ -24,11 +24,18 @@ namespace CoolBooks_NinjaExperts.Controllers
             return View();
         }
 
+        public IActionResult Termsofuse()
+        {
+            return View();
+        }
+
+
         [Authorize (Roles = "User")]
         public IActionResult Contact()
         {
             return View();
         }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

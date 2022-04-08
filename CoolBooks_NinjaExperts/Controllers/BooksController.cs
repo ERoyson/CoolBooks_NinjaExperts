@@ -12,6 +12,7 @@ namespace CoolBooks_NinjaExperts.Models
 {
     public class BooksController : Controller //Controller start
     {
+
         private readonly CoolBooks_NinjaExpertsContext _context;
 
         public BooksController(CoolBooks_NinjaExpertsContext context)
@@ -20,9 +21,44 @@ namespace CoolBooks_NinjaExperts.Models
         } //Controller end
 
         // GET: Books
-        public async Task<IActionResult> Index()
+        //public async Task<IActionResult> Index()
+        //{
+        //    return View(await _context.Books.ToListAsync());
+        //}
+        //public ActionResult Index(string searchString)
+        //{
+           
+        //    var books = from b in _context.Books
+        //                 select b;
+
+        //    if (!String.IsNullOrEmpty(searchString))
+        //    {
+        //        books = books.Where(s => s.Title.Contains(searchString));
+        //    }
+            
+        //    return View(books);
+        //}
+        public ActionResult Index(string sortOrder, string searchString)
         {
-            return View(await _context.Books.ToListAsync());
+            ViewBag.TitleSort = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
+            ViewBag.AuthorSort = sortOrder == "Author" ? "Author_desc" : "Author";
+            var books = from b in _context.Books
+                         select b;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                books = books.Where(s => s.Title.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "title_desc":
+                    books = books.OrderByDescending(b => b.Title);
+                    break;
+                
+                default:
+                    books = books.OrderBy(b =>b.Title);
+                    break;
+            }
+            return View(books.ToList());
         }
 
         // GET: Books/Details/5

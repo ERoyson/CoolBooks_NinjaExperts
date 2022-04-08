@@ -44,8 +44,14 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Books" asp-action="Create">Create book</a>
                         </li>
+                       
                     </ul>
                 </div>
+                @using (Html.BeginForm())
+                            {    
+                            <p> Search Title/Author: @Html.TextBox("SearchString")   
+                            <input type="submit" value="Search" /></p> 
+                            }
                 <partial name="_LoginPartial" />
 
             </div>
@@ -67,10 +73,13 @@
         </main>
     </div>
 
-    <!-- Footer-->
-<footer class="py-5 bg-light">
-<div class="container"><p class="m-0 text-center text-dark">Copyright &copy; CoolBooks_NinjaExperts 2022 <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></p></div>
-</footer>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2022 - CoolBooks_NinjaExperts - 
+            <a asp-area="" asp-controller="Home" asp-action="Termsofuse">Terms of use</a>
+        </div>
+    </footer>
 
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
