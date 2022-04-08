@@ -1,8 +1,91 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
+<!--
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Det är här vår första sida, jihoooo!</p>
-</div>
+</div>-->
+
+@*<h1>Till View Books</h1>
+<h2>
+@Html.ActionLink("Till Create", "Create", "Books")<br />
+@Html.ActionLink("Till Books", "Index", "Books")<br />
+</h2>
+
+
+<h1>Till View Images</h1>
+<h2>
+@Html.ActionLink("Till Create", "Create", "Images")<br />
+@Html.ActionLink("Till Images", "Index", "Images")<br />
+@Html.ActionLink("Till Upload Images", "UploadImage", "Images")<br />
+</h2>*@
+
+<!-- Framslumpad bild-->
+<section class="py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-4"><img class="card-img-top mb-5 mb-md-0" src="img/FlickanSomLekte.jpg" alt="Omslag till boken flickan som lekte med elden" /></div>
+                <div class="col-md-6">
+                    <div class="small mb-1">Thriller</div>
+                        <h1 class="display-5 fw-bolder">Flickan som lekte med elden</h1>
+                            <div class="fs-5 mb-5">
+                                <span>Stieg Larsson</span><br />
+                                <span>ISBN: 123465789</span>
+                                
+                                <div class="d-flex small text-warning mb-2">
+                                <div class="bi-star-fill"></div>
+                                <div class="bi-star-fill"></div>
+                                <div class="bi-star-fill"></div>
+                                <div class="bi-star-fill"></div>
+                                <div class="bi-star-fill"></div>
+                            </div>
+                </div>
+                        <p class="lead">En journalist och hans researchpartner hittas 
+                        mördade och allt pekar på att Lisbeth Salander är skyldig 
+                        till morden. Mikael Blomkvist misstänker att dödsfallen är 
+                        kopplade till en traffickingoperation som leds av den ökände 
+                        gangstern 'Zala' - och att man försöker sätta dit Salander.
+
+                        En rad dramatiska händelser får Lisbeths mörka förflutna att 
+                        göra sig påmint, och hon bestämmer sig för att göra upp med 
+                        det förgångna en gång för alla. Hon ska straffa dem som 
+                        förtjänar att straffas.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+
+            @for (int i = 0; i < 8; i++)
+            {
+             <div class="col mb-5">
+                <div class="h-100">
+                    <img class="card-img-top" src="img/booksfeet.jpg" alt="..." />
+                        <div class="card-body p-4">
+                            <div class="text-center">
+                            <h5 class="fw-bolder">Den lilla pojkens fötter</h5>
+                            <h6>Nisse Nilsson</h6>
+                                <div class="d-flex justify-content-center small text-warning mb-2">
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            }
+
+
+
+
+
+        </div>
+    </div>
+</section>
