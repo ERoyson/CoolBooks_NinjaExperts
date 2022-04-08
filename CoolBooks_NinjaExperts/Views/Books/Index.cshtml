@@ -9,12 +9,16 @@
 
 <p>
     <a asp-action="Create">Create New</a>
+
+    @*@using (Html.BeginForm()){    
+         <p> Title: @Html.TextBox("SearchString")<input type="submit" value="Search" /></p> 
+        } *@
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                @Html.ActionLink("Title", "Index", new { sortOrder = ViewBag.TitleSort })
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Description)
