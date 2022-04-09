@@ -29,37 +29,45 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+
                     <li class="nav-item">
                         <a  class="navbar-brand" href="#!"><img id="search-img" src="~/img/search.png" class="d-inline-block align-top" alt=""></a>
                     </li> 
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a>
-                    </li>                     
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Books" asp-action="Create">Create book</a>
-                    </li>
-                </ul>
-            </div>
-                <partial name="_LoginPartial" />
+           
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">About</a>
+                        </li>                        
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Books" asp-action="Index">Books</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Books" asp-action="Create">Create book</a>
+                        </li>
+                       
+                    </ul>
+                </div>             
+
 
            
     </div>
+
+    @using (Html.BeginForm())
+        {    
+        <p> Search Title/Author: @Html.TextBox("SearchString")   
+        <input type="submit" value="Search" /></p> 
+        }
+    <partial name="_LoginPartial"/>
+
 </nav>
 
 <!-- Header-->
-<header class="bg-transparent d-flex">
-    <div class="container">
-        <div class="">
-            <img class="card-img-top" src="~/img/Logo_CoolBooks_Large.png"> 
-        </div>
-    </div>
-</header>
+
 
     <div class="container">
         <main role="main" class="pb-3">
@@ -67,10 +75,13 @@
         </main>
     </div>
 
-    <!-- Footer-->
-<footer class="py-5 bg-light">
-<div class="container"><p class="m-0 text-center text-dark">Copyright &copy; CoolBooks_NinjaExperts 2022 <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></p></div>
-</footer>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2022 - CoolBooks_NinjaExperts - 
+            <a asp-area="" asp-controller="Home" asp-action="Termsofuse">Terms of use</a>
+        </div>
+    </footer>
 
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

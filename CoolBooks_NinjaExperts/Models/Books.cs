@@ -6,10 +6,12 @@ namespace CoolBooks_NinjaExperts.Models
     public class Books
     {
         public int Id { get; set; }
-        public UserInfo User { get; set; } // Fk UserId - AspNetUsers
+
+        public UserInfo? User { get; set; } // Fk UserId - AspNetUser
 
         [Required]
         [StringLength(255, ErrorMessage = "The Book-Title must be less than 255 characters")]
+
         public string Title { get; set; }
 
         [Required]
@@ -22,6 +24,13 @@ namespace CoolBooks_NinjaExperts.Models
         [Required]
         public long ISBN { get; set; }
 
+
+        public Books()
+        {
+            this.Created = DateTime.Now;
+        }
+
+
         public double? Rating { get; set; }
 
         public Images? Image { get; set; } // FK ImageId 
@@ -30,12 +39,10 @@ namespace CoolBooks_NinjaExperts.Models
 
         public DateTime? Deleted { get; set; }
 
+
         public virtual ICollection<Genres> Genres { get; set; } // many to many relationship
         public virtual ICollection<Authors> Authors { get; set; } // many to many relationship
 
-        public Books()
-        {
-            this.Created = DateTime.Now;
-        }
+    
     }
 }
