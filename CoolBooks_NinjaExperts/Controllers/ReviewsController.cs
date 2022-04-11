@@ -7,25 +7,26 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CoolBooks_NinjaExperts.Data;
+using CoolBooks_NinjaExperts.Models;
 
-namespace CoolBooks_NinjaExperts.Models
+namespace CoolBooks_NinjaExperts.Controllers
 {
-    public class BooksController : Controller //Controller start
+    public class ReviewsController : Controller
     {
         private readonly CoolBooks_NinjaExpertsContext _context;
 
-        public BooksController(CoolBooks_NinjaExpertsContext context)
+        public ReviewsController(CoolBooks_NinjaExpertsContext context)
         {
             _context = context;
-        } //Controller end
-
-        // GET: Books
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.Books.ToListAsync());
         }
 
-        // GET: Books/Details/5
+        // GET: Reviews
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.Reviews.ToListAsync());
+        }
+
+        // GET: Reviews/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +34,39 @@ namespace CoolBooks_NinjaExperts.Models
                 return NotFound();
             }
 
-            var books = await _context.Books
+            var reviews = await _context.Reviews
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (books == null)
+            if (reviews == null)
             {
                 return NotFound();
             }
 
-            return View(books);
+            return View(reviews);
         }
 
-        // GET: Books/Create
+        // GET: Reviews/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Books/Create
+        // POST: Reviews/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,ISBN,Created,Deleted,Published")] Books books)
+        public async Task<IActionResult> Create([Bind("Id,Title,Text,Rating,Created,Deleted")] Reviews reviews)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(books);
+                _context.Add(reviews);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(books);
+            return View(reviews);
         }
 
-        // GET: Books/Edit/5
+        // GET: Reviews/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +74,22 @@ namespace CoolBooks_NinjaExperts.Models
                 return NotFound();
             }
 
-            var books = await _context.Books.FindAsync(id);
-            if (books == null)
+            var reviews = await _context.Reviews.FindAsync(id);
+            if (reviews == null)
             {
                 return NotFound();
             }
-            return View(books);
+            return View(reviews);
         }
 
-        // POST: Books/Edit/5
+        // POST: Reviews/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,ISBN,Created,Deleted")] Books books)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Text,Rating,Created,Deleted")] Reviews reviews)
         {
-            if (id != books.Id)
+            if (id != reviews.Id)
             {
                 return NotFound();
             }
@@ -97,12 +98,12 @@ namespace CoolBooks_NinjaExperts.Models
             {
                 try
                 {
-                    _context.Update(books);
+                    _context.Update(reviews);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!BooksExists(books.Id))
+                    if (!ReviewsExists(reviews.Id))
                     {
                         return NotFound();
                     }
@@ -113,10 +114,10 @@ namespace CoolBooks_NinjaExperts.Models
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(books);
+            return View(reviews);
         }
 
-        // GET: Books/Delete/5
+        // GET: Reviews/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +125,30 @@ namespace CoolBooks_NinjaExperts.Models
                 return NotFound();
             }
 
-            var books = await _context.Books
+            var reviews = await _context.Reviews
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (books == null)
+            if (reviews == null)
             {
                 return NotFound();
             }
 
-            return View(books);
+            return View(reviews);
         }
 
-        // POST: Books/Delete/5
+        // POST: Reviews/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var books = await _context.Books.FindAsync(id);
-            _context.Books.Remove(books);
+            var reviews = await _context.Reviews.FindAsync(id);
+            _context.Reviews.Remove(reviews);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool BooksExists(int id)
+        private bool ReviewsExists(int id)
         {
-            return _context.Books.Any(e => e.Id == id);
+            return _context.Reviews.Any(e => e.Id == id);
         }
     }
 }

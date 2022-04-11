@@ -73,7 +73,7 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Pages.Account
         {
 
             [Required]
-            [Display(Name = "First name")]
+            [Display(Name = "First name")] //Detta är det som syns i formuläret för Registrering av användare
             public string Firstname { get; set; }
 
             [Required]
@@ -126,9 +126,15 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = CreateUser();
+                var user = new UserInfo
+                {
+                    UserName = Input.Username,
+                    Email = Input.Email,
+                    FirstName = Input.Firstname,
+                    LastName = Input.Lastname
+                };
 
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+                await _userStore.SetUserNameAsync(user, Input.Username, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 

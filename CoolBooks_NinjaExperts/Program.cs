@@ -7,7 +7,8 @@ using CoolBooks_NinjaExperts.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("CoolBooks_NinjaExpertsContextConnection");builder.Services.AddDbContext<CoolBooks_NinjaExpertsContext>(options =>
-    options.UseSqlServer(connectionString));builder.Services.AddDefaultIdentity<UserInfo>(options => options.SignIn.RequireConfirmedAccount = true)
+    options.UseSqlServer(connectionString));builder.Services.AddDefaultIdentity<UserInfo>(options => options.SignIn.RequireConfirmedAccount = false) //Ändra till false
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<CoolBooks_NinjaExpertsContext>();
 
 // Add services to the container.
@@ -28,8 +29,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
-app.UseAuthentication();
+app.UseAuthentication(); //Verifies the user and creates the security context (cookie)
+app.UseAuthorization(); //Verifies the users permissions to access different pages
 
 app.MapRazorPages();
 

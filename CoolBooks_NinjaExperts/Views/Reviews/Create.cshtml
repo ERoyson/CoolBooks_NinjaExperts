@@ -1,13 +1,12 @@
-﻿@model CoolBooks_NinjaExperts.Models.Books
+﻿@model CoolBooks_NinjaExperts.Models.Reviews
 
 @{
     ViewData["Title"] = "Create";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>Create</h1>
 
-<h4>Books</h4>
+<h4>Reviews</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -19,31 +18,25 @@
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <label asp-for="Text" class="control-label"></label>
+                <input asp-for="Text" class="form-control" />
+                <span asp-validation-for="Text" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ISBN" class="control-label"></label>
-                <input asp-for="ISBN" class="form-control" />
-                <span asp-validation-for="ISBN" class="text-danger"></span>
+                <label asp-for="Rating" class="control-label"></label>
+                <input asp-for="Rating" class="form-control" />
+                <span asp-validation-for="Rating" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Published" class="control-label"></label>
-                <input asp-for="Published" class="form-control" type="number" min="1000" max="@DateTime.Now.Year" tabindex="1"/>
-                <span asp-validation-for="Published" class="text-danger"></span>
-            </div>
-
-          @*<div class="form-group">
                 <label asp-for="Created" class="control-label"></label>
                 <input asp-for="Created" class="form-control" />
                 <span asp-validation-for="Created" class="text-danger"></span>
-            </div>*@
-          @*<div class="form-group">
+            </div>
+            <div class="form-group">
                 <label asp-for="Deleted" class="control-label"></label>
                 <input asp-for="Deleted" class="form-control" />
                 <span asp-validation-for="Deleted" class="text-danger"></span>
-            </div>*@
+            </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -55,6 +48,3 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
