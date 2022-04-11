@@ -139,7 +139,7 @@ Ursprungligt formulär
                           @foreach(var item in Model.Genres)
                             {
                                 <label><input name="@item.Name" type="checkbox" id="@item.Id" onchange="checkboxStatusChange()"/> @item.Name</label>
-                                <input type="hidden" name="Genres" value = "@item"/>
+                                <input type="hidden" asp-for="Genres" value = "@item.Id"/>
                             }
                         </div>
                     </div>
@@ -156,7 +156,7 @@ Ursprungligt formulär
             </div>
             <div class="form-group">
                 <label asp-for="Published" class="control-label"></label>
-                <input asp-for="Published"  class="form-control" />
+                <input asp-for="Published" class="form-control" type="number" min="1000" max="@DateTime.Now.Year" tabindex="1"/>
                 <span asp-validation-for="Published" class="text-danger"></span>
             </div>
             <div class="form-group">
