@@ -11,16 +11,43 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
+                <div class="form-group">
+                    <label asp-for="Authors" class="control-label"></label>
+                    <div class="input-group mb-3">
+                        <input type="text" name="Authors[0]" class="form-control m-input" placeholder="Enter Authors full name..." autocomplete="off">
+                        <span asp-validation-for="Authors" class="text-danger"></span>
+                        <button id="addRow" type="button" class="btn btn-info">+</button>
+                    </div>
+                <div id="newRow"></div>
+             </div>
+                  <div class="form-group col-sm-8">
+                    <label for="myMultiselect">Genres</label>
+                    <div id="myMultiselect" class="multiselect">
+                      <div id="mySelectLabel" class="selectBox" onclick="toggleCheckboxArea()">
+                        <select class="form-select">
+                          <option>somevalue</option>
+                        </select>
+                        <div class="overSelect"></div>
+                      </div>
+                      <div id="mySelectOptions">
+                          @foreach(var item in Model.Genres)
+                            {
+                                <label><input name="@item.Name" type="checkbox" id="@item.Id" onchange="checkboxStatusChange()"/> @item.Name</label>
+                                <input type="hidden" name="Genres" value = "@item"/>
+                            }
+                        </div>
+                    </div>
+                </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <textarea asp-for="Description" class="form-control" ></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -33,17 +60,11 @@
                 <input asp-for="Published" class="form-control" type="number" min="1000" max="@DateTime.Now.Year" tabindex="1"/>
                 <span asp-validation-for="Published" class="text-danger"></span>
             </div>
-
-          @*<div class="form-group">
-                <label asp-for="Created" class="control-label"></label>
-                <input asp-for="Created" class="form-control" />
-                <span asp-validation-for="Created" class="text-danger"></span>
-            </div>*@
-          @*<div class="form-group">
-                <label asp-for="Deleted" class="control-label"></label>
-                <input asp-for="Deleted" class="form-control" />
-                <span asp-validation-for="Deleted" class="text-danger"></span>
-            </div>*@
+            <div class="form-group">
+                <label asp-for="Image" class="control-label"></label>
+                <input type="file" id="file1" name="file1" multiple="multiple" class="form-control"/>
+                <span asp-validation-for="Image" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -58,3 +79,94 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+ <script type="text/javascript">
+        // add row
+            var count = 1;
+        $("#addRow").click(function () {
+            var html = '';
+            html += '<div id="inputFormRow">';
+            html += '<div class="input-group mb-3">';
+            html += '<input type="text" name="Authors[' + count +  ']" class="form-control m-input" placeholder="Author ' + (count+1) +  '" autocomplete="off">';
+            html += '<span asp-validation-for="Authors" class="text-danger"></span>';
+            html += '<div class="input-group-append">';
+            html += '<button id="removeRow" type="button" class="btn btn-danger">X</button>';
+            html += '</div>';
+            html += '</div>';
+            count++;
+
+
+            $('#newRow').append(html);
+        });
+
+        // remove row
+        $(document).on('click', '#removeRow', function () {
+            $(this).closest('#inputFormRow').remove();
+            count--;
+        });
+
+// ------------------------------------------------------------------------------------- GENRES
+
+  window.onload = (event) => {
+  initMultiselect();
+};
+
+function initMultiselect() {
+  checkboxStatusChange();
+
+  document.addEventListener("click", function(evt) {
+    var flyoutElement = document.getElementById('myMultiselect'),
+      targetElement = evt.target; // clicked element
+
+    do {
+      if (targetElement == flyoutElement) {
+        // This is a click inside. Do nothing, just return.
+        //console.log('click inside');
+        return;
+      }
+
+      // Go up the DOM
+      targetElement = targetElement.parentNode;
+    } while (targetElement);
+
+    // This is a click outside.
+    toggleCheckboxArea(true);
+    //console.log('click outside');
+  });
+}
+function checkboxStatusChange() {
+  var multiselect = document.getElementById("mySelectLabel");
+  var multiselectOption = multiselect.getElementsByTagName('option')[0];
+
+  var values = [];
+  var checkboxes = document.getElementById("mySelectOptions");
+  var checkedCheckboxes = checkboxes.querySelectorAll('input[type=checkbox]:checked');
+
+  for (const item of checkedCheckboxes) {
+    var checkboxValue = item.getAttribute('name');
+    values.push(checkboxValue);
+  }
+
+  var dropdownValue = "Select Genre(s)";
+  if (values.length > 0) {
+    dropdownValue = values.join(', ');
+  }
+
+  multiselectOption.innerText = dropdownValue;
+}
+
+function toggleCheckboxArea(onlyHide = false) {
+  var checkboxes = document.getElementById("mySelectOptions");
+  var displayValue = checkboxes.style.display;
+
+  if (displayValue != "block") {
+    if (onlyHide == false) {
+      checkboxes.style.display = "block";
+    }
+  } else {
+    checkboxes.style.display = "none";
+  }
+}
+       
+</script>
+

@@ -13,10 +13,18 @@ Eric:
 		Fortsatt läsa på om Identity och authorization/authentication.
 		Imorgon tänkte jag skapa testanvändare och se hur cookies fungerar.
 
+7/4     Idag börjar vår första SPRINT!
+		Tidsestimerat Sprint-backlog i teamet. Lucas hade redan skapat underlag för att göra burndownchart.
+		Läst på om Identity och authorization samt gjort några tester för att testa rollbaserad authorization.
+		so far so good!
+
 Mathias: 
 Pernilla: 
 4/4: Läste in mig på uppgiften, kontaktade grupp medlem
 5/4: Uppdaterade GitHub kunskaper, MVC och gick igenom det gruppen gjort under dagen
 6/4: Fått genomgång och ny kunskap av gruppen kring det de gjort tidigare. Gick igenom Trello och övriga planerings-
 verktyg. Kollat in mer om MVC och Bootstrap. Gjort en Aboutsida och en logga för.
+7/2: Genomgång av planeringsverktyg med tidsestimering, burndownchart etc. Gruppen har gemensamt pushat in i Github
+Bootstrap i MVC och gjort en mall för oss att använda, gjort en mockup på startsida
+8/2 Implementerat Bootstrap i MVC, Testar och prövar mig fram för ökad kunskap.
 

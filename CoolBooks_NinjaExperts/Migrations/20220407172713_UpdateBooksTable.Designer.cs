@@ -4,6 +4,7 @@ using CoolBooks_NinjaExperts.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CoolBooks_NinjaExperts.Migrations
 {
     [DbContext(typeof(CoolBooks_NinjaExpertsContext))]
-    partial class CoolBooks_NinjaExpertsContextModelSnapshot : ModelSnapshot
+    [Migration("20220407172713_UpdateBooksTable")]
+    partial class UpdateBooksTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -182,7 +184,6 @@ namespace CoolBooks_NinjaExperts.Migrations
                     b.Property<DateTime?>("Published")
                         .HasColumnType("datetime2");
 
-
                     b.Property<double?>("Rating")
                         .HasColumnType("float");
 
@@ -240,6 +241,7 @@ namespace CoolBooks_NinjaExperts.Migrations
                         .HasColumnType("varbinary(max)");
 
                     b.Property<byte[]>("Thumbnail")
+                        .IsRequired()
                         .HasColumnType("varbinary(max)");
 
                     b.HasKey("Id");

@@ -12,6 +12,7 @@ namespace CoolBooks_NinjaExperts.Models
 {
     public class BooksController : Controller //Controller start
     {
+
         private readonly CoolBooks_NinjaExpertsContext _context;
 
         public BooksController(CoolBooks_NinjaExpertsContext context)
@@ -19,10 +20,28 @@ namespace CoolBooks_NinjaExperts.Models
             _context = context;
         } //Controller end
 
-        // GET: Books
-        public async Task<IActionResult> Index()
+        public ActionResult Index(string sortOrder, string searchString)
         {
-            return View(await _context.Books.ToListAsync());
+            ViewBag.TitleSort = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
+            ViewBag.AuthorSort = sortOrder == "Author" ? "Author_desc" : "Author";
+            var books = from b in _context.Books
+                         select b;
+            
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                books = books.Where(s => s.Title.Contains(searchString));
+            }
+            switch (sortOrder)
+            {
+                case "title_desc":
+                    books = books.OrderByDescending(b => b.Title);
+                    break;
+          
+                default:
+                    books = books.OrderBy(b =>b.Title);
+                    break;
+            }
+            return View(books.ToList());
         }
 
         // GET: Books/Details/5
@@ -46,7 +65,10 @@ namespace CoolBooks_NinjaExperts.Models
         // GET: Books/Create
         public IActionResult Create()
         {
-            return View();
+            Books books = new Books();
+            books.Genres = _context.Genres.ToList();
+            
+            return View(books);
         }
 
         // POST: Books/Create
@@ -54,15 +76,55 @@ namespace CoolBooks_NinjaExperts.Models
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Description,ISBN,Created,Deleted,Published")] Books books)
+        public async Task<IActionResult> Create(List<string> Genres, List<string> sAuthors, [Bind("Id,Title,Description,Published,ISBN")] Books book)
         {
+            // var nameCookie = Request.Cookies[".AspNetCore.Antiforgery.dskp_3aZLLY"];
+            
+            
+
+            foreach (var file in Request.Form.Files)
+            {
+                Images img = new Images();
+
+                MemoryStream ms = new MemoryStream();
+                file.CopyTo(ms);
+                img.Image = ms.ToArray();
+
+                ms.Close();
+                ms.Dispose();
+
+                img.Thumbnail = CreateThumbnail(img.Image);
+
+                book.Image = img;
+            }
+
+
             if (ModelState.IsValid)
             {
-                _context.Add(books);
+                _context.Add(book);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(books);
+            return View(book);
+        }
+
+        // Covert to Thumbnail
+        public byte[] CreateThumbnail(byte[] imgFile)
+        {
+
+            MemoryStream ms = new MemoryStream(imgFile);
+            System.Drawing.Image image = System.Drawing.Image.FromStream(ms);
+
+            // convert img to thumbnail
+            var thumbimg = image.GetThumbnailImage(64, 64, new System.Drawing.Image.GetThumbnailImageAbort(() => false), IntPtr.Zero);
+
+
+            // convert to byte[]
+            using (var ms2 = new MemoryStream())
+            {
+                thumbimg.Save(ms2, image.RawFormat);
+                return ms2.ToArray();
+            }
         }
 
         // GET: Books/Edit/5

@@ -12,6 +12,7 @@ public class CoolBooks_NinjaExpertsContext : IdentityDbContext<UserInfo>
     public CoolBooks_NinjaExpertsContext(DbContextOptions<CoolBooks_NinjaExpertsContext> options)
         : base(options)
     {
+        Database.EnsureCreated(); // Skapar databasen vid start av programmet
     }
     
     

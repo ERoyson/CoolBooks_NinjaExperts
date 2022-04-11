@@ -6,6 +6,14 @@
  * Copyright (c) 2017 Jörn Zaefferer
  * Released under the MIT license
  */
+
+$("#datepicker").datepicker({
+	format: "yyyy",
+	viewMode: "years",
+	minViewMode: "years",
+	autoclose: true //to close picker once year is selected
+});
+
 (function( factory ) {
 	if ( typeof define === "function" && define.amd ) {
 		define( ["jquery", "./jquery.validate"], factory );
