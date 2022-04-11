@@ -34,14 +34,19 @@ namespace CoolBooks_NinjaExperts.Models
         public double? Rating { get; set; }
 
         public Images? Image { get; set; } // FK ImageId 
+        public int? ImageId { get; set; } //FK
 
         public DateTime Created { get; set; }
 
         public DateTime? Deleted { get; set; }
+        public string BookSeries { get; set; } // Om fler böcker ska finnas i samma serie - lätt att söka
 
 
-        public virtual ICollection<Genres> Genres { get; set; } // many to many relationship
-        public virtual ICollection<Authors> Authors { get; set; } // many to many relationship
+
+        public List<Genres>? Genres { get; set; } // many to many relationship
+        public int? GenreId { get; set; }//FK
+        public List<Authors>? Authors { get; set; } // many to many relationship
+        public int? AuthorId { get; set; } //FK
 
     
     }

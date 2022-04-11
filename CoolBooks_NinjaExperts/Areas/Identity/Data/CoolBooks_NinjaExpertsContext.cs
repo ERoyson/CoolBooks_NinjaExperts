@@ -14,14 +14,37 @@ public class CoolBooks_NinjaExpertsContext : IdentityDbContext<UserInfo>
     {
         Database.EnsureCreated(); // Skapar databasen vid start av programmet
     }
-    
-    
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-        // Customize the ASP.NET Identity model and override the defaults if needed.
-        // For example, you can rename the ASP.NET Identity table names and more.
-        // Add your customizations after calling base.OnModelCreating(builder);
+
+        builder.Entity<Books>()
+                    .HasMany(b => b.Authors)
+                    .WithMany(a => a.Books)
+                    .UsingEntity<AuthorsBooks>(ab => ab.HasOne<Authors>().WithMany(),
+                    ab => ab.HasOne<Books>().WithMany());
+
+        builder.Entity<Books>()
+                    .HasMany(b => b.Genres)
+                    .WithMany(a => a.Books)
+                    .UsingEntity<BooksGenres>(bg => bg.HasOne<Genres>().WithMany(),
+                    bg => bg.HasOne<Books>().WithMany());
+
+
+
+        // seed database here :)
+        // Images 
+        builder.SeedImages();
+        // Authors
+        builder.SeedAuthors();
+        // Genres
+        builder.SeedGenres();
+        // Books
+        builder.SeedBooks();
+
+        builder.SeedAuthorBooks();
+        builder.SeedBooksGenres();
     }
     
     
@@ -32,3 +55,4 @@ public class CoolBooks_NinjaExpertsContext : IdentityDbContext<UserInfo>
     public DbSet<Reviews> Reviews { get; set; }
     public DbSet<UserInfo> UserInfo { get; set; }
 }
+

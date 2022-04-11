@@ -6,7 +6,8 @@ Såg till att alla kunde komma åt GitHub.
 
 Lucas: 
 Eric: 
-5/4:	Idag har jag lagt skapat modeller samt IdentityScaffold för att göra databasen. Tanken är att detta ska vara grunden för projektet.
+5/4:	Idag har jag lagt skapat modeller samt IdentityScaffold för att göra databasen. 
+		Tanken är att detta ska vara grunden för projektet.
 		Vi körde parprogrammering. Vi har även kikat på Bootstrap template för våra views.
 
 6/4		Uppdaterat Pernilla på vad vi har gjort under de senaste dagarna. Jag har skapat en metod som lägger in bilder och konverterar till thumbnails.
