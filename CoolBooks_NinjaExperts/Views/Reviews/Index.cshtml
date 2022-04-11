@@ -1,30 +1,25 @@
-﻿@model IEnumerable<CoolBooks_NinjaExperts.Models.Books>
+﻿@model IEnumerable<CoolBooks_NinjaExperts.Models.Reviews>
 
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Books</h1>
+<h1>Reviews</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
-
-    @*@using (Html.BeginForm()){    
-         <p> Title: @Html.TextBox("SearchString")<input type="submit" value="Search" /></p> 
-        } *@
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.ActionLink("Title", "Index", new { sortOrder = ViewBag.TitleSort })
+                @Html.DisplayNameFor(model => model.Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.Text)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ISBN)
+                @Html.DisplayNameFor(model => model.Rating)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Created)
@@ -42,10 +37,10 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                @Html.DisplayFor(modelItem => item.Text)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ISBN)
+                @Html.DisplayFor(modelItem => item.Rating)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Created)
