@@ -25,9 +25,15 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-4 px-lg-5">
         <a  class="navbar-brand" href="#!"><img src="~/img/COOLBOOKS.png" class="d-inline-block align-top" alt=""></a>
+        
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+
+                    <li class="nav-item">
+                        <a  class="navbar-brand" href="#!"><img id="search-img" src="~/img/search.png" class="d-inline-block align-top" alt=""></a>
+                    </li> 
+           
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
@@ -38,26 +44,34 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
                         </li>
                         <li class="nav-item">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Images" asp-action="">Images</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Reviews" asp-action="">Reviews</a>
+                        </li>
                             <a class="nav-link text-dark" asp-area="" asp-controller="Books" asp-action="Index">Books</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Books" asp-action="Create">Create book</a>
                         </li>
-                       
+                      
                     </ul>
-                </div>
-                
-                
+                </div>             
 
-            </div>
+
+           
     </div>
+
     @using (Html.BeginForm())
         {    
         <p> Search Title/Author: @Html.TextBox("SearchString")   
         <input type="submit" value="Search" /></p> 
         }
     <partial name="_LoginPartial"/>
+
 </nav>
+
 <!-- Header-->
 
 
@@ -67,13 +81,12 @@
         </main>
     </div>
 
-    
-    <footer class="text-muted">
-        <div class="border-top">
-            <div class="container">
-                &copy; 2022 - CoolBooks_NinjaExperts - 
-                <a asp-area="" asp-controller="Home" asp-action="Termsofuse">Terms of use</a>
-            </div>
+
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; @DateTime.Now.Year - CoolBooks_NinjaExperts - <a asp-area="" asp-controller="Home" asp-action="Termsofuse">Terms of use</a>
+
         </div>
     </footer>
 
