@@ -82,7 +82,7 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Pages.Account
 
             [Required]
             [Display(Name = "Username")]
-            public string Username { get; set; }
+            public string UserName { get; set; }
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -126,6 +126,7 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
+
                 var user = new UserInfo
                 {
                     UserName = Input.Username,
@@ -135,6 +136,7 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Pages.Account
                 };
 
                 await _userStore.SetUserNameAsync(user, Input.Username, CancellationToken.None);
+
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 

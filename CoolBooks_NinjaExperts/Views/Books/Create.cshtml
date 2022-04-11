@@ -40,7 +40,7 @@
                           @foreach(var item in Model.Genres)
                             {
                                 <label><input name="@item.Name" type="checkbox" id="@item.Id" onchange="checkboxStatusChange()"/> @item.Name</label>
-                                <input type="hidden" name="Genres" value = "@item"/>
+                                <input type="hidden" asp-for="Genres" value = "@item.Id"/>
                             }
                         </div>
                     </div>

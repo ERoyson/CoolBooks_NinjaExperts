@@ -65,10 +65,9 @@ namespace CoolBooks_NinjaExperts.Models
         // GET: Books/Create
         public IActionResult Create()
         {
-            Books books = new Books();
-            books.Genres = _context.Genres.ToList();
-            
-            return View(books);
+            var book = new Books();
+            book.Genres = _context.Genres.ToList();
+            return View(book);
         }
 
         // POST: Books/Create
@@ -76,12 +75,11 @@ namespace CoolBooks_NinjaExperts.Models
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(List<string> Genres, List<string> sAuthors, [Bind("Id,Title,Description,Published,ISBN")] Books book)
+        public async Task<IActionResult> Create(List<int> Genres, List<string> sAuthors, [Bind("Id,Title,Description,Published,ISBN")] Books book)
         {
             // var nameCookie = Request.Cookies[".AspNetCore.Antiforgery.dskp_3aZLLY"];
-            
-            
-
+            // Control Author if exist
+            // Get genres
             foreach (var file in Request.Form.Files)
             {
                 Images img = new Images();

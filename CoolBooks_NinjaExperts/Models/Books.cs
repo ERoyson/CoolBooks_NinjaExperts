@@ -24,8 +24,10 @@ namespace CoolBooks_NinjaExperts.Models
         [Required]
         public long ISBN { get; set; }
 
-        public double Rating { get; set; }
-        public Images Image { get; set; } // FK ImageId
+
+        public double? Rating { get; set; }
+        public Images? Image { get; set; } // FK ImageId
+        public int? ImageId { get; set; } //FK
         
         [DataType(DataType.Date)] //Visar endast datum och ej tid
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
@@ -34,15 +36,20 @@ namespace CoolBooks_NinjaExperts.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? Deleted { get; set; }
+        public string BookSeries { get; set; } // Om fler böcker ska finnas i samma serie - lätt att söka
 
         public int? Published { get; set; }
 
-        public virtual ICollection<Genres> Genres { get; set; } // many to many relationship
-        public virtual ICollection<Authors> Authors { get; set; } // many to many relationship
+        public List<Genres>? Genres { get; set; } // many to many relationship
+        public int? GenreId { get; set; }//FK
+        public List<Authors>? Authors { get; set; } // many to many relationship
+        public int? AuthorId { get; set; } //FK
+      
         public Books()
-        {
-            this.Created = DateTime.Now;
-        }
+          {
+              this.Created = DateTime.Now;
+          }
+
 
     }
 }
