@@ -98,20 +98,28 @@ namespace CoolBooks_NinjaExperts.Models
                     var bookGenre = new Genres { Id = genre.Genres.Id };
                     _context.Genres.Attach(bookGenre);
                     book.Genres.Add(bookGenre);
-                    // Kolla så att alla properties följer med vid en insert (inte bara id).
                 }
             }
 
             // Add-Authors to book
             foreach (var authors in Authors)
             {
-                // Check if author exists...
-
-                var authorBooks = new Authors {FullName = authors};
-                _context.Authors.Attach(authorBooks);
-                book.Authors.Add(authorBooks);
-                // Kolla så att alla properties följer med vid en insert (inte bara name).
+                var author = _context.Authors.FirstOrDefault(a => a.FullName == authors);
+                if(author == null) // Add New Author
+                {
+                    var newAuthor = new Authors();
+                    newAuthor.FullName = authors;
+                    newAuthor.Biography = "Needs to be added...";
+                    book.Authors.Add(newAuthor);
+                }
+                else // Add Existing Author.
+                {
+                    _context.Authors.Attach(author);
+                    book.Authors.Add(author);
+                }
+                
             }
+
             // Image handeling
             foreach (var file in Request.Form.Files)
             {
