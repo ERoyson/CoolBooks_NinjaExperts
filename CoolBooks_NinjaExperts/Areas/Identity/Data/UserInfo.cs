@@ -13,5 +13,10 @@ public class UserInfo : IdentityUser
     public string LastName { get; set; }
     public string? Phone { get; set; }
     public DateTime Created { get; set; } //?
+
+    public UserInfo()
+    {
+        this.Created = DateTime.Now;
+    }
 }
 

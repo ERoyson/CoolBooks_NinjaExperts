@@ -7,6 +7,7 @@ using CoolBooks_NinjaExperts.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("CoolBooks_NinjaExpertsContextConnection");builder.Services.AddDbContext<CoolBooks_NinjaExpertsContext>(options =>
+
     options.UseSqlServer(connectionString));builder.Services.AddDefaultIdentity<UserInfo>(options => options.SignIn.RequireConfirmedAccount = false) // true if u want to send an confirmation email.
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<CoolBooks_NinjaExpertsContext>();
@@ -29,11 +30,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-
-app.UseAuthentication();
-
-app.UseAuthorization();
-
+app.UseAuthentication(); //Verifies the user and creates the security context (cookie)
+app.UseAuthorization(); //Verifies the users permissions to access different pages
 
 app.MapRazorPages();
 
