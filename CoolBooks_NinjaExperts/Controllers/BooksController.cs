@@ -44,7 +44,7 @@ namespace CoolBooks_NinjaExperts.Models
             }
             if (!string.IsNullOrEmpty(searchString))
             {
-                authors = authors.Where(a => a.LastName.Contains(searchString) || a.FirstName.Contains(searchString));
+                authors = authors.Where(a => a.FullName.Contains(searchString));
             }
             switch (sortOrder)
             {
