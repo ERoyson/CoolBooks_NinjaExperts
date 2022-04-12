@@ -129,13 +129,13 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Pages.Account
 
                 var user = new UserInfo
                 {
-                    UserName = Input.Username,
+                    UserName = Input.UserName,
                     Email = Input.Email,
                     FirstName = Input.Firstname,
                     LastName = Input.Lastname
                 };
 
-                await _userStore.SetUserNameAsync(user, Input.Username, CancellationToken.None);
+                await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
 
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);

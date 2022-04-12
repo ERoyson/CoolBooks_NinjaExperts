@@ -1,6 +1,5 @@
-﻿@model IEnumerable<CoolBooks_NinjaExperts.Models.Books>
+﻿@model CoolBooks_NinjaExperts.ViewModel.AuthorBooksViewModel
 
- 
 
 @{
     ViewData["Title"] = "Index";
@@ -14,49 +13,58 @@
 
     
 </p>
-<table class="table" style="text-decoration: none;">
+<table class="table">
     <thead>
         <tr>
             <th>
                 @Html.ActionLink("Title", "Index", new { sortOrder = ViewBag.TitleSort })
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.ActionLink("Serie", "Index", new { sortOrder = ViewBag.SerieSort })
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ISBN)
+                <p>Test</p>
+            </th>
+            <th>
+                <p>Test</p>
             </th>
             <th>
                @Html.ActionLink("Created", "Index", new { sortOrder = ViewBag.CreatedSort })
             </th>
             <th>
-                
+               <p>Test</p>
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
+        @foreach (var books in Model.Books) {
+            
+            <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Title)
+                @Html.DisplayFor(modelItem => books.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                @Html.DisplayFor(modelItem => books.BookSeries)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ISBN)
+                @Html.DisplayFor(modelItem => books.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Created)
+                @Html.DisplayFor(modelItem => books.ISBN)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Deleted)
+                @Html.DisplayFor(modelItem => books.Created)
             </td>
+            @foreach (var authors in Model.Authors){
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                @Html.DisplayFor(modelItem => authors.FullName)
+            </td>
+            }
+            <td>
+                <a asp-action="Edit" asp-route-id="@books.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@books.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@books.Id">Delete</a>
             </td>
         </tr>
 }

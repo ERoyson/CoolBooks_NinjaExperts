@@ -40,8 +40,6 @@ namespace CoolBooks_NinjaExperts.Models
         public DateTime? Deleted { get; set; }
         public string BookSeries { get; set; } // Om fler böcker ska finnas i samma serie - lätt att söka
 
-        public int? Published { get; set; }
-
         public List<Genres>? Genres { get; set; } // many to many relationship
         public int? GenreId { get; set; }//FK
         public List<Authors>? Authors { get; set; } // many to many relationship

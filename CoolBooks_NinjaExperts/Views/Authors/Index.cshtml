@@ -13,9 +13,9 @@
     </div>
 </header>
 
-<h1>@Html.DisplayNameFor(model => model.LastName)</h1>
+<h1>@Html.DisplayNameFor(model => model.FullName)</h1>
 
 @foreach (var item in Model)
 {
-    @Html.DisplayFor(modelItem => item.LastName)
+    @Html.DisplayFor(modelItem => item.FullName)
 }
