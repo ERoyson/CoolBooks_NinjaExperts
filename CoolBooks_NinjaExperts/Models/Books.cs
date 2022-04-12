@@ -26,12 +26,14 @@ namespace CoolBooks_NinjaExperts.Models
 
 
         public double? Rating { get; set; }
+
         public Images? Image { get; set; } // FK ImageId
         public int? ImageId { get; set; } //FK
         
         [DataType(DataType.Date)] //Visar endast datum och ej tid
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Created { get; set; }
+
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
