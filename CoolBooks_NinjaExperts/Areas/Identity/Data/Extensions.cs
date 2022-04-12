@@ -193,7 +193,16 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
 
         public static void SeedUsers(this ModelBuilder builder)
         {
-            builder.Entity<>()
+            //builder.Entity<AspNetUsers>().HasData(
+            //     new AspNetUsers { 
+            //         FirstName = "Eric", 
+            //         LastName="Royson", 
+            //         Email="9610erro@gapp.uddevalla.se", 
+            //         UserName="ExTra", 
+            //         Created=DateTime.Now, 
+            //         },
+                     
+            //     );
         }
     }
 }
