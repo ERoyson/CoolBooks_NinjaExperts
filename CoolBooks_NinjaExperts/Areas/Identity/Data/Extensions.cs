@@ -1,4 +1,5 @@
 ﻿using CoolBooks_NinjaExperts.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace CoolBooks_NinjaExperts.Areas.Identity.Data
@@ -11,17 +12,17 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                 new Authors { Id = 1, FullName = "JK Rowling", Biography = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", ImageId = 16 }, // HarryP 1 & 7
                 new Authors { Id = 2, FullName = "Andrzej Sapkowski", Biography = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", ImageId = 17 }, // Ladyofthelake, lastwish, swordofdestiny
                 new Authors { Id = 3, FullName = "E.L. James", Biography = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", ImageId = 19 },  // 50 shades
-                new Authors { Id = 4, FullName = "Stephen King", Biography = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", ImageId = 25}, // The Outsider
+                new Authors { Id = 4, FullName = "Stephen King", Biography = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", ImageId = 25 }, // The Outsider
                 new Authors { Id = 5, FullName = "Bret Easton Ellis", Biography = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", ImageId = 18 }, // American Psycho
                 new Authors { Id = 6, FullName = "Frank Herbert", Biography = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", ImageId = 20 }, // Dune
                 new Authors { Id = 7, FullName = "F Scott Fitzgerald", Biography = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", ImageId = 21 }, // The Great Gatsby
                 new Authors { Id = 8, FullName = "Peter Benchley", Biography = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", ImageId = 24 }, // Jaws
                 new Authors { Id = 9, FullName = "Mario Puzo", Biography = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", ImageId = 23 }, // The Godfather
                 new Authors { Id = 10, FullName = "J.R.R. Tolkien", Biography = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.", ImageId = 22 } // The Lord of the Rings
-                );;
+                );
         }
 
-        public static void SeedGenres (this ModelBuilder builder)
+        public static void SeedGenres(this ModelBuilder builder)
         {
             builder.Entity<Genres>().HasData(
                     new Genres { Id = 1, Name = "Detective & Mystery", Description = "One of the toughest genres to write, this one centers on a mystery and involves either a professional or amateur sleuth. Examples: Murder on the the Orient Express by Agatha Christie." },
@@ -74,12 +75,12 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
 
 
                 );
-                
+
         }
 
         public static void SeedBooks(this ModelBuilder builder)
         {
-           
+
 
             builder.Entity<Books>().HasData(
                 new Books { Id = 1, Title = "Harry Potter and The Sorcerer's Stone", BookSeries = "Harry Potter", Published = DateTime.Parse("1997-06-26"), Description = "Harry Potter is a wizard...", ImageId = 9, ISBN = 9780590353403 },
@@ -191,18 +192,74 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
             }
         }
 
+
         public static void SeedUsers(this ModelBuilder builder)
         {
-            //builder.Entity<AspNetUsers>().HasData(
-            //     new AspNetUsers { 
-            //         FirstName = "Eric", 
-            //         LastName="Royson", 
-            //         Email="9610erro@gapp.uddevalla.se", 
-            //         UserName="ExTra", 
-            //         Created=DateTime.Now, 
-            //         },
-                     
-            //     );
+            //Admin
+            UserInfo admin = new UserInfo()
+            {
+                Id = "b74ddd14-6340-4840-95c2-db12554843e5",
+                FirstName = "Default",
+                LastName = "Adminsson",
+                UserName = "Admin",
+                Email = "admin@gmail.com",
+                //LockoutEnabled = false,
+                PhoneNumber = "1234567890",
+                Created = DateTime.Now
+            };
+
+            //Moderator
+            UserInfo mod = new UserInfo()
+            {
+                Id = "803efbbg-d6c9-83f9-ee5f-f8a0fbd5d06b",
+                FirstName = "Default",
+                LastName = "Modsson",
+                UserName = "Moderator",
+                Email = "moderator@gmail.com",
+                //LockoutEnabled = false,
+                PhoneNumber = "1234567890",
+                Created = DateTime.Now
+            };
+
+            //User
+            UserInfo user = new UserInfo()
+            {
+                Id = "ag0265e7-f68f-6ge5-6445-2a3ac7037929",
+                FirstName = "Default",
+                LastName = "Usersson",
+                UserName = "User",
+                Email = "user@gmail.com",
+                //LockoutEnabled = false,
+                PhoneNumber = "1234567890",
+                Created = DateTime.Now
+            };
+
+            PasswordHasher<UserInfo> passwordHasher = new PasswordHasher<UserInfo>();
+            passwordHasher.HashPassword(admin, "Admin*123");
+            passwordHasher.HashPassword(mod, "Mod*123");
+            passwordHasher.HashPassword(user, "User*123");
+
+            builder.Entity<UserInfo>().HasData(admin);
+            builder.Entity<UserInfo>().HasData(mod);
+            builder.Entity<UserInfo>().HasData(user);
+        }
+
+        public static void SeedRoles(this ModelBuilder builder)
+        {
+            builder.Entity<IdentityRole>().HasData(
+                new IdentityRole() { Id = "fab4fac1-c546-41de-aebc-a14da6895711", Name = "Admin" },
+                new IdentityRole() { Id = "c7b013f0-5201-4317-abd8-c211f91b7330", Name = "Moderator" },
+                new IdentityRole() { Id = "g4a251c5-6285-9362-def3-d722e74c5378", Name = "User" }
+                );
+        }
+
+        public static void SeedUserRoles(this ModelBuilder builder)
+        {
+            builder.Entity<IdentityUserRole<string>>().HasData(
+                new IdentityUserRole<string>() { RoleId = "fab4fac1-c546-41de-aebc-a14da6895711", UserId = "b74ddd14-6340-4840-95c2-db12554843e5" }, //Admin
+                new IdentityUserRole<string>() { RoleId = "c7b013f0-5201-4317-abd8-c211f91b7330", UserId = "803efbbg-d6c9-83f9-ee5f-f8a0fbd5d06b" }, //Moderator
+                new IdentityUserRole<string>() { RoleId = "g4a251c5-6285-9362-def3-d722e74c5378", UserId = "ag0265e7-f68f-6ge5-6445-2a3ac7037929" }  //User
+                );
         }
     }
 }
