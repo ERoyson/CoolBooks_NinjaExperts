@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CoolBooks_NinjaExperts.Data;
-using CoolBooks_NinjaExperts.ViewModel;
-using CoolBooks_NinjaExperts.Models;
+
+using CoolBooks_NinjaExperts.ViewModels;
 
 namespace CoolBooks_NinjaExperts.Models
 {
@@ -52,7 +52,9 @@ namespace CoolBooks_NinjaExperts.Models
             }
             if (!string.IsNullOrEmpty(searchString))
             {
+
                 authors = authors.Where(a => a.FullName.Contains(searchString));
+
             }
             switch (sortOrder)
             {
@@ -110,9 +112,18 @@ namespace CoolBooks_NinjaExperts.Models
 
         // GET: Books/Create
         public IActionResult Create()
-        {
-            var book = new Books();
-            book.Genres = _context.Genres.ToList();
+        {   
+            var book = new CreateBookViewModel();
+            var getDbGenres = _context.Genres.ToList();
+
+            foreach (var item in getDbGenres)
+            {
+                var listGenres = new SelectGenresViewModel();
+                listGenres.Genres = item;
+                listGenres.IsSelected = false;
+                book.ListGenres.Add(listGenres);
+            }
+           
             return View(book);
         }
 
@@ -121,19 +132,48 @@ namespace CoolBooks_NinjaExperts.Models
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(List<int> Genres, List<string> sAuthors, [Bind("Id,Title,Description,Published,ISBN")] Books book)
+        public async Task<IActionResult> Create(List<string> Authors, CreateBookViewModel FormBook)
         {
-            // var nameCookie = Request.Cookies[".AspNetCore.Antiforgery.dskp_3aZLLY"];
-            // Control Author if exist
-            // Get genres
+            var book = FormBook.Book;
+            
+
+            // Add-Genres to book
+            foreach(var genre in FormBook.ListGenres)
+            {
+                if(genre.IsSelected)
+                {
+                    var bookGenre = new Genres { Id = genre.Genres.Id };
+                    _context.Genres.Attach(bookGenre);
+                    book.Genres.Add(bookGenre);
+                }
+            }
+
+            // Add-Authors to book
+            foreach (var authors in Authors)
+            {
+                var author = _context.Authors.FirstOrDefault(a => a.FullName == authors);
+                if(author == null) // Add New Author
+                {
+                    var newAuthor = new Authors();
+                    newAuthor.FullName = authors;
+                    newAuthor.Biography = "Needs to be added...";
+                    book.Authors.Add(newAuthor);
+                }
+                else // Add Existing Author.
+                {
+                    _context.Authors.Attach(author);
+                    book.Authors.Add(author);
+                }
+                
+            }
+
+            // Image handeling
             foreach (var file in Request.Form.Files)
             {
                 Images img = new Images();
-
                 MemoryStream ms = new MemoryStream();
                 file.CopyTo(ms);
                 img.Image = ms.ToArray();
-
                 ms.Close();
                 ms.Dispose();
 
@@ -149,7 +189,7 @@ namespace CoolBooks_NinjaExperts.Models
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(book);
+            return View(FormBook);
         }
 
         // Covert to Thumbnail
