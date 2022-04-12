@@ -38,6 +38,7 @@ namespace CoolBooks_NinjaExperts.Models
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? Deleted { get; set; }
 
+
         //[Required]
         [StringLength(255, ErrorMessage = "The Book-Title must be less than 255 characters")]
         public string? BookSeries { get; set; } // Om fler böcker ska finnas i samma serie - lätt att söka
@@ -46,7 +47,7 @@ namespace CoolBooks_NinjaExperts.Models
         public List<Genres>? Genres { get; set; } = new List<Genres>(); // many to many relationship
         [Required]
         public List<Authors>? Authors { get; set; } = new List<Authors>(); // many to many relationship
-      
+
       
         public Books()
           {

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CoolBooks_NinjaExperts.Data;
+
 using CoolBooks_NinjaExperts.ViewModels;
 
 namespace CoolBooks_NinjaExperts.Models
@@ -30,12 +31,12 @@ namespace CoolBooks_NinjaExperts.Models
                 .Include(b => b.Image)
                 .ToList();
 
-
             ViewBag.CurrentSort = sortOrder;
             ViewBag.TitleSort = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
-            //ViewBag.AuthorSort = sortOrder == "Author" ? "Author_desc" : "Author";
-            //ViewBag.RatingSort = sortOrder == "Rating" ? "Rating_desc" : "Rating";
-            //ViewBag.CreatedSort = sortOrder == "Created" ? "Created_desc" : "Created";
+            ViewBag.SerieSort = sortOrder == "Serie" ? "Serie_desc" : "Serie";
+            ViewBag.AuthorSort = sortOrder == "Author" ? "Author_desc" : "Author";
+            ViewBag.RatingSort = sortOrder == "Rating" ? "Rating_desc" : "Rating";
+            ViewBag.CreatedSort = sortOrder == "Created" ? "Created_desc" : "Created";
             var books = from b in _context.Books
                         select b;
             var authors = from a in _context.Authors
@@ -47,7 +48,7 @@ namespace CoolBooks_NinjaExperts.Models
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                books = books.Where(s => s.Title.Contains(searchString)); // s.serie.contains(searchString));
+                books = books.Where(s => s.Title.Contains(searchString) || s.BookSeries.Contains(searchString));
             }
             if (!string.IsNullOrEmpty(searchString))
             {
@@ -60,27 +61,33 @@ namespace CoolBooks_NinjaExperts.Models
                 case "title_desc":
                     books = books.OrderByDescending(b => b.Title);
                     break;
+                //case "Serie":
+                //    VM.Books = books.OrderBy(b => b.BookSeries);
+                //    break;
+                //case "Serie_desc":
+                //    VM.Books = books.OrderByDescending(b => b.BookSeries);
+                //    break;
                 //case "Author":
-                //    authors = authors.OrderBy(a => a.LastName);
+                //    VM.Authors = authors.OrderBy(a => a.FullName);
                 //    break;
                 //case "Author_desc":
-                //    authors = authors.OrderByDescending(a => a.LastName);
+                //    VM.Authors = authors.OrderByDescending(a => a.FullName);
                 //    break;
                 //case "Rating":
-                //    rating = rating.OrderBy(r => r.Rating);
+                //    VM.Books = rating.OrderBy(r => r.Rating);
                 //    break;
                 //case "Rating_desc":
-                //    rating = rating.OrderByDescending(r => r.Rating);
+                //    VM.Books = rating.OrderByDescending(r => r.Rating);
                 //    break;
                 //case "Created":
-                //    created = created.OrderBy(c => c.Created);
+                //    VM.Books = created.OrderBy(c => c.Created);
                 //    break;
                 //case "Created_desc":
-                //    created = created.OrderByDescending(c => c.Created);
-                    //break;
-                default:
-                    books = books.OrderBy(b => b.Title);
-                    break;
+                //    VM.Books = created.OrderByDescending(c => c.Created);
+                //    break;
+                //default:
+                //    VM.Books = books.OrderBy(b => b.Title);
+                //    break;
             }
             return View(VM);
         }
