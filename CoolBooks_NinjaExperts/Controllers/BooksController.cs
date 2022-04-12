@@ -23,7 +23,14 @@ namespace CoolBooks_NinjaExperts.Models
 
         public ActionResult Index(string sortOrder, string searchString)
         {
-            
+            var VM = new CreateBookViewModel();
+            VM.Books = _context.Books
+                .Include(b => b.Authors)
+                .Include(b => b.Genres)
+                .Include(b => b.Image)
+                .ToList();
+
+
             ViewBag.CurrentSort = sortOrder;
             ViewBag.TitleSort = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
             //ViewBag.AuthorSort = sortOrder == "Author" ? "Author_desc" : "Author";
@@ -44,7 +51,7 @@ namespace CoolBooks_NinjaExperts.Models
             }
             if (!string.IsNullOrEmpty(searchString))
             {
-                authors = authors.Where(a => a.LastName.Contains(searchString) || a.FirstName.Contains(searchString));
+                authors = authors.Where(a => a.FullName.Contains(searchString) || a.FullName.Contains(searchString));
             }
             switch (sortOrder)
             {
@@ -73,7 +80,7 @@ namespace CoolBooks_NinjaExperts.Models
                     books = books.OrderBy(b => b.Title);
                     break;
             }
-            return View(books);
+            return View(VM);
         }
 
         // GET: Books/Details/5
