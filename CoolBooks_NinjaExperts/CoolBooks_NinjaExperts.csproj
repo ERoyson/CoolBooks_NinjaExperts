@@ -20,4 +20,11 @@
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Index\Controllers\" />
+    <Folder Include="Areas\Index\Data\" />
+    <Folder Include="Areas\Index\Models\" />
+    <Folder Include="Areas\Index\Views\" />
+  </ItemGroup>
+
 </Project>

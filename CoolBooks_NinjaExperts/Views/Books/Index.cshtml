@@ -1,5 +1,7 @@
 ﻿@model IEnumerable<CoolBooks_NinjaExperts.Models.Books>
 
+ 
+
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -10,11 +12,9 @@
 <p>
     <a asp-action="Create">Create New</a>
 
-    @*@using (Html.BeginForm()){    
-         <p> Title: @Html.TextBox("SearchString")<input type="submit" value="Search" /></p> 
-        } *@
+    
 </p>
-<table class="table">
+<table class="table" style="text-decoration: none;">
     <thead>
         <tr>
             <th>
@@ -27,10 +27,10 @@
                 @Html.DisplayNameFor(model => model.ISBN)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Created)
+               @Html.ActionLink("Created", "Index", new { sortOrder = ViewBag.CreatedSort })
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Deleted)
+                
             </th>
             <th></th>
         </tr>

@@ -35,7 +35,7 @@ namespace CoolBooks_NinjaExperts.Models
 
         public Images? Image { get; set; } // FK ImageId 
 
-        public DateTime Created { get; set; }
+        public DateTime? Created { get; set; }
 
         public DateTime? Deleted { get; set; }
 

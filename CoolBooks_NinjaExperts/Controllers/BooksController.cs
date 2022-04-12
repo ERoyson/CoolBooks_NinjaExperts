@@ -22,26 +22,57 @@ namespace CoolBooks_NinjaExperts.Models
 
         public ActionResult Index(string sortOrder, string searchString)
         {
-            ViewBag.TitleSort = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
-            ViewBag.AuthorSort = sortOrder == "Author" ? "Author_desc" : "Author";
-            var books = from b in _context.Books
-                         select b;
             
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.TitleSort = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
+            //ViewBag.AuthorSort = sortOrder == "Author" ? "Author_desc" : "Author";
+            //ViewBag.RatingSort = sortOrder == "Rating" ? "Rating_desc" : "Rating";
+            //ViewBag.CreatedSort = sortOrder == "Created" ? "Created_desc" : "Created";
+            var books = from b in _context.Books
+                        select b;
+            var authors = from a in _context.Authors
+                          select a;
+            var rating = from r in _context.Books
+                         select r;
+            var created = from c in _context.Books
+                          select c;
+
             if (!String.IsNullOrEmpty(searchString))
             {
-                books = books.Where(s => s.Title.Contains(searchString));
+                books = books.Where(s => s.Title.Contains(searchString)); // s.serie.contains(searchString));
+            }
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                authors = authors.Where(a => a.LastName.Contains(searchString) || a.FirstName.Contains(searchString));
             }
             switch (sortOrder)
             {
                 case "title_desc":
                     books = books.OrderByDescending(b => b.Title);
                     break;
-          
+                //case "Author":
+                //    authors = authors.OrderBy(a => a.LastName);
+                //    break;
+                //case "Author_desc":
+                //    authors = authors.OrderByDescending(a => a.LastName);
+                //    break;
+                //case "Rating":
+                //    rating = rating.OrderBy(r => r.Rating);
+                //    break;
+                //case "Rating_desc":
+                //    rating = rating.OrderByDescending(r => r.Rating);
+                //    break;
+                //case "Created":
+                //    created = created.OrderBy(c => c.Created);
+                //    break;
+                //case "Created_desc":
+                //    created = created.OrderByDescending(c => c.Created);
+                    //break;
                 default:
-                    books = books.OrderBy(b =>b.Title);
+                    books = books.OrderBy(b => b.Title);
                     break;
             }
-            return View(books.ToList());
+            return View(books);
         }
 
         // GET: Books/Details/5

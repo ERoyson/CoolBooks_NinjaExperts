@@ -1,0 +1,21 @@
+﻿@model IEnumerable<CoolBooks_NinjaExperts.Models.Authors>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<header class="bg-transparent d-flex">
+    <div class="container">
+        <div class="">
+            <img class="card-img-top" src="~/img/Logo_CoolBooks_Large.png"> 
+        </div>
+    </div>
+</header>
+
+<h1>@Html.DisplayNameFor(model => model.LastName)</h1>
+
+@foreach (var item in Model)
+{
+    @Html.DisplayFor(modelItem => item.LastName)
+}
