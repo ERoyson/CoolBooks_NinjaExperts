@@ -190,5 +190,10 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                 return ms2.ToArray();
             }
         }
+
+        public static void SeedUsers(this ModelBuilder builder)
+        {
+            builder.Entity<>()
+        }
     }
 }

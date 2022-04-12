@@ -11,7 +11,6 @@ namespace CoolBooks_NinjaExperts.Models
 
         [Required]
         [StringLength(255, ErrorMessage = "The Book-Title must be less than 255 characters")]
-
         public string Title { get; set; }
 
         [Required]
@@ -27,7 +26,7 @@ namespace CoolBooks_NinjaExperts.Models
 
         public double? Rating { get; set; }
         public Images? Image { get; set; } // FK ImageId
-        public int? ImageId { get; set; } //FK
+        public int? ImageId { get; set; }
         
         [DataType(DataType.Date)] //Visar endast datum och ej tid
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
@@ -36,14 +35,16 @@ namespace CoolBooks_NinjaExperts.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime? Deleted { get; set; }
-        public string BookSeries { get; set; } // Om fler böcker ska finnas i samma serie - lätt att söka
 
-        public int? Published { get; set; }
+        //[Required]
+        [StringLength(255, ErrorMessage = "The Book-Title must be less than 255 characters")]
+        public string? BookSeries { get; set; } // Om fler böcker ska finnas i samma serie - lätt att söka
 
-        public List<Genres>? Genres { get; set; } // many to many relationship
-        public int? GenreId { get; set; }//FK
-        public List<Authors>? Authors { get; set; } // many to many relationship
-        public int? AuthorId { get; set; } //FK
+        [Required]
+        public List<Genres>? Genres { get; set; } = new List<Genres>(); // many to many relationship
+        [Required]
+        public List<Authors>? Authors { get; set; } = new List<Authors>(); // many to many relationship
+      
       
         public Books()
           {
