@@ -1,22 +1,35 @@
-﻿using CoolBooks_NinjaExperts.Models;
+﻿using CoolBooks_NinjaExperts.Data;
+using CoolBooks_NinjaExperts.Models;
+using CoolBooks_NinjaExperts.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace CoolBooks_NinjaExperts.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly CoolBooks_NinjaExpertsContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
-        {
-            _logger = logger;
-        }
+            public HomeController(CoolBooks_NinjaExpertsContext context)
+            {
+                _context = context;
+            } 
+
+
 
         public IActionResult Index()
         {
-            return View();
+            var book = new List<Books>();
+            book = _context.Books
+                .Include(b => b.Authors)
+                .Include(b => b.Genres)
+                .Include(b => b.Image)
+                .Take(8)
+                .ToList();
+
+            return View(book);
         }
 
         public IActionResult About()
@@ -30,7 +43,7 @@ namespace CoolBooks_NinjaExperts.Controllers
         }
 
 
-        [Authorize (Roles = "User")]
+        [Authorize (Roles = "User, Admin, Mod")]
         public IActionResult Contact()
         {
             return View();

@@ -106,8 +106,9 @@
 @*Ursprungligt formulär*@
 
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create" enctype="multipart/form-data">
+    <div>
+            <form asp-action="Create" enctype="multipart/form-data" class="d-flex justify-content-between">
+         <div class="col-md-5">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Book.Title" class="control-label"></label>
@@ -143,11 +144,6 @@
                       </div>
                     </div>
                 </div>
-            <div class="form-group"> @*Flytta gärna denna till höger om formuläret (om det går)*@
-                <label asp-for="Book.Description" class="control-label"></label>
-                <textarea asp-for="Book.Description" class="form-control" ></textarea>
-                <span asp-validation-for="Book.Description" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <label asp-for="Book.ISBN" class="control-label"></label>
                 <input asp-for="Book.ISBN" class="form-control" />
@@ -163,11 +159,22 @@
                 <input type="file" id="file1" name="file1" multiple="multiple" class="form-control"/>
                 <span asp-validation-for="Book.Image" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-success" />
+            <div class="form-group mt-1">
+                <input type="submit" value="  Create  " class="btn btn-success btn-lg"/>
             </div>
-        </form>
+        </div>
+
+        <div style="width:25px;"></div>
+
+        <div class="col-lg">
+            <div class="form-group ">
+                <label asp-for="Book.Description" class="control-label"></label>
+                <textarea asp-for="Book.Description" class="form-control row-cols-6" rows="15" cols="75" ></textarea> @*style="resize:none;"*@
+                <span asp-validation-for="Book.Description" class="text-danger"></span>
             </div>
+       </div>
+            </form>
+    </div>
                 
     </div>
 

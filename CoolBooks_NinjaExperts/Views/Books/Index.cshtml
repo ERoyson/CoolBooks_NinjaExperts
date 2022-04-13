@@ -78,12 +78,9 @@
             <td>
                 @Html.DisplayFor(model => book.Rating)
             </td>
-            @foreach (var authors in book.Authors)
-            {
-                <td>
-
-                    @Html.DisplayFor(model => book.Created)
-                </td>
+            <td>
+                @Html.DisplayFor(model => book.Created)
+            </td>
             }
             <td>
                 <a asp-action="Edit" asp-route-id="@book.Id">Edit</a> |
