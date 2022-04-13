@@ -21,10 +21,10 @@
                 @Html.ActionLink("Title", "Index", new { sortOrder = ViewBag.TitleSort })
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Book.Authors)
+                @Html.ActionLink("Author", "Index", new { sortOrder = ViewBag.AuthorSort })
             </th>
              <th>
-                @Html.DisplayNameFor(model => model.Book.Genres)
+                @Html.ActionLink("Genre", "Index", new { sortOrder = ViewBag.GenreSort })
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Book.Image)
@@ -33,7 +33,7 @@
                 @Html.DisplayNameFor(model => model.Book.Description)
             </th>
              <th>
-                @Html.DisplayNameFor(model => model.Book.Rating)
+               @Html.ActionLink("Rating", "Index", new { sortOrder = ViewBag.RatingSort })
             </th>
             <th>
                @Html.ActionLink("Created", "Index", new { sortOrder = ViewBag.CreatedSort })
