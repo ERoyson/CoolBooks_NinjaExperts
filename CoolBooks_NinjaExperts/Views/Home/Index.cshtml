@@ -1,32 +1,24 @@
-﻿@{
+﻿@model IEnumerable<CoolBooks_NinjaExperts.Models.Books>
+
+
+@{
     ViewData["Title"] = "Home Page";
 }
-<!--
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Det är här vår första sida, jihoooo!</p>
-</div>-->
-
-@*<h1>Till View Books</h1>
-<h2>
-@Html.ActionLink("Till Create", "Create", "Books")<br />
-@Html.ActionLink("Till Books", "Index", "Books")<br />
-</h2>
 
 
-<h1>Till View Images</h1>
-<h2>
-@Html.ActionLink("Till Create", "Create", "Images")<br />
-@Html.ActionLink("Till Images", "Index", "Images")<br />
-@Html.ActionLink("Till Upload Images", "UploadImage", "Images")<br />
-</h2>*@
-
-<!-- Framslumpad bild-->
 
 <section class="py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="row gx-4 gx-lg-5 align-items-center">
-            <div class="col-md-4"><img class="card-img-top mb-5 mb-md-0" src="img/FlickanSomLekte.jpg" alt="Omslag till boken flickan som lekte med elden" /></div>
+            
+               @*<div class="col-md-4">
+               @{
+                    var baseThumb = Convert.ToBase64String(book.Image.Thumbnail);
+                    var imgsrc2 = string.Format("data:image/thumbnail;base64,{0}", baseThumb);
+                }
+                <img src="@imgsrc2">*@
+
+                </div>
                 <div class="col-md-6">
                     <div class="small mb-1">Thriller</div>
                         <h1 class="display-5 fw-bolder">Flickan som lekte med elden</h1>
@@ -52,7 +44,9 @@
                         göra sig påmint, och hon bestämmer sig för att göra upp med 
                         det förgångna en gång för alla. Hon ska straffa dem som 
                         förtjänar att straffas.</p>
-            </div>
+            </div> 
+            }
+            
         </div>
     </div>
 </section>
@@ -61,11 +55,16 @@
     <div class="container px-4 px-lg-5 mt-5">
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 
-            @for (int i = 0; i < 8; i++)
+           @foreach(var book in Model)
             {
              <div class="col mb-5">
                 <div class="h-100">
-                    <img class="card-img-top" src="img/booksfeet.jpg" alt="..." />
+                    @{
+                    var baseThumb = Convert.ToBase64String(book.Image.Thumbnail);
+                    var imgsrc2 = string.Format("data:image/thumbnail;base64,{0}", baseThumb);
+                    }
+                <img  class="card-img-top" src="@imgsrc2">
+                    
                         <div class="card-body p-4">
                             <div class="text-center">
                             <h5 class="fw-bolder">Den lilla pojkens fötter</h5>
