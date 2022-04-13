@@ -202,7 +202,9 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                 FirstName = "Default",
                 LastName = "Adminsson",
                 UserName = "Admin",
+                NormalizedUserName = "ADMIN",
                 Email = "admin@gmail.com",
+                NormalizedEmail = "ADMIN@GMAIL.COM",
                 //LockoutEnabled = false,
                 PhoneNumber = "1234567890",
                 Created = DateTime.Now
@@ -215,7 +217,9 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                 FirstName = "Default",
                 LastName = "Modsson",
                 UserName = "Moderator",
+                NormalizedUserName = "MODERATOR",
                 Email = "moderator@gmail.com",
+                NormalizedEmail = "MODERATOR@GMAIL.COM",
                 //LockoutEnabled = false,
                 PhoneNumber = "1234567890",
                 Created = DateTime.Now
@@ -228,16 +232,18 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                 FirstName = "Default",
                 LastName = "Usersson",
                 UserName = "User",
+                NormalizedUserName = "USER",
                 Email = "user@gmail.com",
+                NormalizedEmail = "USER@GMAIL.COM",
                 //LockoutEnabled = false,
                 PhoneNumber = "1234567890",
                 Created = DateTime.Now
             };
 
             PasswordHasher<UserInfo> passwordHasher = new PasswordHasher<UserInfo>();
-            passwordHasher.HashPassword(admin, "Admin*123");
-            passwordHasher.HashPassword(mod, "Mod*123");
-            passwordHasher.HashPassword(user, "User*123");
+            admin.PasswordHash = passwordHasher.HashPassword(admin, "Admin*123");
+            mod.PasswordHash = passwordHasher.HashPassword(mod, "Mod*123");
+            user.PasswordHash = passwordHasher.HashPassword(user, "User*123");
 
             builder.Entity<UserInfo>().HasData(admin);
             builder.Entity<UserInfo>().HasData(mod);
@@ -247,9 +253,9 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
         public static void SeedRoles(this ModelBuilder builder)
         {
             builder.Entity<IdentityRole>().HasData(
-                new IdentityRole() { Id = "fab4fac1-c546-41de-aebc-a14da6895711", Name = "Admin" },
-                new IdentityRole() { Id = "c7b013f0-5201-4317-abd8-c211f91b7330", Name = "Moderator" },
-                new IdentityRole() { Id = "g4a251c5-6285-9362-def3-d722e74c5378", Name = "User" }
+                new IdentityRole() { Id = "fab4fac1-c546-41de-aebc-a14da6895711", Name = "Admin", NormalizedName = "ADMIN"},
+                new IdentityRole() { Id = "c7b013f0-5201-4317-abd8-c211f91b7330", Name = "Moderator", NormalizedName="MODERATOR" },
+                new IdentityRole() { Id = "g4a251c5-6285-9362-def3-d722e74c5378", Name = "User", NormalizedName="USER" }
                 );
         }
 
