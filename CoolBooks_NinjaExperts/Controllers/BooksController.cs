@@ -20,7 +20,7 @@ namespace CoolBooks_NinjaExperts.Models
         public BooksController(CoolBooks_NinjaExpertsContext context)
         {
             _context = context;
-        } //Controller end
+        }
 
         public ActionResult Index(string sortOrder, string searchString)
         {
