@@ -48,7 +48,7 @@ namespace CoolBooks_NinjaExperts.Models
 
             if (!String.IsNullOrEmpty(searchString))
             {
-                books = books.Where(s => s.Title.Contains(searchString) || s.BookSeries.Contains(searchString));
+                books = books.Where(b => b.Title.Contains(searchString));
             }
             if (!string.IsNullOrEmpty(searchString))
             {
@@ -59,7 +59,7 @@ namespace CoolBooks_NinjaExperts.Models
             switch (sortOrder)
             {
                 case "title_desc":
-                    books = books.OrderByDescending(b => b.Title);
+                    VM.Books = books.OrderByDescending(b => b.Title);
                     break;
                 //case "Serie":
                 //    VM.Books = books.OrderBy(b => b.BookSeries);
@@ -68,10 +68,10 @@ namespace CoolBooks_NinjaExperts.Models
                 //    VM.Books = books.OrderByDescending(b => b.BookSeries);
                 //    break;
                 //case "Author":
-                //    VM.Authors = authors.OrderBy(a => a.FullName);
+                //   VM.Books = authors.OrderBy(a => a.FullName);
                 //    break;
                 //case "Author_desc":
-                //    VM.Authors = authors.OrderByDescending(a => a.FullName);
+                //    VM.Books = authors.OrderByDescending(a => a.FullName);
                 //    break;
                 //case "Rating":
                 //    VM.Books = rating.OrderBy(r => r.Rating);
@@ -79,15 +79,15 @@ namespace CoolBooks_NinjaExperts.Models
                 //case "Rating_desc":
                 //    VM.Books = rating.OrderByDescending(r => r.Rating);
                 //    break;
-                //case "Created":
-                //    VM.Books = created.OrderBy(c => c.Created);
-                //    break;
-                //case "Created_desc":
-                //    VM.Books = created.OrderByDescending(c => c.Created);
-                //    break;
-                //default:
-                //    VM.Books = books.OrderBy(b => b.Title);
-                //    break;
+                case "Created":
+                    VM.Books = created.OrderBy(c => c.Created);
+                    break;
+                case "Created_desc":
+                    VM.Books = created.OrderByDescending(c => c.Created);
+                    break;
+                default:
+                    VM.Books = books.OrderBy(b => b.Title);
+                    break;
             }
             return View(VM);
         }
