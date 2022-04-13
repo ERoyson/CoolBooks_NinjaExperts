@@ -33,7 +33,13 @@ public class CoolBooks_NinjaExpertsContext : IdentityDbContext<UserInfo>
 
 
 
-        // seed database here :)
+        // --------- seed database here :) -------------------
+
+        //Users & Roles
+        builder.SeedUsers();
+        builder.SeedRoles();
+        builder.SeedUserRoles();
+
         // Images 
         builder.SeedImages();
         // Authors
@@ -43,11 +49,14 @@ public class CoolBooks_NinjaExpertsContext : IdentityDbContext<UserInfo>
         // Books
         builder.SeedBooks();
 
+        // Relationships
         builder.SeedAuthorBooks();
         builder.SeedBooksGenres();
+
+
+
     }
-    
-    
+
     public DbSet<Books> Books { get; set; }
     public DbSet<Authors> Authors { get; set; }
     public DbSet<Genres> Genres { get; set; }

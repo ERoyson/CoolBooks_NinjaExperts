@@ -1,4 +1,6 @@
-﻿@model IEnumerable<CoolBooks_NinjaExperts.Models.Books>
+@model CoolBooks_NinjaExperts.ViewModels.CreateBookViewModel
+
+
 
 @{
     ViewData["Title"] = "Index";
@@ -10,9 +12,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 
-    @*@using (Html.BeginForm()){    
-         <p> Title: @Html.TextBox("SearchString")<input type="submit" value="Search" /></p> 
-        } *@
+    
 </p>
 <table class="table">
     <thead>
@@ -21,44 +21,74 @@
                 @Html.ActionLink("Title", "Index", new { sortOrder = ViewBag.TitleSort })
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => model.Book.Authors)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model => model.Book.Genres)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ISBN)
+                @Html.DisplayNameFor(model => model.Book.Image)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model => model.Book.Description)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model => model.Book.Rating)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Created)
+               @Html.ActionLink("Created", "Index", new { sortOrder = ViewBag.CreatedSort })
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Deleted)
+               <p>Test</p>
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+    @foreach (var book in Model.Books) 
+    {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Title)
+                @Html.DisplayFor(model => book.Title)
+            </td>
+             <td>
+            @foreach(var author in book.Authors)
+                { 
+                  @Html.DisplayFor(book => author.FullName) 
+                  <p></p>
+                }
+                </td>
+                <td>
+            @foreach(var genres in book.Genres)
+                {
+                   @Html.DisplayFor(book => genres.Name) 
+                   <p></p>
+                }
+                </td>
+            <td>
+                @{
+                    var baseThumb = Convert.ToBase64String(book.Image.Thumbnail);
+                    var imgsrc2 = string.Format("data:image/thumbnail;base64,{0}", baseThumb);
+                }
+                <img src="@imgsrc2">
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                @Html.DisplayFor(model => book.Description)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ISBN)
+                @Html.DisplayFor(model => book.Rating)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Created)
+
+                @Html.DisplayFor(model => book.Created)
             </td>
+          
             <td>
-                @Html.DisplayFor(modelItem => item.Deleted)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@book.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@book.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@book.Id">Delete</a>
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>
