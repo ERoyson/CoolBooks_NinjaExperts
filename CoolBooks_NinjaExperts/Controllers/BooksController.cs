@@ -42,10 +42,12 @@ namespace CoolBooks_NinjaExperts.Models
             bool bookSearch = true;
             if (!String.IsNullOrEmpty(searchString))
             {
+
                 VM.Books = VM.Books.Where(s => s.Title.Contains(searchString, StringComparison.OrdinalIgnoreCase) || s.BookSeries.Contains(searchString, StringComparison.OrdinalIgnoreCase));
                 if(!VM.Books.Any())
                     bookSearch = false;
                     
+
             }
             if (!string.IsNullOrEmpty(searchString) && bookSearch == false)
             {
@@ -62,6 +64,7 @@ namespace CoolBooks_NinjaExperts.Models
             switch (sortOrder)
             {
                 case "title_desc":
+
                     VM.Books = VM.Books.OrderByDescending(b => b.Title);
                     break;
                 case "Serie":
@@ -69,8 +72,10 @@ namespace CoolBooks_NinjaExperts.Models
                     break;
                 case "Serie_desc":
                     VM.Books = VM.Books.OrderByDescending(b => b.BookSeries);
+
                     break;
                 //case "Author":
+
                 //    VM.Books = VM.Books.OrderBy(a => a.FullName);
                 //    break;
                 //case "Author_desc":
@@ -90,6 +95,7 @@ namespace CoolBooks_NinjaExperts.Models
                     break;
                 default:
                     VM.Books = VM.Books.OrderBy(b => b.Title);
+
                     break;
             }
             return View(VM);
