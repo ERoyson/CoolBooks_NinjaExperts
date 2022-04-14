@@ -1,5 +1,13 @@
 @model CoolBooks_NinjaExperts.ViewModels.CreateBookViewModel
 
+@using Microsoft.AspNetCore.Identity
+@using CoolBooks_NinjaExperts.Areas.Identity.Data
+
+@inject SignInManager<UserInfo> SignInManager
+@inject UserManager<UserInfo> UserManager
+
+
+
 
 
 @{
@@ -81,13 +89,32 @@
             <td>
                 @Html.DisplayFor(model => book.Created)
             </td>
-            }
-            <td>
-                <a asp-action="Edit" asp-route-id="@book.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@book.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@book.Id">Delete</a>
-            </td>
-        </tr>
+
+            @if (SignInManager.IsSignedIn(User))
+            {
+                if (User.IsInRole("Admin"))
+                {
+                <td>
+                    <a asp-action="Edit" asp-route-id="@book.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@book.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@book.Id">Delete</a>
+                 </td>
+                 }
+                else if (User.IsInRole("Moderator"))
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@book.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@book.Id">Details</a> |
+                    </td>
+                }
+                else if(User.IsInRole("User"))
+                {
+                    <td>
+                        <a asp-action="Details" asp-route-id="@book.Id">Details</a>
+                    </td>
+                }
+           }
+            </tr>
     }
     </tbody>
 </table>

@@ -44,9 +44,8 @@ namespace CoolBooks_NinjaExperts.Models
             {
 
                 VM.Books = VM.Books.Where(s => s.Title.Contains(searchString, StringComparison.OrdinalIgnoreCase) || s.BookSeries.Contains(searchString, StringComparison.OrdinalIgnoreCase));
-                if(!VM.Books.Any())
+                if (!VM.Books.Any())
                     bookSearch = false;
-                    
 
             }
             if (!string.IsNullOrEmpty(searchString) && bookSearch == false)
@@ -56,11 +55,11 @@ namespace CoolBooks_NinjaExperts.Models
                 authorResult = _context.Books
                     .SelectMany(b => b.Authors)
                     .FirstOrDefault(a => a.FullName.Contains(searchString, StringComparison.OrdinalIgnoreCase));
-                
+
                 VM.Books = authorResult.Books;
             }
-            
-            
+
+
             switch (sortOrder)
             {
                 case "title_desc":
