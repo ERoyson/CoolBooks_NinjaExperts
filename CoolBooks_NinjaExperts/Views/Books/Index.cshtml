@@ -11,8 +11,6 @@
 
 <p>
     <a asp-action="Create">Create New</a>
-
-    
 </p>
 <table class="table">
     <thead>
@@ -81,7 +79,6 @@
             <td>
                 @Html.DisplayFor(model => book.Created)
             </td>
-            }
             <td>
                 <a asp-action="Edit" asp-route-id="@book.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@book.Id">Details</a> |
