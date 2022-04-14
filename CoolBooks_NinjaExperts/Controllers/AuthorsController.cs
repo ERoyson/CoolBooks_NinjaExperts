@@ -14,6 +14,7 @@ namespace CoolBooks_NinjaExperts.Controllers
         // GET: AuthorController
         public ActionResult Index()
         {
+            var authors = _context.Authors.ToList();
             return View();
         }
 

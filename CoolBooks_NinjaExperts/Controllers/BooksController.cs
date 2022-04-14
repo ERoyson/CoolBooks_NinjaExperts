@@ -7,14 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CoolBooks_NinjaExperts.Data;
-
 using CoolBooks_NinjaExperts.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoolBooks_NinjaExperts.Models
 {
     public class BooksController : Controller //Controller start
     {
-
         private readonly CoolBooks_NinjaExpertsContext _context;
 
         public BooksController(CoolBooks_NinjaExpertsContext context)
@@ -22,9 +21,10 @@ namespace CoolBooks_NinjaExperts.Models
             _context = context;
         }
 
+        // [Authorize(Roles = "User, Admin, Mod")]
         public IActionResult Index(string sortOrder, string searchString)
         {
-            var VM = new CreateBookViewModel();
+            var VM = new DisplayBooksViewModel();
 
             VM.Books = _context.Books
                 .Include(b => b.Authors)
