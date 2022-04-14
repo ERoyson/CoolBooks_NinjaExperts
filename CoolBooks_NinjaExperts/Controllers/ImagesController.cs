@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CoolBooks_NinjaExperts.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoolBooks_NinjaExperts.Models
 {
@@ -20,6 +21,7 @@ namespace CoolBooks_NinjaExperts.Models
         }
 
         // GET: Images
+        [Authorize(Roles = "Admin, Moderator, User")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Images.ToListAsync());
@@ -44,10 +46,13 @@ namespace CoolBooks_NinjaExperts.Models
         }
 
         // GET: Images/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {
             return View();
         }
+
+        [Authorize(Roles = "Admin")]
         public IActionResult UploadImage()
         {
             return View();
@@ -122,7 +127,7 @@ namespace CoolBooks_NinjaExperts.Models
         {
             if (id == null)
             {
-                return NotFound();
+                return NotFound(); //Returnerar att sidan ej finns
             }
 
             var images = await _context.Images.FindAsync(id);

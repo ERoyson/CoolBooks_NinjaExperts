@@ -17,9 +17,19 @@
 
 <h1>Books</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+@if (SignInManager.IsSignedIn(User))
+{
+	if (User.IsInRole("Admin"))
+	{
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
+	}
+	else
+	{
+	}
+}
+
 <table class="table">
     <thead>
         <tr>
@@ -43,9 +53,6 @@
             </th>
             <th>
                @Html.ActionLink("Created", "Index", new { sortOrder = ViewBag.CreatedSort })
-            </th>
-            <th>
-               <p>Test</p>
             </th>
             <th></th>
         </tr>

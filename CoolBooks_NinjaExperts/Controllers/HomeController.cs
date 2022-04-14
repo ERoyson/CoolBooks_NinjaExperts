@@ -43,7 +43,7 @@ namespace CoolBooks_NinjaExperts.Controllers
         }
 
 
-        [Authorize (Roles = "User, Admin, Mod")]
+        [Authorize (Roles = "User, Admin, Moderator")]
         public IActionResult Contact()
         {
             return View();
