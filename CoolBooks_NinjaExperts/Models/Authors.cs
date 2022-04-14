@@ -9,7 +9,7 @@
         public Images? Image { get; set; } // Author images // FK
         public int? ImageId { get; set; } //FK
 
-        public List<Books>Books { get; set; } // Many to many relationship
+        public List<Books> Books { get; set; } = new List<Books>(); // Many to many relationship
 
         public Authors()
         {
