@@ -22,14 +22,16 @@ namespace CoolBooks_NinjaExperts.Models
             _context = context;
         }
 
-        public ActionResult Index(string sortOrder, string searchString)
+        public IActionResult Index(string sortOrder, string searchString)
         {
             var VM = new CreateBookViewModel();
+
             VM.Books = _context.Books
                 .Include(b => b.Authors)
                 .Include(b => b.Genres)
                 .Include(b => b.Image)
                 .ToList();
+
 
             ViewBag.CurrentSort = sortOrder;
             ViewBag.TitleSort = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
@@ -39,31 +41,30 @@ namespace CoolBooks_NinjaExperts.Models
             ViewBag.RatingSort = sortOrder == "Rating" ? "Rating_desc" : "Rating";
             ViewBag.CreatedSort = sortOrder == "Created" ? "Created_desc" : "Created";
 
-            bool bookSearch = true;
             if (!String.IsNullOrEmpty(searchString))
             {
-
-                VM.Books = VM.Books.Where(s => s.Title.Contains(searchString, StringComparison.OrdinalIgnoreCase) || s.BookSeries.Contains(searchString, StringComparison.OrdinalIgnoreCase));
-                if (!VM.Books.Any())
-                    bookSearch = false;
-
+                VM.Books =
+                    VM.Books.Where(s => s.Title.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+                    s.BookSeries.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+                    s.Authors.All(a => a.FullName.Contains(searchString)) ||
+                    s.Genres.All(a => a.Name.Contains(searchString)));
             }
-            if (!string.IsNullOrEmpty(searchString) && bookSearch == false)
-            {
-                var authorResult = new Authors();
+            //if (!string.IsNullOrEmpty(searchString))
+            //{
+            //    var authorResult = _context.Books
+            //        .SelectMany(b => b.Authors)
+            //        .FirstOrDefault(a => a.FullName.Contains(searchString, StringComparison.OrdinalIgnoreCase));
 
-                authorResult = _context.Books
-                    .SelectMany(b => b.Authors)
-                    .FirstOrDefault(a => a.FullName.Contains(searchString, StringComparison.OrdinalIgnoreCase));
-
-                VM.Books = authorResult.Books;
-            }
-
-
+            //    if (!vmTemp.Books.Any() && !authorResult.Books.Any())
+            //    {
+            //        vmTemp.Books = authorResult.Books;
+            //    }
+            //}
+            
+            
             switch (sortOrder)
             {
                 case "title_desc":
-
                     VM.Books = VM.Books.OrderByDescending(b => b.Title);
                     break;
                 case "Serie":
@@ -71,10 +72,8 @@ namespace CoolBooks_NinjaExperts.Models
                     break;
                 case "Serie_desc":
                     VM.Books = VM.Books.OrderByDescending(b => b.BookSeries);
-
                     break;
                 //case "Author":
-
                 //    VM.Books = VM.Books.OrderBy(a => a.FullName);
                 //    break;
                 //case "Author_desc":
