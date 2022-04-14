@@ -9,102 +9,6 @@
 
 <h4>Books</h4>
 <hr />
-
-@*<section class="py-1">
-    <div class="container px-4 px-lg-5 my-2">
-        <div class="row gx-4 gx-lg-5 align-items-start">
-
-           <div class="col-md-4">
-               <form asp-action="Create" enctype="multipart/form-data">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group">
-                        <label asp-for="Book.Title" class="control-label"></label>
-                        <input asp-for="Book.Title" class=" form-control" />
-
-                        <span asp-validation-for="Book.Title" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Book.Authors" class="control-label"></label>
-                        <div class="input-group mb-3">
-
-                        <input type="text" name="Authors[0]" class=" form-control m-input" placeholder="Enter Authors full name..." autocomplete="off">
-                        <span asp-validation-for="Book.Authors" class="text-danger"></span>
-                        <button id="addRow" type="button" class="btn btn-info">+</button>
-                    </div>
-                    <div id="newRow"></div>
-                    </div>
-                  <div class="form-group col-sm-8">
-                     <label for="myMultiselect">Genres</label>
-                       <div id="myMultiselect" class="multiselect">
-
-                            <div id="mySelectLabel" class="selectBox" onclick="toggleCheckboxArea()">
-                                <select class="form-select">
-                                    <option>somevalue</option>
-                                </select>
-
-                            <div class="overSelect"></div>
-                            </div>
-                       <div id="mySelectOptions">
-                          @for(int i = 0; i < Model.ListGenres.Count; i++) // syns detta?
-                            {
-                                <input type="hidden" asp-for="@Model.ListGenres[i].Genres.Id"/>
-                                <input type="hidden" asp-for="@Model.ListGenres[i].Genres.Name"/>
-                                <label><input type="checkbox" Id= "@Model.ListGenres[i].Genres.Name" asp-for="@Model.ListGenres[i].IsSelected" onchange="checkboxStatusChange()"/> @Model.ListGenres[i].Genres.Name</label>
-                                
-                            }
-                      </div>
-                    </div>
-                  </div>
-
-                    <div class="form-group">
-                        <label asp-for="Book.ISBN" class="control-label"></label>
-                        <input asp-for="Book.ISBN" class="form-control" />
-                        <span asp-validation-for="ISBN" class="text-danger"></span>
-
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Book.Published" class="control-label"></label>
-                        <input asp-for="Book.Published" class="form-control" type="date" min="1000" max="@DateTime.Now" tabindex="1"/>
-                        <span asp-validation-for="Book.Published" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-
-                        <label asp-for="Book.Image" class="control-label"></label>
-                        <input type="file" id="file1" name="file1" multiple="multiple" class="form-control"/>
-                        <span asp-validation-for="Book.Image" class="text-danger"></span>
-
-                    </div>
-                    <div class="form-group">
-
-                        <input type="submit" value="Create" class="mb-3 mt-1 btn btn-primary" />
-                    </div>
-                </form>
-            </div>
-                    <div class="col-md-4">
-                    <form asp-action="Create" enctype="multipart/form-data">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="form-group">
-                            <label asp-for="Book.Description" class="control-label"></label>
-                            <textarea asp-for="Book.Description" class="description form-control" ></textarea>
-                            <span asp-validation-for="Book.Description" class="text-danger"></span>
-                        </div>
-                    </form>
-
-                </div>
-                </form>
-            </div>
-
-            <div>
-            <a asp-action="Index">Back to List</a>
-            </div>  
-            
-        </div>
-    </div>
-</section>*@
-
-
-@*Ursprungligt formulär*@
-
 <div class="row">
     <div>
             <form asp-action="Create" enctype="multipart/form-data" class="d-flex justify-content-between">
@@ -144,6 +48,11 @@
                       </div>
                     </div>
                 </div>
+                <div class="form-group">
+                <label asp-for="Book.BookSeries" class="control-label"></label>
+                <input asp-for="Book.BookSeries" class="form-control" />
+                <span asp-validation-for="Book.BookSeries" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Book.ISBN" class="control-label"></label>
                 <input asp-for="Book.ISBN" class="form-control" />

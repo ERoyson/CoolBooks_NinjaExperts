@@ -21,15 +21,45 @@ namespace CoolBooks_NinjaExperts.Controllers
 
         public IActionResult Index()
         {
-            var book = new List<Books>();
-            book = _context.Books
+            int bookOnPages = 8;
+            var VM = new DisplayBooksViewModel();
+            VM.Books = _context.Books
                 .Include(b => b.Authors)
                 .Include(b => b.Genres)
                 .Include(b => b.Image)
-                .Take(8)
                 .ToList();
 
-            return View(book);
+            // calc the number of pages to display all the books.
+            double pagecount = VM.Books.Count();
+            pagecount /= bookOnPages;
+            pagecount = Math.Ceiling(pagecount);
+            VM.PageCount = (int)pagecount;
+
+            Random random = new Random();
+            int rndmBook = random.Next(1,VM.Books.Count());
+
+            VM.RandomBooks = VM.Books.Where(b => b.Id == rndmBook).ToList();
+
+            VM.Books = VM.Books.Where(b => b.Id != rndmBook).Take(8);
+            return View(VM);
+        }
+        public IActionResult BookPages(int page) // Copy of index - will have same search functionalities
+        {
+            if(page == 1)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            page -= 1; // 2nd Page = 1
+
+            var VM = new DisplayBooksViewModel();
+            VM.Books = _context.Books
+                .Include(b => b.Authors)
+                .Include(b => b.Genres)
+                .Include(b => b.Image)
+                .ToList();
+          
+            VM.Books = VM.Books.Skip(8*page).Take(8);
+            return View("Index", VM);
         }
 
         public IActionResult About()

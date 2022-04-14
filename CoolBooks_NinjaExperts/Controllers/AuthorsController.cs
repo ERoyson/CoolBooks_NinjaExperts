@@ -20,6 +20,8 @@ namespace CoolBooks_NinjaExperts.Models
             _context = context;
         }
 
+
+
         // GET: Authors
         public IActionResult Index()
         {
