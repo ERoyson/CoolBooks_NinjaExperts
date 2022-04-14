@@ -1,8 +1,93 @@
 ﻿@model IEnumerable<CoolBooks_NinjaExperts.Models.Authors>
 
+
+ @using Microsoft.AspNetCore.Identity
+@using CoolBooks_NinjaExperts.Areas.Identity.Data
+
+@inject SignInManager<UserInfo> SignInManager
+@inject UserManager<UserInfo> UserManager
+
+
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<h1>Authors</h1>
 
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.ActionLink("Title", "Index", new { sortOrder = ViewBag.TitleSort })
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Image)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model => model.Biography)
+            </th>
+              <th>
+                @Html.DisplayNameFor(model => model.Books)
+            </th>
+         
+           
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var author in Model) 
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => author.FullName)
+            </td>
+            
+            <td>
+                @{
+                    var baseThumb = Convert.ToBase64String(author.Image.Thumbnail);
+                    var imgsrc2 = string.Format("data:image/thumbnail;base64,{0}", baseThumb);
+                }
+                <img src="@imgsrc2">
+            </td>
+            <td>
+                @Html.DisplayFor(model => author.Biography)
+            </td>
+            <td>
+               @foreach(var books in author.Books)
+                { 
+                  @Html.DisplayFor(author => books.Title) 
+                  <p></p>
+                }
+            </td>
+    
+            @if (SignInManager.IsSignedIn(User))
+            {
+                if (User.IsInRole("Admin"))
+                {
+                <td>
+                    <a asp-action="Edit" asp-route-id="@author.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@author.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@author.Id">Delete</a>
+                 </td>
+                 }
+                else if (User.IsInRole("Moderator"))
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@author.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@author.Id">Details</a> |
+                    </td>
+                }
+                else if(User.IsInRole("User"))
+                {
+                    <td>
+                        <a asp-action="Details" asp-route-id="@author.Id">Details</a>
+                    </td>
+                }
+           }
+        </tr>
+    }
+    </tbody>
+</table>
