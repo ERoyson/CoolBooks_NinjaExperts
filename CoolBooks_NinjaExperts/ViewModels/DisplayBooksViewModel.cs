@@ -8,5 +8,6 @@ namespace CoolBooks_NinjaExperts.ViewModels
         public IEnumerable<Books>? Books { get; set; } = new List<Books>(); // Display in index
         public IEnumerable<Books>? RandomBooks { get; set; } = new List<Books>(); // Display RandomBooks on mainpage
         public int PageCount { get; set; } // switch between pages
+        public int CurrentPage { get; set; } // what page am I on?
     }
 }
