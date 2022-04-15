@@ -36,29 +36,33 @@ namespace CoolBooks_NinjaExperts.Controllers
             VM.PageCount = (int)pagecount;
 
             Random random = new Random();
-            int rndmBook = random.Next(1,VM.Books.Count());
+            int rndmBook = random.Next(1,VM.Books.Count()+1);
 
             VM.RandomBooks = VM.Books.Where(b => b.Id == rndmBook).ToList();
-
+            VM.CurrentPage = 0;
             VM.Books = VM.Books.Where(b => b.Id != rndmBook).Take(8);
             return View(VM);
         }
-        public IActionResult BookPages(int page) // Copy of index - will have same search functionalities
+        public IActionResult BookPages(int currentPage, int pageCount) // Copy of index - will have same search functionalities
         {
-            if(page == 1)
+            if(currentPage == 0)
             {
                 return RedirectToAction(nameof(Index));
             }
-            page -= 1; // 2nd Page = 1
+            
+            //2nd Page = 1
 
-            var VM = new DisplayBooksViewModel();
-            VM.Books = _context.Books
+            var query = _context.Books
                 .Include(b => b.Authors)
                 .Include(b => b.Genres)
                 .Include(b => b.Image)
-                .ToList();
-          
-            VM.Books = VM.Books.Skip(8*page).Take(8);
+                .Skip(8 * currentPage)
+                .Take(8);
+
+            var VM = new DisplayBooksViewModel();
+            VM.Books = query.ToList();
+            VM.PageCount = pageCount;
+            VM.CurrentPage = currentPage;
             return View("Index", VM);
         }
 
