@@ -31,6 +31,40 @@ public class CoolBooks_NinjaExpertsContext : IdentityDbContext<UserInfo>
                     .UsingEntity<BooksGenres>(bg => bg.HasOne<Genres>().WithMany(),
                     bg => bg.HasOne<Books>().WithMany());
 
+        // LIKES AND DISLIKES TABLES
+        builder.Entity<ReviewLikes>().HasKey(x => new { x.UserId, x.ReviewId });
+        builder.Entity<ReviewDislikes>().HasKey(x => new { x.UserId, x.ReviewId });
+        builder.Entity<CommentLikes>().HasKey(x => new { x.UserId, x.CommentId });
+        builder.Entity<CommentDislikes>().HasKey(x => new { x.UserId, x.CommentId });
+        builder.Entity<ReplyLikes>().HasKey(x => new { x.UserId, x.ReplyId });
+        builder.Entity<ReplyDislikes>().HasKey(x => new { x.UserId, x.ReplyId });
+
+        builder.Entity<ReviewLikes>()
+            .HasOne(x => x.Review)
+            .WithMany(x => x.ReviewLikes)
+            .HasForeignKey(x => x.ReviewId);
+        builder.Entity<ReviewDislikes>()
+           .HasOne(x => x.Review)
+           .WithMany(x => x.ReviewDislikes)
+           .HasForeignKey(x => x.ReviewId);
+
+        builder.Entity<CommentLikes>()
+           .HasOne(x => x.Comment)
+           .WithMany(x => x.CommentLikes)
+           .HasForeignKey(x => x.CommentId);
+        builder.Entity<CommentDislikes>()
+           .HasOne(x => x.Comment)
+           .WithMany(x => x.CommentDislikes)
+           .HasForeignKey(x => x.CommentId);
+
+        builder.Entity<ReplyLikes>()
+           .HasOne(x => x.Reply)
+           .WithMany(x => x.ReplyLikes)
+           .HasForeignKey(x => x.ReplyId);
+        builder.Entity<ReplyDislikes>()
+           .HasOne(x => x.Reply)
+           .WithMany(x => x.ReplyDislikes)
+           .HasForeignKey(x => x.ReplyId);
 
 
         // --------- seed database here :) -------------------
@@ -53,8 +87,6 @@ public class CoolBooks_NinjaExpertsContext : IdentityDbContext<UserInfo>
         builder.SeedAuthorBooks();
         builder.SeedBooksGenres();
 
-
-
     }
 
     public DbSet<Books> Books { get; set; }
@@ -63,5 +95,7 @@ public class CoolBooks_NinjaExpertsContext : IdentityDbContext<UserInfo>
     public DbSet<Images> Images { get; set; }
     public DbSet<Reviews> Reviews { get; set; }
     public DbSet<UserInfo> UserInfo { get; set; }
+    public DbSet<Comments> Comments { get; set; }
+    public DbSet<Replies> Replies { get; set; }
 }
 

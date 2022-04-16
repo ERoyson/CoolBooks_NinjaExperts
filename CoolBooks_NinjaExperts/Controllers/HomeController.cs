@@ -21,15 +21,49 @@ namespace CoolBooks_NinjaExperts.Controllers
 
         public IActionResult Index()
         {
-            var book = new List<Books>();
-            book = _context.Books
+            int bookOnPages = 8;
+            var VM = new DisplayBooksViewModel();
+            VM.Books = _context.Books
                 .Include(b => b.Authors)
                 .Include(b => b.Genres)
                 .Include(b => b.Image)
-                .Take(8)
                 .ToList();
 
-            return View(book);
+            // calc the number of pages to display all the books.
+            double pagecount = VM.Books.Count();
+            pagecount /= bookOnPages;
+            pagecount = Math.Ceiling(pagecount);
+            VM.PageCount = (int)pagecount;
+
+            Random random = new Random();
+            int rndmBook = random.Next(1,VM.Books.Count()+1);
+
+            VM.RandomBooks = VM.Books.Where(b => b.Id == rndmBook).ToList();
+            VM.CurrentPage = 0;
+            VM.Books = VM.Books.Where(b => b.Id != rndmBook).Take(8);
+            return View(VM);
+        }
+        public IActionResult BookPages(int currentPage, int pageCount) // Copy of index - will have same search functionalities
+        {
+            if(currentPage == 0)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+            
+            //2nd Page = 1
+
+            var query = _context.Books
+                .Include(b => b.Authors)
+                .Include(b => b.Genres)
+                .Include(b => b.Image)
+                .Skip(8 * currentPage)
+                .Take(8);
+
+            var VM = new DisplayBooksViewModel();
+            VM.Books = query.ToList();
+            VM.PageCount = pageCount;
+            VM.CurrentPage = currentPage;
+            return View("Index", VM);
         }
 
         public IActionResult About()
@@ -43,7 +77,7 @@ namespace CoolBooks_NinjaExperts.Controllers
         }
 
 
-        [Authorize (Roles = "User, Admin, Mod")]
+        [Authorize (Roles = "User, Admin, Moderator")]
         public IActionResult Contact()
         {
             return View();

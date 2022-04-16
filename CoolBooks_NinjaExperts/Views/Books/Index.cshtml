@@ -1,4 +1,14 @@
-@model CoolBooks_NinjaExperts.ViewModels.CreateBookViewModel
+
+@model CoolBooks_NinjaExperts.ViewModels.DisplayBooksViewModel
+
+@using Microsoft.AspNetCore.Identity
+@using CoolBooks_NinjaExperts.Areas.Identity.Data
+
+@inject SignInManager<UserInfo> SignInManager
+@inject UserManager<UserInfo> UserManager
+
+
+
 
 
 
@@ -9,9 +19,19 @@
 
 <h1>Books</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+@if (SignInManager.IsSignedIn(User))
+{
+	if (User.IsInRole("Admin"))
+	{
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
+	}
+	else
+	{
+	}
+}
+
 <table class="table">
     <thead>
         <tr>
@@ -35,9 +55,6 @@
             </th>
             <th>
                @Html.ActionLink("Created", "Index", new { sortOrder = ViewBag.CreatedSort })
-            </th>
-            <th>
-               <p>Test</p>
             </th>
             <th></th>
         </tr>
@@ -79,11 +96,31 @@
             <td>
                 @Html.DisplayFor(model => book.Created)
             </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@book.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@book.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@book.Id">Delete</a>
-            </td>
+
+            @if (SignInManager.IsSignedIn(User))
+            {
+                if (User.IsInRole("Admin"))
+                {
+                <td>
+                    <a asp-action="Edit" asp-route-id="@book.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@book.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@book.Id">Delete</a>
+                 </td>
+                 }
+                else if (User.IsInRole("Moderator"))
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@book.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@book.Id">Details</a> |
+                    </td>
+                }
+                else if(User.IsInRole("User"))
+                {
+                    <td>
+                        <a asp-action="Details" asp-route-id="@book.Id">Details</a>
+                    </td>
+                }
+           }
         </tr>
     }
     </tbody>
