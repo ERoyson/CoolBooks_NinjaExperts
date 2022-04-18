@@ -149,6 +149,124 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                 new BooksGenres { BooksId = 13, GenresId = 8 }
                 );
         }
+
+        public static void SeedBookReviews(this ModelBuilder builder)
+        {
+            builder.Entity<Reviews>().HasData(
+                new Reviews
+                {
+                    Id = 1,
+                    BookId = 1,
+                    Title = "The book was magical!",
+                    Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
+                    Rating = 4.5
+                },
+                new Reviews
+                {
+                    Id = 2,
+                    BookId = 2,
+                    Title = "I never stopped reading",
+                    Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
+                    Rating = 5.0
+                },
+                new Reviews
+                {
+                    Id = 3,
+                    BookId = 2,
+                    Title = "Boring book",
+                    Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
+                    Rating = 1.0
+                },
+                new Reviews
+                {
+                    Id = 4,
+                    BookId = 3,
+                    Title = "Read this book if you like to be mindblown",
+                    Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
+                    Rating = 4.0
+                },
+                new Reviews
+                {
+                    Id = 5,
+                    BookId = 4,
+                    Title = "The shortstories are something else",
+                    Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
+                    Rating = 4.5
+                },
+                new Reviews
+                {
+                    Id = 6,
+                    BookId = 5,
+                    Title = "Meh.. Was kind of disapoitend",
+                    Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
+                    Rating = 2.5
+                },
+                new Reviews
+                {
+                    Id = 7,
+                    BookId = 6,
+                    Title = "Mr Grey.. What a man",
+                    Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
+                    Rating = 4
+                },
+                new Reviews
+                {
+                    Id = 8,
+                    BookId = 7,
+                    Title = "Loved it!",
+                    Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
+                    Rating = 4.2
+                },
+                new Reviews
+                {
+                    Id = 9,
+                    BookId = 8,
+                    Title = "The movie was better",
+                    Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
+                    Rating = 3
+                },
+                new Reviews
+                {
+                    Id = 10,
+                    BookId = 9,
+                    Title = "Amazing, just amazing...",
+                    Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
+                    Rating = 5
+                },
+                new Reviews
+                {
+                    Id = 11,
+                    BookId = 10,
+                    Title = "Don't bother reading, it sucks (my opinion)",
+                    Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
+                    Rating = 1.5
+                },
+                new Reviews
+                {
+                    Id = 12,
+                    BookId = 11,
+                    Title = "Well, this was a waste of time",
+                    Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
+                    Rating = 2.5
+                },
+                new Reviews
+                {
+                    Id = 13,
+                    BookId = 12,
+                    Title = "Wow.. just wow",
+                    Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
+                    Rating = 4.0
+                },
+                new Reviews
+                {
+                    Id = 14,
+                    BookId = 13,
+                    Title = "If you love the movies you will love this book",
+                    Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
+                    Rating = 5
+                }
+            );
+        }
         public static byte[] ReadFile(string imageFileName) // Get images from filepath
         {
             string sPath = "../CoolBooks_NinjaExperts/wwwroot/img/CoolBooksImages/";
