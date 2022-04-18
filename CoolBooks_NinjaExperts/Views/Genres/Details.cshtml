@@ -1,29 +1,19 @@
-﻿@model CoolBooks_NinjaExperts.Models.Authors
+﻿@model CoolBooks_NinjaExperts.Models.Genres
 
 @{
     ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <section class="py-5">
     <div class="container px-4 px-lg-5 my-5 d-flex flex-row">
-        <div class="col-md-4 mb-10">
-            @{
-                var baseThumb = Convert.ToBase64String(Model.Image.Image);
-                var imgsrc2 = string.Format("data:image/thumbnail;base64,{0}", baseThumb);
-            }
-            <img src="@imgsrc2" style="width:400px; height:550px;">
-        </div>
         <div class="col-md-6" style="padding-left: 15px;">
-            <h1 class="display-5 fw-bolder">@Model.FullName</h1>
-            <div class="fs-5 mb-5">
-            <p class="lead">@Html.DisplayFor(model => Model.Biography)</p>
+            <h1 class="display-5 fw-bolder">@Model.Name</h1>
+            <p class="lead">@Html.DisplayFor(model => Model.Description)</p>
         </div>   
     </div>
 </section>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
@@ -34,11 +24,13 @@
              <div class="col mb-5">
                 <div class="h-100">
                     @{
-                    var baseThumb1 = Convert.ToBase64String(book.Image.Thumbnail);
-                    var imgsrc = string.Format("data:image/thumbnail;base64,{0}", baseThumb1);
+                    var baseThumb = Convert.ToBase64String(book.Image.Thumbnail);
+                    var imgsrc2 = string.Format("data:image/thumbnail;base64,{0}", baseThumb);
                     }
                 <a class="text-dark" asp-controller="Books" asp-action="Details" asp-route-id="@book.Id" style="text-decoration:none; important!" >
-                <img  class="card-img-top" src="@imgsrc">
+                <img  class="card-img-top" src="@imgsrc2">
+                
+                    
                         <div class="card-body p-4">
                             <div class="text-center">
                             <h5 class="fw-bolder">@book.Title</h5>
