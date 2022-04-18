@@ -7,30 +7,25 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CoolBooks_NinjaExperts.Data;
-using CoolBooks_NinjaExperts.Models;
 
 namespace CoolBooks_NinjaExperts.Models
 {
-    public class AuthorsController : Controller
+    public class GenresController : Controller
     {
         private readonly CoolBooks_NinjaExpertsContext _context;
 
-        public AuthorsController(CoolBooks_NinjaExpertsContext context)
+        public GenresController(CoolBooks_NinjaExpertsContext context)
         {
             _context = context;
         }
 
-
-
-        // GET: Authors
-        public IActionResult Index()
+        // GET: Genres
+        public async Task<IActionResult> Index()
         {
-            var authors = _context.Authors.Include(a => a.Image).Include(a => a.Books).ToList();
-
-            return View(authors);
+            return View(await _context.Genres.ToListAsync());
         }
 
-        // GET: Authors/Details/5
+        // GET: Genres/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -38,44 +33,41 @@ namespace CoolBooks_NinjaExperts.Models
                 return NotFound();
             }
 
-            var authors = await _context.Authors
-                .Include(a => a.Image)
-                .Include(a => a.Books)
+            var genres = await _context.Genres
+                .Include(g => g.Books)
                 .ThenInclude(b => b.Image)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (authors == null)
+            if (genres == null)
             {
                 return NotFound();
             }
 
-            return View(authors);
+            return View(genres);
         }
 
-        // GET: Authors/Create
+        // GET: Genres/Create
         public IActionResult Create()
         {
-            ViewData["ImageId"] = new SelectList(_context.Images, "Id", "Id");
             return View();
         }
 
-        // POST: Authors/Create
+        // POST: Genres/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FullName,Biography,Created,ImageId")] Authors authors)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,Created")] Genres genres)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(authors);
+                _context.Add(genres);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ImageId"] = new SelectList(_context.Images, "Id", "Id", authors.ImageId);
-            return View(authors);
+            return View(genres);
         }
 
-        // GET: Authors/Edit/5
+        // GET: Genres/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -83,23 +75,22 @@ namespace CoolBooks_NinjaExperts.Models
                 return NotFound();
             }
 
-            var authors = await _context.Authors.FindAsync(id);
-            if (authors == null)
+            var genres = await _context.Genres.FindAsync(id);
+            if (genres == null)
             {
                 return NotFound();
             }
-            ViewData["ImageId"] = new SelectList(_context.Images, "Id", "Id", authors.ImageId);
-            return View(authors);
+            return View(genres);
         }
 
-        // POST: Authors/Edit/5
+        // POST: Genres/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FullName,Biography,Created,ImageId")] Authors authors)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Created")] Genres genres)
         {
-            if (id != authors.Id)
+            if (id != genres.Id)
             {
                 return NotFound();
             }
@@ -108,12 +99,12 @@ namespace CoolBooks_NinjaExperts.Models
             {
                 try
                 {
-                    _context.Update(authors);
+                    _context.Update(genres);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AuthorsExists(authors.Id))
+                    if (!GenresExists(genres.Id))
                     {
                         return NotFound();
                     }
@@ -124,11 +115,10 @@ namespace CoolBooks_NinjaExperts.Models
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ImageId"] = new SelectList(_context.Images, "Id", "Id", authors.ImageId);
-            return View(authors);
+            return View(genres);
         }
 
-        // GET: Authors/Delete/5
+        // GET: Genres/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -136,31 +126,30 @@ namespace CoolBooks_NinjaExperts.Models
                 return NotFound();
             }
 
-            var authors = await _context.Authors
-                .Include(a => a.Image)
+            var genres = await _context.Genres
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (authors == null)
+            if (genres == null)
             {
                 return NotFound();
             }
 
-            return View(authors);
+            return View(genres);
         }
 
-        // POST: Authors/Delete/5
+        // POST: Genres/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var authors = await _context.Authors.FindAsync(id);
-            _context.Authors.Remove(authors);
+            var genres = await _context.Genres.FindAsync(id);
+            _context.Genres.Remove(genres);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AuthorsExists(int id)
+        private bool GenresExists(int id)
         {
-            return _context.Authors.Any(e => e.Id == id);
+            return _context.Genres.Any(e => e.Id == id);
         }
     }
 }

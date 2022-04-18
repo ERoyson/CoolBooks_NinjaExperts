@@ -8,6 +8,7 @@ namespace CoolBooks_NinjaExperts.Models
         public int Id { get; set; }
 
         public UserInfo? User { get; set; } // Fk UserId - AspNetUser
+        public string? UserId { get; set; } // FK UserId
 
         [Required]
         [StringLength(255, ErrorMessage = "The Book-Title must be less than 255 characters")]

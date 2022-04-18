@@ -7,6 +7,11 @@
         public string? Description { get; set; }
         public DateTime? Created { get; set; }
 
-        public List<Books>? Books { get; set; } // Many to many relationship
+        public List<Books>? Books { get; set; } = new List<Books>(); // Many to many relationship
+
+        public Genres()
+        {
+            Created = DateTime.Now;
+        }
     }
 }
