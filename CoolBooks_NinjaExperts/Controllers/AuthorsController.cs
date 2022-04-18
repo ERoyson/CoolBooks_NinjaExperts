@@ -23,11 +23,25 @@ namespace CoolBooks_NinjaExperts.Models
 
 
         // GET: Authors
-        public IActionResult Index()
+        public IActionResult Index(string sortOrder)
         {
+            ViewBag.CurrentSort = sortOrder;
+            ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+
             var authors = _context.Authors.Include(a => a.Image).Include(a => a.Books).ToList();
 
-            return View(authors);
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    authors = authors.OrderByDescending(a => a.FullName).ToList();
+                    break;
+                default:
+                    authors = authors.OrderBy(a => a.FullName).ToList();
+                    break;
+
+
+            }
+                    return View(authors);
         }
 
         // GET: Authors/Details/5
