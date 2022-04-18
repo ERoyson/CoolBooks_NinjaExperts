@@ -20,5 +20,10 @@ namespace CoolBooks_NinjaExperts.Models
         public bool? IsFlagged { get; set; }
         public bool? IsBlocked { get; set; }
 
+        public Reviews()
+        {
+            this.Created = DateTime.Now;
+        }
+
     }
 }
