@@ -14,6 +14,7 @@ namespace CoolBooks_NinjaExperts.Models
         public string Title { get; set; }
 
         [Required]
+        [StringLength(500, ErrorMessage = "Description cannot be longer than 500 characters.")]
         public string Description { get; set; }
 
         [DataType(DataType.Date)]

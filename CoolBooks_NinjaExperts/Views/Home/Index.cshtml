@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CoolBooks_NinjaExperts.Models.Books>
+﻿@model CoolBooks_NinjaExperts.ViewModels.DisplayBooksViewModel
 
 
 @{
@@ -11,64 +11,95 @@
     <div class="container px-4 px-lg-5 my-5">
         <div class="row gx-4 gx-lg-5 align-items-center">
             
-               @*<div class="col-md-4">
-               @{
-                    var baseThumb = Convert.ToBase64String(book.Image.Thumbnail);
-                    var imgsrc2 = string.Format("data:image/thumbnail;base64,{0}", baseThumb);
-                }
-                <img src="@imgsrc2">*@
-
-                </div>
-                <div class="col-md-6">
-                    <div class="small mb-1">Thriller</div>
-                        <h1 class="display-5 fw-bolder">Flickan som lekte med elden</h1>
-                            <div class="fs-5 mb-5">
-                                <span>Stieg Larsson</span><br />
-                                <span>ISBN: 123465789</span>
+                      
+             @foreach(var rndmBook in Model.RandomBooks)
+             {
+                    <div class="col-md-4 mb-10">
+                   @{
+                        var baseThumb = Convert.ToBase64String(rndmBook.Image.Image);
+                        var imgsrc2 = string.Format("data:image/thumbnail;base64,{0}", baseThumb);
+                    }
+                    <a asp-controller="Books" asp-action="Details" asp-route-id="@rndmBook.Id">
+                        <img src="@imgsrc2" style="width:400px; height:550px;">
+                        </a> 
+             
+                    </div>
+                    <div class="col-md-6">
+                        <div class="small mb-1">
+                            @{
+                            string genreList = "";
+                            foreach(var genre in rndmBook.Genres)
+                            {
+                                genreList += genre.Name + " | ";
+                            }
+                            genreList = genreList.Remove(genreList.Length - 2, 1);
+                            }
+                        @genreList
+                        </div>
+                            <h1 class="display-5 fw-bolder">
+                                <a class="text-dark" asp-controller="Books" asp-action="Details" asp-route-id="@rndmBook.Id" style="text-decoration:none; important!" >
+                                    @rndmBook.Title
+                                </a>
+                            </h1>
+                                <div class="fs-5 mb-5">
+                        <span>@{
+                                string authorList = "";
+                                foreach(var author in rndmBook.Authors)
+                                {
+                                    authorList += author.FullName + " & ";
+                                }
+                                authorList = authorList.Remove(authorList.Length - 2, 1);
+                                }
+                                @authorList
+                                </span><br />
+                                    <span>@rndmBook.ISBN</span>
                                 
-                                <div class="d-flex small text-warning mb-2">
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                            </div>
-                </div>
-                        <p class="lead">En journalist och hans researchpartner hittas 
-                        mördade och allt pekar på att Lisbeth Salander är skyldig 
-                        till morden. Mikael Blomkvist misstänker att dödsfallen är 
-                        kopplade till en traffickingoperation som leds av den ökände 
-                        gangstern 'Zala' - och att man försöker sätta dit Salander.
-
-                        En rad dramatiska händelser får Lisbeths mörka förflutna att 
-                        göra sig påmint, och hon bestämmer sig för att göra upp med 
-                        det förgångna en gång för alla. Hon ska straffa dem som 
-                        förtjänar att straffas.</p>
-            </div> 
-           
+                                    <div class="d-flex small text-warning mb-2">
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                    <div class="bi-star-fill"></div>
+                                </div>
+                    </div>
+                            <p class="lead">@rndmBook.Description</p>
+                    </div> 
+           }
             
         </div>
     </div>
 </section>
 
+
 <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 
-           @foreach(var book in Model)
-            {
+           @foreach(var book in Model.Books)
+           {
              <div class="col mb-5">
                 <div class="h-100">
                     @{
                     var baseThumb = Convert.ToBase64String(book.Image.Thumbnail);
                     var imgsrc2 = string.Format("data:image/thumbnail;base64,{0}", baseThumb);
                     }
+                <a class="text-dark" asp-controller="Books" asp-action="Details" asp-route-id="@book.Id" style="text-decoration:none; important!" >
                 <img  class="card-img-top" src="@imgsrc2">
+                
                     
                         <div class="card-body p-4">
                             <div class="text-center">
-                            <h5 class="fw-bolder">Den lilla pojkens fötter</h5>
-                            <h6>Nisse Nilsson</h6>
+                            <h5 class="fw-bolder">@book.Title</h5>
+                            <h6>
+                                @{
+                                string authorList2 = "";
+                                foreach(var author in book.Authors)
+                                {
+                                    authorList2 += author.FullName + " & ";
+                                }
+                                authorList2 = authorList2.Remove(authorList2.Length - 2, 1);
+                                }
+                                @authorList2</h6>
                                 <div class="d-flex justify-content-center small text-warning mb-2">
                                     <div class="bi-star-fill"></div>
                                     <div class="bi-star-fill"></div>
@@ -78,8 +109,10 @@
                                 </div>
                             </div>
                         </div>
+                        </a>
                 </div>
             </div>
+
             }
 
 
@@ -89,3 +122,5 @@
         </div>
     </div>
 </section>
+
+<partial name="_PageSelect"/> 

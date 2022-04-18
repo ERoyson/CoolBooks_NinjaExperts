@@ -7,14 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CoolBooks_NinjaExperts.Data;
-
 using CoolBooks_NinjaExperts.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoolBooks_NinjaExperts.Models
 {
+    //[Authorize(Roles = "Admin, Moderator, User")]
     public class BooksController : Controller //Controller start
     {
-
         private readonly CoolBooks_NinjaExpertsContext _context;
 
         public BooksController(CoolBooks_NinjaExpertsContext context)
@@ -22,9 +22,10 @@ namespace CoolBooks_NinjaExperts.Models
             _context = context;
         }
 
+        // [Authorize(Roles = "User, Admin, Mod")]
         public IActionResult Index(string sortOrder, string searchString)
         {
-            var VM = new CreateBookViewModel();
+            var VM = new DisplayBooksViewModel();
 
             VM.Books = _context.Books
                 .Include(b => b.Authors)
@@ -100,6 +101,7 @@ namespace CoolBooks_NinjaExperts.Models
         }
 
         // GET: Books/Details/5
+        //[Authorize(Roles = "Admin, Moderator, User")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -108,6 +110,9 @@ namespace CoolBooks_NinjaExperts.Models
             }
 
             var books = await _context.Books
+                .Include(a => a.Authors)
+                .Include(g => g.Genres)
+                .Include(i => i.Image)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (books == null)
             {
@@ -118,6 +123,7 @@ namespace CoolBooks_NinjaExperts.Models
         }
 
         // GET: Books/Create
+        [Authorize(Roles = "Admin")]
         public IActionResult Create()
         {   
             var book = new CreateBookViewModel();
@@ -200,6 +206,7 @@ namespace CoolBooks_NinjaExperts.Models
         }
 
         // Covert to Thumbnail
+        [Authorize(Roles = "Admin")]
         public byte[] CreateThumbnail(byte[] imgFile)
         {
 
@@ -219,6 +226,7 @@ namespace CoolBooks_NinjaExperts.Models
         }
 
         // GET: Books/Edit/5
+        [Authorize(Roles = "Admin, Moderator")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -270,6 +278,7 @@ namespace CoolBooks_NinjaExperts.Models
         }
 
         // GET: Books/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
