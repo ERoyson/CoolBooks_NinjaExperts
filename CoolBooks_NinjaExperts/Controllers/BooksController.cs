@@ -110,6 +110,9 @@ namespace CoolBooks_NinjaExperts.Models
             }
 
             var books = await _context.Books
+                .Include(a => a.Authors)
+                .Include(g => g.Genres)
+                .Include(i => i.Image)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (books == null)
             {
