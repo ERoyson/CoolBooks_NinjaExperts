@@ -26,15 +26,19 @@
                     </div>
                     <div class="col-md-6">
                         <div class="small mb-1">
-                            @{
-                            string genreList = "";
-                            foreach(var genre in rndmBook.Genres)
+                        @{
+                            for(int i = 0;  i < rndmBook.Genres.Count(); i++)
                             {
-                                genreList += genre.Name + " | ";
+                                if (i == rndmBook.Genres.Count()-1)
+                                {
+                                    <a class="text-dark" asp-controller="Genres" asp-action="Details" asp-route-id="@rndmBook.Genres[i].Id" style="text-decoration: none">@rndmBook.Genres[i].Name</a>
+                                }
+                                else
+                                {
+                                    <a class="text-dark" asp-controller="Genres" asp-action="Details" asp-route-id="@rndmBook.Genres[i].Id" style="text-decoration: none">@rndmBook.Genres[i].Name | </a>
+                                }
                             }
-                            genreList = genreList.Remove(genreList.Length - 2, 1);
                             }
-                        @genreList
                         </div>
                             <h1 class="display-5 fw-bolder">
                                 <a class="text-dark" asp-controller="Books" asp-action="Details" asp-route-id="@rndmBook.Id" style="text-decoration:none; important!" >
@@ -43,14 +47,18 @@
                             </h1>
                                 <div class="fs-5 mb-5">
                         <span>@{
-                                string authorList = "";
-                                foreach(var author in rndmBook.Authors)
+                               for(int i = 0;  i < rndmBook.Authors.Count(); i++)
                                 {
-                                    authorList += author.FullName + " & ";
+                                    if (i == rndmBook.Authors.Count()-1)
+                                    {
+                                        <a class="text-dark" asp-controller="Authors" asp-action="Details" asp-route-id="@rndmBook.Authors[i].Id" style="text-decoration: none">@rndmBook.Authors[i].FullName</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="text-dark" asp-controller="Authors" asp-action="Details" asp-route-id="@rndmBook.Authors[i].Id" style="text-decoration: none">@rndmBook.Authors[i].FullName & </a>
+                                    }
                                 }
-                                authorList = authorList.Remove(authorList.Length - 2, 1);
                                 }
-                                @authorList
                                 </span><br />
                                     <span>@rndmBook.ISBN</span>
                                 
@@ -92,16 +100,22 @@
                             <h5 class="fw-bolder">@book.Title</h5>
                             <h6>
                                 @{
-                                string authorList2 = "";
-                                foreach(var author in book.Authors)
+                                for(int i = 0;  i < book.Authors.Count(); i++)
                                 {
-                                    authorList2 += author.FullName + " & ";
+                                    if (i == book.Authors.Count()-1)
+                                    {
+                                        <a class="text-dark" asp-controller="Authors" asp-action="Details" asp-route-id="@book.Authors[i].Id" style="text-decoration: none">@book.Authors[i].FullName</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="text-dark" asp-controller="Authors" asp-action="Details" asp-route-id="@book.Authors[i].Id" style="text-decoration: none">@book.Authors[i].FullName & </a>
+                                    }
                                 }
-                                authorList2 = authorList2.Remove(authorList2.Length - 2, 1);
                                 }
-                                @authorList2</h6>
+                                </h6>
                                 <div class="d-flex justify-content-center small text-warning mb-2">
                                     <div class="bi-star-fill"></div>
+                                    @*<div class="bi-star-half"></div>*@
                                     <div class="bi-star-fill"></div>
                                     <div class="bi-star-fill"></div>
                                     <div class="bi-star-fill"></div>

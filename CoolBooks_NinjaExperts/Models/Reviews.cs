@@ -6,6 +6,7 @@ namespace CoolBooks_NinjaExperts.Models
     {
         public int Id { get; set; }
         public UserInfo? User { get; set; } // Fk UserId - AspNetUsers
+        public string? UserId { get; set; } // FK UserId
         public Books Book { get; set; } // FK BookId
         public int BookId { get; set; }
         public string Title { get; set; }
@@ -22,7 +23,7 @@ namespace CoolBooks_NinjaExperts.Models
 
         public Reviews()
         {
-            this.Created = DateTime.Now;
+            Created = DateTime.Now;
         }
 
     }
