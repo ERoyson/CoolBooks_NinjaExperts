@@ -83,19 +83,19 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
 
 
             builder.Entity<Books>().HasData(
-                new Books { Id = 1, Title = "Harry Potter and The Sorcerer's Stone", BookSeries = "Harry Potter", Published = DateTime.Parse("1997-06-26"), Description = "Harry Potter is a wizard...", ImageId = 9, ISBN = 9780590353403 },
-                new Books { Id = 2, Title = "Harry Potter and The Deathly Hallows", BookSeries = "Harry Potter", Published = DateTime.Parse("2007-07-21"), Description = "Harry Potter is a wizard...", ImageId = 10, ISBN = 9780545029377 },
-                new Books { Id = 3, Title = "Witcher: The Last Wish", BookSeries = "Witcher", Published = DateTime.Parse("1993-01-01"), Description = "Short stories - Geralt of Rivia is a mutated monsterhunter...", ImageId = 14, ISBN = 9781473231061 },
-                new Books { Id = 4, Title = "Witcher: Sword of Destiny", BookSeries = "Witcher", Published = DateTime.Parse("1992-01-01"), Description = "Short stories - Geralt of Rivia is a mutated monsterhunter...", ImageId = 1, ISBN = 978147323108 },
-                new Books { Id = 5, Title = "Witcher: Lady of the Lake", BookSeries = "Witcher", Published = DateTime.Parse("1999-01-01"), Description = "Geralt of Rivia is a mutated monsterhunter...", ImageId = 2, ISBN = 9781473231122 },
-                new Books { Id = 6, Title = "Fifthy Shades of Grey", BookSeries = "Fifthy Shades of Grey", Published = DateTime.Parse("2012-04-17"), Description = "Mr Grey is a rich dude with kinky stuff going on...", ImageId = 3, ISBN = 9780345803481 },
-                new Books { Id = 7, Title = "The Outsider", BookSeries = "The Outsider", Published = DateTime.Parse("2018-05-22"), Description = "An eleven-year-old boy’s violated corpse is discovered in a town park...", ImageId = 5, ISBN = 9781501180989 },
-                new Books { Id = 8, Title = "American Psycho", BookSeries = "American Psycho", Published = DateTime.Parse("1991-03-06"), Description = "Patrick Bateman is Harvard-educated and intelligent. He works by day on Wall Street, earning a fortune to complement the one he was born with. His nights he spends in ways we cannot begin to fathom - doing impermissible things to women. He is living his own American Dream....", ImageId = 6, ISBN = 9780330484770 },
-                new Books { Id = 9, Title = "Dune", BookSeries = "Dune", Published = DateTime.Parse("1965-08-01"), Description = "Dune is the story of the boy Paul Atreides, who would become the mysterious man...", ImageId = 7, ISBN = 9789178934751 },
-                new Books { Id = 10, Title = "The Great Gatsby", BookSeries = "The Great Gatsby", Published = DateTime.Parse("1925-04-10"), Description = "Party hard...", ImageId = 8, ISBN = 9780020198819 },
-                new Books { Id = 11, Title = "Jaws", BookSeries = "Jaws", Published = DateTime.Parse("1974-02-01"), Description = "Hungry Shark...", ImageId = 12, ISBN = 9780385047715 },
-                new Books { Id = 12, Title = "The Godfather", BookSeries = "The Godfather", Published = DateTime.Parse("1969-03-10"), Description = "Gangsters...", ImageId = 13, ISBN = 9780434604913 },
-                new Books { Id = 13, Title = "Lord of the Rings", BookSeries = "Lord of the Rings", Published = DateTime.Parse("1955-10-20"), Description = "The hobbit Frodo Baggins takes it upon himself to destroy the ring of power...", ImageId = 15, ISBN = 9780007136575 }
+                new Books { Id = 1, UserId = "0cgg7156-dee2-fe6g-4df6-147f5836e357", Title = "Harry Potter and The Sorcerer's Stone", BookSeries = "Harry Potter", Published = DateTime.Parse("1997-06-26"), Description = "The first novel in the Harry Potter series and Rowling's debut novel, it follows Harry Potter, a young wizard who discovers his magical heritage on his eleventh birthday, when he receives a letter of acceptance to Hogwarts School of Witchcraft and Wizardry.", ImageId = 9, ISBN = 9780590353403 },
+                new Books { Id = 2, UserId = "0cgg7156-dee2-fe6g-4df6-147f5836e357", Title = "Harry Potter and The Deathly Hallows", BookSeries = "Harry Potter", Published = DateTime.Parse("2007-07-21"), Description = "Harry Potter is a wizard...", ImageId = 10, ISBN = 9780545029377 },
+                new Books { Id = 3, UserId = "be661gc4-d6b6-3b1d-23d4-2485c1bf5c0d", Title = "Witcher: The Last Wish", BookSeries = "Witcher", Published = DateTime.Parse("1993-01-01"), Description = "Short stories - Geralt of Rivia is a mutated monsterhunter...", ImageId = 14, ISBN = 9781473231061 },
+                new Books { Id = 4, UserId = "be661gc4-d6b6-3b1d-23d4-2485c1bf5c0d", Title = "Witcher: Sword of Destiny", BookSeries = "Witcher", Published = DateTime.Parse("1992-01-01"), Description = "Short stories - Geralt of Rivia is a mutated monsterhunter...", ImageId = 1, ISBN = 978147323108 },
+                new Books { Id = 5, UserId = "be661gc4-d6b6-3b1d-23d4-2485c1bf5c0d", Title = "Witcher: Lady of the Lake", BookSeries = "Witcher", Published = DateTime.Parse("1999-01-01"), Description = "Geralt of Rivia is a mutated monsterhunter...", ImageId = 2, ISBN = 9781473231122 },
+                new Books { Id = 6, UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f", Title = "Fifthy Shades of Grey", BookSeries = "Fifthy Shades of Grey", Published = DateTime.Parse("2012-04-17"), Description = "Mr Grey is a rich dude with kinky stuff going on...", ImageId = 3, ISBN = 9780345803481 },
+                new Books { Id = 7, UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f", Title = "The Outsider", BookSeries = "The Outsider", Published = DateTime.Parse("2018-05-22"), Description = "An eleven-year-old boy’s violated corpse is discovered in a town park...", ImageId = 5, ISBN = 9781501180989 },
+                new Books { Id = 8, UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f", Title = "American Psycho", BookSeries = "American Psycho", Published = DateTime.Parse("1991-03-06"), Description = "Patrick Bateman is Harvard-educated and intelligent. He works by day on Wall Street, earning a fortune to complement the one he was born with. His nights he spends in ways we cannot begin to fathom - doing impermissible things to women. He is living his own American Dream....", ImageId = 6, ISBN = 9780330484770 },
+                new Books { Id = 9, UserId = "be661gc4-d6b6-3b1d-23d4-2485c1bf5c0d", Title = "Dune", BookSeries = "Dune", Published = DateTime.Parse("1965-08-01"), Description = "Dune is the story of the boy Paul Atreides, who would become the mysterious man...", ImageId = 7, ISBN = 9789178934751 },
+                new Books { Id = 10, UserId = "85e508e4-80ce-9d68-84c3-g1gd726e97g1", Title = "The Great Gatsby", BookSeries = "The Great Gatsby", Published = DateTime.Parse("1925-04-10"), Description = "Party hard...", ImageId = 8, ISBN = 9780020198819 },
+                new Books { Id = 11, UserId = "85e508e4-80ce-9d68-84c3-g1gd726e97g1", Title = "Jaws", BookSeries = "Jaws", Published = DateTime.Parse("1974-02-01"), Description = "Hungry Shark...", ImageId = 12, ISBN = 9780385047715 },
+                new Books { Id = 12, UserId = "bd332a8c-b4e4-5cg1-b68d-g25g3cg8dgc5", Title = "The Godfather", BookSeries = "The Godfather", Published = DateTime.Parse("1969-03-10"), Description = "Gangsters...", ImageId = 13, ISBN = 9780434604913 },
+                new Books { Id = 13, UserId = "bd332a8c-b4e4-5cg1-b68d-g25g3cg8dgc5", Title = "Lord of the Rings", BookSeries = "Lord of the Rings", Published = DateTime.Parse("1955-10-20"), Description = "The hobbit Frodo Baggins takes it upon himself to destroy the ring of power...", ImageId = 15, ISBN = 9780007136575 }
                 );
         }
 
@@ -148,6 +148,124 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                 new BooksGenres { BooksId = 13, GenresId = 5 },
                 new BooksGenres { BooksId = 13, GenresId = 8 }
                 );
+        }
+
+        public static void SeedBookReviews(this ModelBuilder builder)
+        {
+            builder.Entity<Reviews>().HasData(
+                new Reviews
+                {
+                    Id = 1,
+                    BookId = 1,
+                    Title = "The book was magical!",
+                    Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
+                    Rating = 4.5
+                },
+                new Reviews
+                {
+                    Id = 2,
+                    BookId = 2,
+                    Title = "I never stopped reading",
+                    Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
+                    Rating = 5.0
+                },
+                new Reviews
+                {
+                    Id = 3,
+                    BookId = 2,
+                    Title = "Boring book",
+                    Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
+                    Rating = 1.0
+                },
+                new Reviews
+                {
+                    Id = 4,
+                    BookId = 3,
+                    Title = "Read this book if you like to be mindblown",
+                    Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
+                    Rating = 4.0
+                },
+                new Reviews
+                {
+                    Id = 5,
+                    BookId = 4,
+                    Title = "The shortstories are something else",
+                    Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
+                    Rating = 4.5
+                },
+                new Reviews
+                {
+                    Id = 6,
+                    BookId = 5,
+                    Title = "Meh.. Was kind of disapoitend",
+                    Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
+                    Rating = 2.5
+                },
+                new Reviews
+                {
+                    Id = 7,
+                    BookId = 6,
+                    Title = "Mr Grey.. What a man",
+                    Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
+                    Rating = 4
+                },
+                new Reviews
+                {
+                    Id = 8,
+                    BookId = 7,
+                    Title = "Loved it!",
+                    Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
+                    Rating = 4.2
+                },
+                new Reviews
+                {
+                    Id = 9,
+                    BookId = 8,
+                    Title = "The movie was better",
+                    Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
+                    Rating = 3
+                },
+                new Reviews
+                {
+                    Id = 10,
+                    BookId = 9,
+                    Title = "Amazing, just amazing...",
+                    Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
+                    Rating = 5
+                },
+                new Reviews
+                {
+                    Id = 11,
+                    BookId = 10,
+                    Title = "Don't bother reading, it sucks (my opinion)",
+                    Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
+                    Rating = 1.5
+                },
+                new Reviews
+                {
+                    Id = 12,
+                    BookId = 11,
+                    Title = "Well, this was a waste of time",
+                    Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
+                    Rating = 2.5
+                },
+                new Reviews
+                {
+                    Id = 13,
+                    BookId = 12,
+                    Title = "Wow.. just wow",
+                    Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
+                    Rating = 4.0
+                },
+                new Reviews
+                {
+                    Id = 14,
+                    BookId = 13,
+                    Title = "If you love the movies you will love this book",
+                    Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
+                    Rating = 5
+                }
+            );
         }
         public static byte[] ReadFile(string imageFileName) // Get images from filepath
         {
@@ -240,14 +358,90 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                 Created = DateTime.Now
             };
 
+            UserInfo user1 = new UserInfo()
+            {
+                Id = "0cgg7156-dee2-fe6g-4df6-147f5836e357",
+                FirstName = "Karl",
+                LastName = "Karlsson",
+                UserName = "Karl",
+                NormalizedUserName = "KARL",
+                Email = "karl@gmail.com",
+                NormalizedEmail = "KARL@GMAIL.COM",
+                //LockoutEnabled = false,
+                PhoneNumber = "1234567899",
+                Created = DateTime.Now
+            };
+            UserInfo user2 = new UserInfo()
+            {
+                Id = "be661gc4-d6b6-3b1d-23d4-2485c1bf5c0d",
+                FirstName = "Per",
+                LastName = "Persson",
+                UserName = "Per",
+                NormalizedUserName = "PER",
+                Email = "per@gmail.com",
+                NormalizedEmail = "PER@GMAIL.COM",
+                //LockoutEnabled = false,
+                PhoneNumber = "1234567889",
+                Created = DateTime.Now
+            };
+            UserInfo user3 = new UserInfo()
+            {
+                Id = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f",
+                FirstName = "Mats",
+                LastName = "Matsson",
+                UserName = "Mats",
+                NormalizedUserName = "MATS",
+                Email = "mats@gmail.com",
+                NormalizedEmail = "MATS@GMAIL.COM",
+                //LockoutEnabled = false,
+                PhoneNumber = "1234567789",
+                Created = DateTime.Now
+            };
+            UserInfo user4 = new UserInfo()
+            {
+                Id = "85e508e4-80ce-9d68-84c3-g1gd726e97g1",
+                FirstName = "Anna",
+                LastName = "Annasson",
+                UserName = "Anna",
+                NormalizedUserName = "ANNA",
+                Email = "anna@gmail.com",
+                NormalizedEmail = "ANNA@GMAIL.COM",
+                //LockoutEnabled = false,
+                PhoneNumber = "1234566789",
+                Created = DateTime.Now
+            };
+            UserInfo user5 = new UserInfo()
+            {
+                Id = "bd332a8c-b4e4-5cg1-b68d-g25g3cg8dgc5",
+                FirstName = "Berit",
+                LastName = "Beritsson",
+                UserName = "Berit",
+                NormalizedUserName = "BERIT",
+                Email = "berit@gmail.com",
+                NormalizedEmail = "BERIT@GMAIL.COM",
+                //LockoutEnabled = false,
+                PhoneNumber = "1234556789",
+                Created = DateTime.Now
+            };
+
             PasswordHasher<UserInfo> passwordHasher = new PasswordHasher<UserInfo>();
             admin.PasswordHash = passwordHasher.HashPassword(admin, "Admin*123");
             mod.PasswordHash = passwordHasher.HashPassword(mod, "Mod*123");
             user.PasswordHash = passwordHasher.HashPassword(user, "User*123");
+            user1.PasswordHash = passwordHasher.HashPassword(user1, "Karl*123");
+            user2.PasswordHash = passwordHasher.HashPassword(user2, "Per*123");
+            user3.PasswordHash = passwordHasher.HashPassword(user3, "Mats*123");
+            user4.PasswordHash = passwordHasher.HashPassword(user4, "Anna*123");
+            user5.PasswordHash = passwordHasher.HashPassword(user5, "Berit*123");
 
             builder.Entity<UserInfo>().HasData(admin);
             builder.Entity<UserInfo>().HasData(mod);
             builder.Entity<UserInfo>().HasData(user);
+            builder.Entity<UserInfo>().HasData(user1);
+            builder.Entity<UserInfo>().HasData(user2);
+            builder.Entity<UserInfo>().HasData(user3);
+            builder.Entity<UserInfo>().HasData(user4);
+            builder.Entity<UserInfo>().HasData(user5);
         }
 
         public static void SeedRoles(this ModelBuilder builder)
@@ -264,7 +458,12 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
             builder.Entity<IdentityUserRole<string>>().HasData(
                 new IdentityUserRole<string>() { RoleId = "fab4fac1-c546-41de-aebc-a14da6895711", UserId = "b74ddd14-6340-4840-95c2-db12554843e5" }, //Admin
                 new IdentityUserRole<string>() { RoleId = "c7b013f0-5201-4317-abd8-c211f91b7330", UserId = "803efbbg-d6c9-83f9-ee5f-f8a0fbd5d06b" }, //Moderator
-                new IdentityUserRole<string>() { RoleId = "g4a251c5-6285-9362-def3-d722e74c5378", UserId = "ag0265e7-f68f-6ge5-6445-2a3ac7037929" }  //User
+                new IdentityUserRole<string>() { RoleId = "g4a251c5-6285-9362-def3-d722e74c5378", UserId = "ag0265e7-f68f-6ge5-6445-2a3ac7037929" },  //User
+                new IdentityUserRole<string>() { RoleId = "g4a251c5-6285-9362-def3-d722e74c5378", UserId = "0cgg7156-dee2-fe6g-4df6-147f5836e357" },
+                new IdentityUserRole<string>() { RoleId = "g4a251c5-6285-9362-def3-d722e74c5378", UserId = "be661gc4-d6b6-3b1d-23d4-2485c1bf5c0d" },
+                new IdentityUserRole<string>() { RoleId = "g4a251c5-6285-9362-def3-d722e74c5378", UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f" },
+                new IdentityUserRole<string>() { RoleId = "g4a251c5-6285-9362-def3-d722e74c5378", UserId = "85e508e4-80ce-9d68-84c3-g1gd726e97g1" },
+                new IdentityUserRole<string>() { RoleId = "g4a251c5-6285-9362-def3-d722e74c5378", UserId = "bd332a8c-b4e4-5cg1-b68d-g25g3cg8dgc5" }                
                 );
         }
     }
