@@ -85,6 +85,9 @@ public class CoolBooks_NinjaExpertsContext : IdentityDbContext<UserInfo>
         // Reviews 
         builder.SeedBookReviews();
 
+        // Reviews
+        builder.SeedBookReviews();
+
         // Relationships
         builder.SeedAuthorBooks();
         builder.SeedBooksGenres();
