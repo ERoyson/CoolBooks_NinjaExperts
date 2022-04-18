@@ -83,7 +83,7 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
 
 
             builder.Entity<Books>().HasData(
-                new Books { Id = 1, Title = "Harry Potter and The Sorcerer's Stone", BookSeries = "Harry Potter", Published = DateTime.Parse("1997-06-26"), Description = "Harry Potter is a wizard...", ImageId = 9, ISBN = 9780590353403 },
+                new Books { Id = 1, Title = "Harry Potter and The Sorcerer's Stone", BookSeries = "Harry Potter", Published = DateTime.Parse("1997-06-26"), Description = "The first novel in the Harry Potter series and Rowling's debut novel, it follows Harry Potter, a young wizard who discovers his magical heritage on his eleventh birthday, when he receives a letter of acceptance to Hogwarts School of Witchcraft and Wizardry.", ImageId = 9, ISBN = 9780590353403 },
                 new Books { Id = 2, Title = "Harry Potter and The Deathly Hallows", BookSeries = "Harry Potter", Published = DateTime.Parse("2007-07-21"), Description = "Harry Potter is a wizard...", ImageId = 10, ISBN = 9780545029377 },
                 new Books { Id = 3, Title = "Witcher: The Last Wish", BookSeries = "Witcher", Published = DateTime.Parse("1993-01-01"), Description = "Short stories - Geralt of Rivia is a mutated monsterhunter...", ImageId = 14, ISBN = 9781473231061 },
                 new Books { Id = 4, Title = "Witcher: Sword of Destiny", BookSeries = "Witcher", Published = DateTime.Parse("1992-01-01"), Description = "Short stories - Geralt of Rivia is a mutated monsterhunter...", ImageId = 1, ISBN = 978147323108 },

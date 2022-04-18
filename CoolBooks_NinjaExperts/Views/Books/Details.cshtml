@@ -4,12 +4,17 @@
     ViewData["Title"] = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@using Microsoft.AspNetCore.Identity
+@using CoolBooks_NinjaExperts.Areas.Identity.Data
+
+@inject SignInManager<UserInfo> SignInManager
+@inject UserManager<UserInfo> UserManager
 
 <h1>Details</h1>
 
 
 <section class="py-5">
-    <div class="container px-4 px-lg-5 my-5">
+    <div class="container px-4 px-lg-5 my-5 d-flex flex-row">
         <div class="row gx-4 gx-lg-5 align-items-center">
             
                @*<div class="col-md-4">
@@ -19,38 +24,55 @@
                 }
                 <img src="@imgsrc2">*@
 
-                </div>
-                <div class="col-md-6">
-                    <div class="small mb-1">Thriller</div>
-                        <h1 class="display-5 fw-bolder">Flickan som lekte med elden</h1>
-                            <div class="fs-5 mb-5">
-                                <span>Stieg Larsson</span><br />
-                                <span>ISBN: 123465789</span>
-                                
-                                <div class="d-flex small text-warning mb-2">
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                                <div class="bi-star-fill"></div>
-                            </div>
-                </div>
-                        <p class="lead">En journalist och hans researchpartner hittas 
-                        mördade och allt pekar på att Lisbeth Salander är skyldig 
-                        till morden. Mikael Blomkvist misstänker att dödsfallen är 
-                        kopplade till en traffickingoperation som leds av den ökände 
-                        gangstern 'Zala' - och att man försöker sätta dit Salander.
-
-                        En rad dramatiska händelser får Lisbeths mörka förflutna att 
-                        göra sig påmint, och hon bestämmer sig för att göra upp med 
-                        det förgångna en gång för alla. Hon ska straffa dem som 
-                        förtjänar att straffas.</p>
-            </div> 
-           
-            
         </div>
+        <div class="col-md-4 mb-10">
+            @{
+                var baseThumb = Convert.ToBase64String(Model.Image.Image);
+                var imgsrc2 = string.Format("data:image/thumbnail;base64,{0}", baseThumb);
+            }
+            <img src="@imgsrc2" style="width:400px; height:550px;">
+        </div>
+        <div class="col-md-6" style="padding-left: 15px;">
+            <div class="small mb-1">
+                @{string genreList = "";
+                    foreach(var genre in Model.Genres)
+                    {
+                        genreList += genre.Name + " | ";
+                    }
+                    genreList = genreList.Remove(genreList.Length - 2, 1);
+                }
+                @genreList
+            </div>
+            <h1 class="display-5 fw-bolder">@Html.DisplayFor(model => model.Title)</h1>
+            <div class="fs-5 mb-5">
+
+                <span>
+                    @{string authorList = "";
+                        foreach(var author in Model.Authors)
+                        {
+                            authorList += author.FullName + " & ";
+                        }
+                        authorList = authorList.Remove(authorList.Length - 2, 1);
+                    }
+                    @authorList
+                </span><br />
+                <span>ISBN: @Html.DisplayFor(model => Model.ISBN)</span>
+                                
+                <div class="d-flex small text-warning mb-2">
+                    <div class="bi-star-fill"></div>
+                    <div class="bi-star-fill"></div>
+                    <div class="bi-star-fill"></div>
+                    <div class="bi-star-fill"></div>
+                    <div class="bi-star-fill"></div>
+                </div>
+            </div>
+            <p class="lead">@Html.DisplayFor(model => Model.Description)</p>
+        </div>   
     </div>
 </section>
 <div>
+    @if (SignInManager.IsSignedIn(User))
+    {
     <a asp-action="Index">Back to List</a>
+    }
 </div>

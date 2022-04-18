@@ -53,9 +53,15 @@
              <th>
                @Html.ActionLink("Rating", "Index", new { sortOrder = ViewBag.RatingSort })
             </th>
-            <th>
-               @Html.ActionLink("Created", "Index", new { sortOrder = ViewBag.CreatedSort })
-            </th>
+            @if (SignInManager.IsSignedIn(User))
+            {
+                if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+                {
+                <th>
+                   @Html.ActionLink("Created", "Index", new { sortOrder = ViewBag.CreatedSort })
+                </th>
+                }
+            }
             <th></th>
         </tr>
     </thead>
@@ -85,6 +91,7 @@
                     var baseThumb = Convert.ToBase64String(book.Image.Thumbnail);
                     var imgsrc2 = string.Format("data:image/thumbnail;base64,{0}", baseThumb);
                 }
+                    <a class="text-dark" asp-controller="Books" asp-action="Details" asp-route-id="@book.Id" style="text-decoration:none; important!" />
                 <img src="@imgsrc2">
             </td>
             <td>
@@ -93,9 +100,15 @@
             <td>
                 @Html.DisplayFor(model => book.Rating)
             </td>
-            <td>
-                @Html.DisplayFor(model => book.Created)
-            </td>
+            @if (SignInManager.IsSignedIn(User))
+            {
+                if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+                {
+                    <td>
+                        @Html.DisplayFor(model => book.Created)
+                    </td>
+                }
+            }
 
             @if (SignInManager.IsSignedIn(User))
             {
