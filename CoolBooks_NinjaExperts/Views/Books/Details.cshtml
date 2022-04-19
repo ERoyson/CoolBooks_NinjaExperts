@@ -23,16 +23,6 @@
 
 <section>
     <div class="container px-4 px-lg-5 my-5 d-flex flex-row">
-        <div class="row gx-4 gx-lg-5 align-items-center">
-            
-               @*<div class="col-md-4">
-               @{
-                    var baseThumb = Convert.ToBase64String(book.Image.Thumbnail);
-                    var imgsrc2 = string.Format("data:image/thumbnail;base64,{0}", baseThumb);
-                }
-                <img src="@imgsrc2">*@
-
-        </div>
         <div class="col-md-4 mb-10">
             @{
                 var baseThumb = Convert.ToBase64String(Model.Book.Image.Image);
@@ -42,27 +32,38 @@
         </div>
         <div class="col-md-6" style="padding-left: 15px;">
             <div class="small mb-1">
-                @{string genreList = "";
-                    foreach(var genre in Model.Book.Genres)
+
+                @{
+                for(int i = 0;  i < Model.Genres.Count(); i++)
                     {
-                        genreList += genre.Name + " | ";
+                        if (i == Model.Genres.Count()-1)
+                        {
+                            <a class="text-dark" asp-controller="Genres" asp-action="Details" asp-route-id="@Model.Genres[i].Id" style="text-decoration: none">@Model.Genres[i].Name</a>
+                        }
+                        else
+                        {
+                            <a class="text-dark" asp-controller="Genres" asp-action="Details" asp-route-id="@Model.Genres[i].Id" style="text-decoration: none">@Model.Genres[i].Name | </a>
+                        }
                     }
-                    genreList = genreList.Remove(genreList.Length - 2, 1);
                 }
-                @genreList
             </div>
             <h1 class="display-5 fw-bolder">@Html.DisplayFor(model => model.Book.Title)</h1>
             <div class="fs-5 mb-5">
 
                 <span>
-                    @{string authorList = "";
-                        foreach(var author in Model.Book.Authors)
-                        {
-                            authorList += author.FullName + " & ";
-                        }
-                        authorList = authorList.Remove(authorList.Length - 2, 1);
+                    @{
+                        for(int i = 0;  i < Model.Authors.Count(); i++)
+                            {
+                                if (i == Model.Authors.Count()-1)
+                                {
+                                    <a class="text-dark" asp-controller="Authors" asp-action="Details" asp-route-id="@Model.Authors[i].Id" style="text-decoration: none">@Model.Authors[i].FullName</a>
+                                }
+                                else
+                                {
+                                    <a class="text-dark" asp-controller="Authors" asp-action="Details" asp-route-id="@Model.Authors[i].Id" style="text-decoration: none">@Model.Authors[i].FullName & </a>
+                                }
+                            }
                     }
-                    @authorList
                 </span><br />
                 <span>ISBN: @Html.DisplayFor(model => Model.Book.ISBN)</span>
                                 
