@@ -156,7 +156,8 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                 new Reviews
                 {
                     Id = 1,
-                    BookId = 1,
+                    BookId = 1, //Harry Potter & The Sorcerer's Stone
+                    UserId = "0cgg7156-dee2-fe6g-4df6-147f5836e357", //Karl
                     Title = "The book was magical!",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
                     Rating = 4.5
@@ -164,7 +165,8 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                 new Reviews
                 {
                     Id = 2,
-                    BookId = 2,
+                    BookId = 2, //Harry Potter & The Deathly Hallows
+                    UserId = "0cgg7156-dee2-fe6g-4df6-147f5836e357", //Karl
                     Title = "I never stopped reading",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
                     Rating = 5.0
@@ -172,7 +174,8 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                 new Reviews
                 {
                     Id = 3,
-                    BookId = 2,
+                    BookId = 2, //Harry Potter & The Deathly Hallows
+                    UserId = "85e508e4-80ce-9d68-84c3-g1gd726e97g1", //Anna
                     Title = "Boring book",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
                     Rating = 1.0
@@ -180,7 +183,8 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                 new Reviews
                 {
                     Id = 4,
-                    BookId = 3,
+                    BookId = 3, //Witcher: The Last Wish
+                    UserId = "be661gc4-d6b6-3b1d-23d4-2485c1bf5c0d", //Per
                     Title = "Read this book if you like to be mindblown",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
                     Rating = 4.0
@@ -188,7 +192,8 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                 new Reviews
                 {
                     Id = 5,
-                    BookId = 4,
+                    BookId = 4, //Witcher: Sword of Destiny
+                    UserId = "be661gc4-d6b6-3b1d-23d4-2485c1bf5c0d", //Per
                     Title = "The shortstories are something else",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
                     Rating = 4.5
@@ -196,7 +201,8 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                 new Reviews
                 {
                     Id = 6,
-                    BookId = 5,
+                    BookId = 5, //Witcher: Lady of the Lake
+                    UserId = "be661gc4-d6b6-3b1d-23d4-2485c1bf5c0d", //Per
                     Title = "Meh.. Was kind of disapoitend",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
                     Rating = 2.5
@@ -204,7 +210,8 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                 new Reviews
                 {
                     Id = 7,
-                    BookId = 6,
+                    BookId = 6, //Fifty Shades of Grey
+                    UserId = "bd332a8c-b4e4-5cg1-b68d-g25g3cg8dgc5", //Berit
                     Title = "Mr Grey.. What a man",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
                     Rating = 4
@@ -212,7 +219,8 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                 new Reviews
                 {
                     Id = 8,
-                    BookId = 7,
+                    BookId = 7, //The Outsider
+                    UserId = "be661gc4-d6b6-3b1d-23d4-2485c1bf5c0d", //Per
                     Title = "Loved it!",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
                     Rating = 4.2
@@ -220,7 +228,8 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                 new Reviews
                 {
                     Id = 9,
-                    BookId = 8,
+                    BookId = 8, //American Psyco
+                    UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f", //Mats
                     Title = "The movie was better",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
                     Rating = 3
@@ -228,7 +237,8 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                 new Reviews
                 {
                     Id = 10,
-                    BookId = 9,
+                    BookId = 9, //Dune
+                    UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f", //Mats
                     Title = "Amazing, just amazing...",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
                     Rating = 5
@@ -236,7 +246,8 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                 new Reviews
                 {
                     Id = 11,
-                    BookId = 10,
+                    BookId = 10, //The Great Gatsby
+                    UserId = "bd332a8c-b4e4-5cg1-b68d-g25g3cg8dgc5", //Berit
                     Title = "Don't bother reading, it sucks (my opinion)",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
                     Rating = 1.5
@@ -244,7 +255,8 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                 new Reviews
                 {
                     Id = 12,
-                    BookId = 11,
+                    BookId = 11, //Jaws
+                    UserId = "bd332a8c-b4e4-5cg1-b68d-g25g3cg8dgc5", //Berit
                     Title = "Well, this was a waste of time",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
                     Rating = 2.5
@@ -252,7 +264,8 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                 new Reviews
                 {
                     Id = 13,
-                    BookId = 12,
+                    BookId = 12, //The Godfather
+                    UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f", //Mats
                     Title = "Wow.. just wow",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
                     Rating = 4.0
@@ -260,13 +273,15 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                 new Reviews
                 {
                     Id = 14,
-                    BookId = 13,
+                    BookId = 13, //Lord of the Rings
+                    UserId = "0cgg7156-dee2-fe6g-4df6-147f5836e357", //Karl
                     Title = "If you love the movies you will love this book",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
                     Rating = 5
                 }
             );
         }
+
         public static byte[] ReadFile(string imageFileName) // Get images from filepath
         {
             string sPath = "../CoolBooks_NinjaExperts/wwwroot/img/CoolBooksImages/";
