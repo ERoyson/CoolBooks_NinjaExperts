@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using CoolBooks_NinjaExperts.Data;
 using CoolBooks_NinjaExperts.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace CoolBooks_NinjaExperts.Models
 {
@@ -105,12 +106,14 @@ namespace CoolBooks_NinjaExperts.Models
         public async Task<IActionResult> Details(int? id)
         {
             var VM = new BookReviewsViewModel();
+            VM.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the logged in user's userId
             VM.Book = _context.Books.FirstOrDefault(x => x.Id == id);
             if (id == null)
             {
                 return NotFound();
             }
 
+            //Lägg till fler filtreringsalternativ på reviews, ex. högst poäng, flest gillade review etc.
             VM.Reviews = _context.Reviews
                 .Include(r => r.User)
                 .Include(r => r.Book)
@@ -119,7 +122,8 @@ namespace CoolBooks_NinjaExperts.Models
                 .ThenInclude(b => b.Authors)
                 .Include(r => r.Book)
                 .ThenInclude(b => b.Genres)
-                .Where(r => r.BookId == id).ToList();
+                .Where(r => r.BookId == id)
+                .OrderByDescending(r=>r.Created).ToList();
             if (VM.Reviews == null)
             {
                 return NotFound();
