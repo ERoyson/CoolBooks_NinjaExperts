@@ -65,6 +65,22 @@ public class CoolBooks_NinjaExpertsContext : IdentityDbContext<UserInfo>
            .HasOne(x => x.Reply)
            .WithMany(x => x.ReplyDislikes)
            .HasForeignKey(x => x.ReplyId);
+        //---------------------------------------------------- 
+        // Flagged Reviews/Comments/Replies
+        builder.Entity<FlaggedReviews>().HasKey(x => new { x.UserId, x.ReviewId, x.FlaggedId });
+
+        builder.Entity<FlaggedReviews>()
+            .HasOne(x => x.Review)
+            .WithMany(x => x.FlaggedReviews)
+            .HasForeignKey(x => x.ReviewId);
+        builder.Entity<FlaggedReviews>()
+            .HasOne(x => x.User)
+            .WithMany(x => x.FlaggedReviews)
+            .HasForeignKey(x => x.UserId);
+        builder.Entity<FlaggedReviews>()
+            .HasOne(x => x.Flagged)
+            .WithMany(x => x.FlaggedReviews)
+            .HasForeignKey(x => x.FlaggedId);
 
 
         // --------- seed database here :) -------------------
