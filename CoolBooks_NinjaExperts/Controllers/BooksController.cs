@@ -9,6 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using CoolBooks_NinjaExperts.Data;
 using CoolBooks_NinjaExperts.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace CoolBooks_NinjaExperts.Models
 {
@@ -117,28 +119,38 @@ namespace CoolBooks_NinjaExperts.Models
       //[Authorize(Roles = "Admin, Moderator, User")]
       public async Task<IActionResult> Details(int? id)
       {
-         var VM = new BookReviewsViewModel();
-         VM.Book = _context.Books.FirstOrDefault(x => x.Id == id);
-         if (id == null)
-         {
-            return NotFound();
-         }
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the user's userId
+            var userName = User.FindFirstValue(ClaimTypes.Name); // will give the user's userName
 
-         VM.Reviews = _context.Reviews
-             .Include(r => r.User)
-             .Include(r => r.Book)
-             .ThenInclude(b => b.Image)
-             .Include(r => r.Book)
-             .ThenInclude(b => b.Authors)
-             .Include(r => r.Book)
-             .ThenInclude(b => b.Genres)
-             .Where(r => r.BookId == id).ToList();
-         if (VM.Reviews == null)
-         {
-            return NotFound();
-         }
+            var VM = new BookReviewsViewModel();
+            VM.FlaggedReviews = _context.FlaggedReviews
+                .Include(x=>x.Review)
+                .Include(x=>x.Flagged)
+                .Include(x=>x.User)
+                .Where(x => x.UserId == userId)
+                .ToList();
 
-         return View(VM);
+            VM.Book = _context.Books.FirstOrDefault(x => x.Id == id);
+            if (id == null)
+            {
+            return NotFound();
+            }
+
+            VM.Reviews = _context.Reviews
+                .Include(r => r.User)
+                .Include(r => r.Book)
+                .ThenInclude(b => b.Image)
+                .Include(r => r.Book)
+                .ThenInclude(b => b.Authors)
+                .Include(r => r.Book)
+                .ThenInclude(b => b.Genres)
+                .Where(r => r.BookId == id).ToList();
+            if (VM.Reviews == null)
+            {
+            return NotFound();
+            }
+
+            return View(VM);
       }
 
       // GET: Books/Create

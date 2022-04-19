@@ -120,6 +120,7 @@
     <div class="row">
         @foreach (var review in Model.Reviews) 
         {
+            
             <div class="col-md-8">
                 <div class="media g-mb-30 media-comment">
                     <img class="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-15" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Image Description">
@@ -128,11 +129,18 @@
                         @*<h5 class="h5 g-color-gray-dark-v1 mb-0">Username: @review.User.UserName</h5>*@
                         <div class="d-flex justify-content-between">
                         <h5 class="h5 g-color-gray-dark-v1 mb-0">@review.Title</h5>
-                      
-                          <button class="bi bi-flag btn-outline-danger"><small> | Report/Reported</small></button>
-                        
-
-                        @*<i class="bi bi-flag"></i>*@
+                       @{
+                            
+                            if(@Model.FlaggedReviews.Where(x=>x.ReviewId == review.Id).Count() > 0)
+                            {
+                                <button class="bi bi-flag btn-danger"><small> | Reported</small></button>
+                            }
+                            else
+                            {
+                                <button class="bi bi-flag btn-outline-danger"></button>
+                            }
+                            
+                        }
                        
                         </div>
                         <span class="fa fa-star checked"></span>
