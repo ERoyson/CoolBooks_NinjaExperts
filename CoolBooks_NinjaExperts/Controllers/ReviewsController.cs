@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CoolBooks_NinjaExperts.Data;
 using CoolBooks_NinjaExperts.Models;
+using CoolBooks_NinjaExperts.ViewModels;
 
 namespace CoolBooks_NinjaExperts.Controllers
 {
@@ -29,19 +30,23 @@ namespace CoolBooks_NinjaExperts.Controllers
         // GET: Reviews/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            var VM = new BookReviewsViewModel();
+            VM.Book = _context.Books.FirstOrDefault(x => x.Id == id);
             if (id == null)
             {
                 return NotFound();
             }
 
-            var reviews = await _context.Reviews
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (reviews == null)
+            VM.Reviews = _context.Reviews
+                .Include(r => r.User)
+                //.Include(r => r.Book)
+                .Where(r => r.BookId == id).ToList();
+            if (VM.Reviews == null)
             {
                 return NotFound();
             }
 
-            return View(reviews);
+            return View(VM);
         }
 
         // GET: Reviews/Create

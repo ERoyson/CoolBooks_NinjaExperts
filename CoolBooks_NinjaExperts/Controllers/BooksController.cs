@@ -104,22 +104,28 @@ namespace CoolBooks_NinjaExperts.Models
         //[Authorize(Roles = "Admin, Moderator, User")]
         public async Task<IActionResult> Details(int? id)
         {
+            var VM = new BookReviewsViewModel();
+            VM.Book = _context.Books.FirstOrDefault(x => x.Id == id);
             if (id == null)
             {
                 return NotFound();
             }
 
-            var books = await _context.Books
-                .Include(a => a.Authors)
-                .Include(g => g.Genres)
-                .Include(i => i.Image)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (books == null)
+            VM.Reviews = _context.Reviews
+                .Include(r => r.User)
+                .Include(r => r.Book)
+                .ThenInclude(b => b.Image)
+                .Include(r => r.Book)
+                .ThenInclude(b => b.Authors)
+                .Include(r => r.Book)
+                .ThenInclude(b => b.Genres)
+                .Where(r => r.BookId == id).ToList();
+            if (VM.Reviews == null)
             {
                 return NotFound();
             }
 
-            return View(books);
+            return View(VM);
         }
 
         // GET: Books/Create
