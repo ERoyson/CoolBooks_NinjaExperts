@@ -6,6 +6,7 @@ namespace CoolBooks_NinjaExperts.Models
     {
         public int Id { get; set; }
         public UserInfo? User { get; set; } // Fk UserId - AspNetUsers
+        public string? UserId { get; set; } //Programmet kraschar utan string = null(?), varför?
         public Books Book { get; set; } // FK BookId
         public int BookId { get; set; }
         public string Title { get; set; }

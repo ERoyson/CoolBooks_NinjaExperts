@@ -46,3 +46,7 @@
 .media-comment {
     margin-top: 20px
 }
+
+.checked {
+    color: orange;
+}
