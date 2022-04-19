@@ -281,6 +281,13 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                 }
             );
         }
+        public static void SeedFlaggedTable(this ModelBuilder builder)
+        {
+            builder.Entity<Flagged>().HasData(
+                new Flagged { Id = 1, IsFlagged = false },
+                new Flagged { Id = 2, IsFlagged = true }
+                );
+        }
 
         public static byte[] ReadFile(string imageFileName) // Get images from filepath
         {
