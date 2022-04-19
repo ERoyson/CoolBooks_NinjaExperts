@@ -288,6 +288,15 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                 new Flagged { Id = 2, IsFlagged = true }
                 );
         }
+        public static void SeedFlaggedReviews(this ModelBuilder builder)
+        {
+            builder.Entity<FlaggedReviews>().HasData(
+                new FlaggedReviews { UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f", FlaggedId = 2, ReviewId = 1 },
+                new FlaggedReviews { UserId = "0cgg7156-dee2-fe6g-4df6-147f5836e357", FlaggedId = 2, ReviewId = 2 },
+                new FlaggedReviews { UserId = "0cgg7156-dee2-fe6g-4df6-147f5836e357", FlaggedId = 2, ReviewId = 3 }
+              
+                );
+        }
 
         public static byte[] ReadFile(string imageFileName) // Get images from filepath
         {
