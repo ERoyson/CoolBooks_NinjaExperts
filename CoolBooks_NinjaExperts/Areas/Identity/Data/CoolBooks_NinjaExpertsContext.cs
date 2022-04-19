@@ -118,5 +118,6 @@ public class CoolBooks_NinjaExpertsContext : IdentityDbContext<UserInfo>
     public DbSet<UserInfo> UserInfo { get; set; }
     public DbSet<Comments> Comments { get; set; }
     public DbSet<Replies> Replies { get; set; }
+    public DbSet<FlaggedReviews> FlaggedReviews { get; set; }   
 }
 
