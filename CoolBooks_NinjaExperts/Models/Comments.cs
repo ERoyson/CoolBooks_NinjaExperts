@@ -12,5 +12,13 @@ namespace CoolBooks_NinjaExperts.Models
         public DateTime Deleted { get; set; }
         public ICollection<CommentLikes> CommentLikes { get; set; }//many to many = list of likes on this Comment
         public ICollection<CommentDislikes> CommentDislikes { get; set; }//many to many = list of likes on this Comment
+
+        public bool? IsFlagged { get; set; }
+        public bool? IsBlocked { get; set; }
+
+        public Comments()
+        {
+            Created = DateTime.Now;
+        }
     }
 }

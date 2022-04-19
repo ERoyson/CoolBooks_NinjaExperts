@@ -8,7 +8,9 @@ namespace CoolBooks_NinjaExperts.Models
         public int Id { get; set; }
 
         public UserInfo? User { get; set; } // Fk UserId - AspNetUser
-        public string? UserId { get; set; } //FK UserID 
+
+        public string? UserId { get; set; } // FK UserId
+
 
         [Required]
         [StringLength(255, ErrorMessage = "The Book-Title must be less than 255 characters")]
@@ -49,8 +51,9 @@ namespace CoolBooks_NinjaExperts.Models
         public List<Genres>? Genres { get; set; } = new List<Genres>(); // many to many relationship
         [Required]
         public List<Authors>? Authors { get; set; } = new List<Authors>(); // many to many relationship
+        public List<Reviews>? Reviews { get; set; } = new List<Reviews>();
 
-      
+
         public Books()
           {
               this.Created = DateTime.Now;
