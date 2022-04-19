@@ -123,6 +123,7 @@ namespace CoolBooks_NinjaExperts.Models
             var userName = User.FindFirstValue(ClaimTypes.Name); // will give the user's userName
 
             var VM = new BookReviewsViewModel();
+            VM.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the logged in user's userId
             VM.FlaggedReviews = _context.FlaggedReviews
                 .Include(x=>x.Review)
                 .Include(x=>x.Flagged)
@@ -135,7 +136,8 @@ namespace CoolBooks_NinjaExperts.Models
             {
             return NotFound();
             }
-
+            
+            //Lägg till fler filtreringsalternativ på reviews, ex. högst poäng, flest gillade review etc.
             VM.Reviews = _context.Reviews
                 .Include(r => r.User)
                 .Include(r => r.Book)
@@ -144,7 +146,8 @@ namespace CoolBooks_NinjaExperts.Models
                 .ThenInclude(b => b.Authors)
                 .Include(r => r.Book)
                 .ThenInclude(b => b.Genres)
-                .Where(r => r.BookId == id).ToList();
+                .Where(r => r.BookId == id)
+                .OrderByDescending(r=>r.Created).ToList();
             if (VM.Reviews == null)
             {
             return NotFound();
@@ -183,7 +186,6 @@ namespace CoolBooks_NinjaExperts.Models
 
          // Add-Genres to book
          foreach (var genre in FormBook.ListGenres)
-
          {
             var bookGenre = new Genres { Id = genre.Genres.Id };
             _context.Genres.Attach(bookGenre);

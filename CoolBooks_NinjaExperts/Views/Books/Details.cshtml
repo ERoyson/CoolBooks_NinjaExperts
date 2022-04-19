@@ -1,4 +1,7 @@
 ﻿@model CoolBooks_NinjaExperts.ViewModels.BookReviewsViewModel
+@*Template: https://www.bootdey.com/snippets/view/bs4-beta-comment-list*@
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" rel="stylesheet"/>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 
 @{
     ViewData["Title"] = "Details";
@@ -81,40 +84,61 @@
 </section>
 
 
-@*---------------------------Comment form---------------------------*@
+@*---------------------------Review form---------------------------*@
 <div class="container">
     <div class="row">
         <div class="bg-white rounded shadow-sm p-4 mb-5 rating-review-select-page col-md-8">
             <h5 class="mb-4">Leave a Review</h5>
-            <p class="mb-2">Rate this book</p>
-            <div class="mb-4">
-            @*<span class="star-rating">
-                <a href="#"><i class="icofont-ui-rating icofont-2x"></i></a>
-                <a href="#"><i class="icofont-ui-rating icofont-2x"></i></a>
-                <a href="#"><i class="icofont-ui-rating icofont-2x"></i></a>
-                <a href="#"><i class="icofont-ui-rating icofont-2x"></i></a>
-                <a href="#"><i class="icofont-ui-rating icofont-2x"></i></a>
-                </span>*@
+            @*<div class="d-flex flex-row">*@
+@*            <p class="mb-2" style="padding-right:10px">Rate this book</p>*@
+            <div class="rating">
+                <span class="rating__result"></span> 
+                <i class="rating__star far fa-star"></i>
+                <i class="rating__star far fa-star"></i>
+                <i class="rating__star far fa-star"></i>
+                <i class="rating__star far fa-star"></i>
+                <i class="rating__star far fa-star"></i>
+            @*</div>*@
             </div>
-            <form>
+
+
+            <div>
+            <form asp-controller="Reviews" asp-action="Create" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Review.UserId" value="@Model.UserId"/>
+                <input type="hidden" asp-for="Review.BookId" value="@Model.Book.Id" />
                 <div class="form-group">
-                    <label>Your Review</label>
-                    <textarea class="form-control"></textarea>
+                    <label asp-for="Review.Rating" class="control-label"></label>
+                    <input asp-for="Review.Rating" class="form-control" />
+                    <span asp-validation-for="Review.Rating" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <button class="btn btn-primary btn-sm" type="button"> Submit Review </button>
+                    <label asp-for="Review.Title" class="control-label"></label>
+                    <input asp-for="Review.Title" class="form-control" />
+                    <span asp-validation-for="Review.Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Review.Text" class="control-label"></label>
+                    <textarea id="desc-area" asp-for="Review.Text" class="form-control row-cols-6" rows="5" cols="75" maxlength="500"></textarea>
+                    <span id="count_message" asp-validation-for="Review.Text" class="text-danger"></span>
+                    <div id="chars-remaining" style="text-align:right; font-weight:bold;">500 characters remaining</div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
                 </div>
             </form>
+            </div>
+
+
         </div>
     </div>
 </div>
 
+<script src="~/js/review-form.js"></script>
+<script src="~/js/chacacter-counter.js"></script>
 
 
 @*------------------------------Reviews------------------------------*@
-@*Template: https://www.bootdey.com/snippets/view/bs4-beta-comment-list*@
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 <div class="container">
     <div class="row">
@@ -126,7 +150,6 @@
                     <img class="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-15" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Image Description">
                     <div class="media-body u-shadow-v18 g-bg-secondary g-pa-30">
                       <div class="g-mb-15">
-                        @*<h5 class="h5 g-color-gray-dark-v1 mb-0">Username: @review.User.UserName</h5>*@
                         <div class="d-flex justify-content-between">
                         <h5 class="h5 g-color-gray-dark-v1 mb-0">@review.Title</h5>
                        @{
