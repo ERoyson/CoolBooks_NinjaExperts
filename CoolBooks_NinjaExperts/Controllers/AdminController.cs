@@ -72,17 +72,24 @@ namespace CoolBooks_NinjaExperts.Controllers
         {
             var VM = new AdminViewModel();
             var oldUserRole = _context.UserRoles.Where(x => x.UserId == User.Id).FirstOrDefault();
-            VM.User = _context.Users.Where(x => x.Id == User.Id).FirstOrDefault();
 
+            VM.User = _context.Users.Where(x => x.Id == User.Id).FirstOrDefault();
+            var currentRole = oldUserRole.RoleId;
             VM.User.FirstName = User.FirstName;
             VM.User.LastName = User.LastName;
             VM.User.UserName = User.UserName;
             VM.User.Email = User.Email;
 
-            if (RoleId != null)
+            if (RoleId == null || RoleId == currentRole)
             {
-                 var newUserRole = new IdentityUserRole<string>(){ UserId = User.Id, RoleId = RoleId};
-                
+                _context.Update(VM.User);
+                _context.SaveChanges();
+            }
+
+            else if (RoleId != null)
+            {
+                var newUserRole = new IdentityUserRole<string>() { UserId = User.Id, RoleId = RoleId };
+
                 try
                 {
                     _context.Update(VM.User);
@@ -105,7 +112,7 @@ namespace CoolBooks_NinjaExperts.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(VM);
-            
+
         }
     }
 }

@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using CoolBooks_NinjaExperts.Data;
 using CoolBooks_NinjaExperts.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 
 namespace CoolBooks_NinjaExperts.Models
@@ -36,10 +37,10 @@ namespace CoolBooks_NinjaExperts.Models
              .Include(b => b.Image)
              .ToList();
 
-         double pagecount = VM.Books.Count(); //Räknar antalet böcker i DB och lagrar det i variabeln pagecount
-         pagecount /= bookOnPage; //Antalet sidor som behövs för att visa alla böcker
-         pagecount = Math.Ceiling(pagecount); //Rundar upp
-         VM.PageCount = (int)pagecount; //Pagecount double => int
+         double pagecount = VM.Books.Count();
+         pagecount /= bookOnPage;
+         pagecount = Math.Ceiling(pagecount);
+         VM.PageCount = (int)pagecount;
          VM.CurrentPage = 0;
          VM.Books = VM.Books.Take(10);
          return View(VM);
@@ -100,41 +101,59 @@ namespace CoolBooks_NinjaExperts.Models
             return RedirectToAction(nameof(Index));
          }
 
-         var query = _context.Books       //Frågar efter Författare, Genre och bild
-             .Include(b => b.Authors)     //Resultatet sparas i variabeln query
+         var query = _context.Books       
+             .Include(b => b.Authors)     
              .Include(b => b.Genres)
              .Include(b => b.Image)
-             .Skip(10 * currentPage)   //Plocka bort de 10/sida som redan visats (sorteras efter Titel)
-             .Take(10);                //Ta de 10 som följer efter "skip"              
+             .Skip(10 * currentPage)   
+             .Take(10);                             
 
-         var VM = new DisplayBooksViewModel();     //Nytt object som vill ha Books, PageCount, CurrentPage
-         VM.Books = query.ToList();       //Value till objectet  
-         VM.PageCount = pageCount;        // ---"---
-         VM.CurrentPage = currentPage;    // ---"---
-         return View("Index", VM);        //Skickar till View
+         var VM = new DisplayBooksViewModel();     
+         VM.Books = query.ToList();       
+         VM.PageCount = pageCount;        
+         VM.CurrentPage = currentPage;    
+         return View("Index", VM);        
       }
-
 
       // GET: Books/Details/5
       //[Authorize(Roles = "Admin, Moderator, User")]
       public async Task<IActionResult> Details(int? id)
       {
-         if (id == null)
-         {
-            return NotFound();
-         }
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the user's userId
+            var userName = User.FindFirstValue(ClaimTypes.Name); // will give the user's userName
 
-         var books = await _context.Books
-             .Include(a => a.Authors)
-             .Include(g => g.Genres)
-             .Include(i => i.Image)
-             .FirstOrDefaultAsync(m => m.Id == id);
-         if (books == null)
-         {
-            return NotFound();
-         }
+            var VM = new BookReviewsViewModel();
+            VM.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the logged in user's userId
+            VM.FlaggedReviews = _context.FlaggedReviews
+                .Include(x=>x.Review)
+                .Include(x=>x.Flagged)
+                .Include(x=>x.User)
+                .Where(x => x.UserId == userId)
+                .ToList();
 
-         return View(books);
+            VM.Book = _context.Books.FirstOrDefault(x => x.Id == id);
+            if (id == null)
+            {
+            return NotFound();
+            }
+            
+            //Lägg till fler filtreringsalternativ på reviews, ex. högst poäng, flest gillade review etc.
+            VM.Reviews = _context.Reviews
+                .Include(r => r.User)
+                .Include(r => r.Book)
+                .ThenInclude(b => b.Image)
+                .Include(r => r.Book)
+                .ThenInclude(b => b.Authors)
+                .Include(r => r.Book)
+                .ThenInclude(b => b.Genres)
+                .Where(r => r.BookId == id)
+                .OrderByDescending(r=>r.Created).ToList();
+            if (VM.Reviews == null)
+            {
+            return NotFound();
+            }
+
+            return View(VM);
       }
 
       // GET: Books/Create
@@ -168,164 +187,11 @@ namespace CoolBooks_NinjaExperts.Models
          // Add-Genres to book
          foreach (var genre in FormBook.ListGenres)
          {
-            if (genre.IsSelected)
-
-    //[Authorize(Roles = "Admin, Moderator, User")]
-    public class BooksController : Controller //Controller start
-    {
-        private readonly CoolBooks_NinjaExpertsContext _context;
-
-        public BooksController(CoolBooks_NinjaExpertsContext context)
-        {
-            _context = context;
-        }
-
-        // [Authorize(Roles = "User, Admin, Mod")]
-        public IActionResult Index(string sortOrder, string searchString)
-        {
-            var VM = new DisplayBooksViewModel();
-
-            VM.Books = _context.Books
-                .Include(b => b.Authors)
-                .Include(b => b.Genres)
-                .Include(b => b.Image)
-                .ToList();
-
-
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.TitleSort = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
-            ViewBag.SerieSort = sortOrder == "Serie" ? "Serie_desc" : "Serie";
-            ViewBag.AuthorSort = sortOrder == "Author" ? "Author_desc" : "Author";
-            ViewBag.GenreSort = sortOrder == "Genre" ? "Genre_desc" : "Genre";
-            ViewBag.RatingSort = sortOrder == "Rating" ? "Rating_desc" : "Rating";
-            ViewBag.CreatedSort = sortOrder == "Created" ? "Created_desc" : "Created";
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                VM.Books =
-                    VM.Books.Where(s => s.Title.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
-                    s.BookSeries.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
-                    s.Authors.All(a => a.FullName.Contains(searchString)) ||
-                    s.Genres.All(a => a.Name.Contains(searchString)));
-            }
-            //if (!string.IsNullOrEmpty(searchString))
-            //{
-            //    var authorResult = _context.Books
-            //        .SelectMany(b => b.Authors)
-            //        .FirstOrDefault(a => a.FullName.Contains(searchString, StringComparison.OrdinalIgnoreCase));
-
-            //    if (!vmTemp.Books.Any() && !authorResult.Books.Any())
-            //    {
-            //        vmTemp.Books = authorResult.Books;
-            //    }
-            //}
-            
-            
-            switch (sortOrder)
-            {
-                case "title_desc":
-                    VM.Books = VM.Books.OrderByDescending(b => b.Title);
-                    break;
-                case "Serie":
-                    VM.Books = VM.Books.OrderBy(b => b.BookSeries);
-                    break;
-                case "Serie_desc":
-                    VM.Books = VM.Books.OrderByDescending(b => b.BookSeries);
-                    break;
-                //case "Author":
-                //    VM.Books = VM.Books.OrderBy(a => a.FullName);
-                //    break;
-                //case "Author_desc":
-                //    VM.Books = VM.Books.OrderByDescending(a => a.FullName);
-                //    break;
-                case "Rating":
-                    VM.Books = VM.Books.OrderBy(r => r.Rating);
-                    break;
-                case "Rating_desc":
-                    VM.Books = VM.Books.OrderByDescending(r => r.Rating);
-                    break;
-                case "Created":
-                    VM.Books = VM.Books.OrderBy(c => c.Created);
-                    break;
-                case "Created_desc":
-                    VM.Books = VM.Books.OrderByDescending(c => c.Created);
-                    break;
-                default:
-                    VM.Books = VM.Books.OrderBy(b => b.Title);
-
-                    break;
-            }
-            return View(VM);
-        }
-
-        // GET: Books/Details/5
-        //[Authorize(Roles = "Admin, Moderator, User")]
-        public async Task<IActionResult> Details(int? id)
-        {
-            var VM = new BookReviewsViewModel();
-            VM.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the logged in user's userId
-            VM.Book = _context.Books.FirstOrDefault(x => x.Id == id);
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            //Lägg till fler filtreringsalternativ på reviews, ex. högst poäng, flest gillade review etc.
-            VM.Reviews = _context.Reviews
-                .Include(r => r.User)
-                .Include(r => r.Book)
-                .ThenInclude(b => b.Image)
-                .Include(r => r.Book)
-                .ThenInclude(b => b.Authors)
-                .Include(r => r.Book)
-                .ThenInclude(b => b.Genres)
-                .Where(r => r.BookId == id)
-                .OrderByDescending(r=>r.Created).ToList();
-            if (VM.Reviews == null)
-            {
-                return NotFound();
-            }
-
-            return View(VM);
-        }
-
-        // GET: Books/Create
-        [Authorize(Roles = "Admin")]
-        public IActionResult Create()
-        {   
-            var book = new CreateBookViewModel();
-            var getDbGenres = _context.Genres.ToList();
-
-            foreach (var item in getDbGenres)
-            {
-                var listGenres = new SelectGenresViewModel();
-                listGenres.Genres = item;
-                listGenres.IsSelected = false;
-                book.ListGenres.Add(listGenres);
-            }
-           
-            return View(book);
-        }
-
-        // POST: Books/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(List<string> Authors, CreateBookViewModel FormBook)
-        {
-            var book = FormBook.Book;
-            
-
-            // Add-Genres to book
-            foreach(var genre in FormBook.ListGenres)
-
-            {
-               var bookGenre = new Genres { Id = genre.Genres.Id };
-               _context.Genres.Attach(bookGenre);
-               book.Genres.Add(bookGenre);
-            }
+            var bookGenre = new Genres { Id = genre.Genres.Id };
+            _context.Genres.Attach(bookGenre);
+            book.Genres.Add(bookGenre);
          }
+
 
          // Add-Authors to book
          foreach (var authors in Authors)
