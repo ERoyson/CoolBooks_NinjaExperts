@@ -159,14 +159,14 @@
                                 <input type="hidden" name="isFlagged" value="false">
                                 <input type="hidden" name="ReviewId" value="@review.Id">
                                 <input type="hidden" name="UserId" value="@Model.UserId">
-                                <button type="submit" class="bi bi-flag btn-danger"><small> | Reported</small></button>
+                                <button type="submit" onclick="reloadPage();" class="bi bi-flag btn-danger"><small> | Reported</small></button>
                             }
                             else
                             {
                                 <input type="hidden" name="isFlagged" value="true">
                                 <input type="hidden" name="ReviewId" value="@review.Id">
                                 <input type="hidden" name="UserId" value="@Model.UserId">
-                                <button type="submit" class="bi bi-flag btn-outline-danger"></button>
+                                <button type="submit" onclick="reloadPage();" class="bi bi-flag btn-outline-danger"></button>
                             }
                         }
                         </form>
@@ -207,3 +207,16 @@
         }
     </div>
 </div>
+
+@*Scroll back to Page-position*@
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function(event) { 
+            var scrollpos = localStorage.getItem('scrollpos');
+            if (scrollpos) window.scrollTo(0, scrollpos);
+        });
+
+        window.onbeforeunload = function(e) {
+            localStorage.setItem('scrollpos', window.scrollY);
+        };
+    </script>

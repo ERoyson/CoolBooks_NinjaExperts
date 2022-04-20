@@ -146,8 +146,22 @@ namespace CoolBooks_NinjaExperts.Models
                 .ThenInclude(b => b.Authors)
                 .Include(r => r.Book)
                 .ThenInclude(b => b.Genres)
-                .Where(r => r.BookId == id)
+                .Where(r => r.BookId == id && r.IsBlocked == null || false) // ???? && r.IsBlocked == null || false ??????
                 .OrderByDescending(r=>r.Created).ToList();
+
+            if(VM.Reviews.Count()<=0)
+            {
+                VM.Reviews = _context.Reviews
+               .Include(r => r.User)
+               .Include(r => r.Book)
+               .ThenInclude(b => b.Image)
+               .Include(r => r.Book)
+               .ThenInclude(b => b.Authors)
+               .Include(r => r.Book)
+               .ThenInclude(b => b.Genres)
+               .Where(r => r.BookId == id)
+               .OrderByDescending(r => r.Created).ToList();
+            }
             if (VM.Reviews == null)
             {
             return NotFound();
