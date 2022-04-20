@@ -20,7 +20,7 @@ namespace CoolBooks_NinjaExperts.Models
         public ICollection<FlaggedReviews>? FlaggedReviews { get; set; } //many to many
 
 
-        public bool? IsFlagged { get; set; }
+        //public bool? IsFlagged { get; set; }
         public bool? IsBlocked { get; set; }
 
         public Reviews()
