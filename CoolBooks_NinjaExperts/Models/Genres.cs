@@ -1,6 +1,6 @@
 ﻿namespace CoolBooks_NinjaExperts.Models
 {
-    public class Genres
+    public class Genres 
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -14,4 +14,5 @@
             Created = DateTime.Now;
         }
     }
+   
 }
