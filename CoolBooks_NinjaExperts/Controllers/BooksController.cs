@@ -119,6 +119,11 @@ namespace CoolBooks_NinjaExperts.Models
       //[Authorize(Roles = "Admin, Moderator, User")]
       public async Task<IActionResult> Details(int? id)
       {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the user's userId
             var userName = User.FindFirstValue(ClaimTypes.Name); // will give the user's userName
 
@@ -131,37 +136,37 @@ namespace CoolBooks_NinjaExperts.Models
                 .Where(x => x.UserId == userId)
                 .ToList();
 
-            VM.Book = _context.Books.FirstOrDefault(x => x.Id == id);
             if (id == null)
             {
-            return NotFound();
+                return NotFound();
             }
-            
+
             //Lägg till fler filtreringsalternativ på reviews, ex. högst poäng, flest gillade review etc.
             VM.Reviews = _context.Reviews
                 .Include(r => r.User)
                 .Include(r => r.Book)
-                .ThenInclude(b => b.Image)
-                .Include(r => r.Book)
-                .ThenInclude(b => b.Authors)
-                .Include(r => r.Book)
-                .ThenInclude(b => b.Genres)
-                .Where(r => r.BookId == id && r.IsBlocked == null || false) // ???? && r.IsBlocked == null || false ??????
+                .Where(r => r.BookId == id && r.IsBlocked == null || false) 
                 .OrderByDescending(r=>r.Created).ToList();
 
-            if(VM.Reviews.Count()<=0)
-            {
-                VM.Reviews = _context.Reviews
-               .Include(r => r.User)
-               .Include(r => r.Book)
-               .ThenInclude(b => b.Image)
-               .Include(r => r.Book)
-               .ThenInclude(b => b.Authors)
-               .Include(r => r.Book)
-               .ThenInclude(b => b.Genres)
-               .Where(r => r.BookId == id)
-               .OrderByDescending(r => r.Created).ToList();
-            }
+            VM.Book = _context.Books
+                .Include(x=>x.Image)
+                .Include(x=>x.Authors)
+                .Include(x=>x.Genres)
+                .FirstOrDefault(x => x.Id == id);
+
+            //if(VM.Reviews.Count() <= 0)
+            //{
+            //    VM.Reviews = _context.Reviews
+            //   .Include(r => r.User)
+            //   .Include(r => r.Book)
+            //   .ThenInclude(b => b.Image)
+            //   .Include(r => r.Book)
+            //   .ThenInclude(b => b.Authors)
+            //   .Include(r => r.Book)
+            //   .ThenInclude(b => b.Genres)
+            //   .Where(r => r.BookId == id)
+            //   .OrderByDescending(r => r.Created).ToList();
+            //}
             if (VM.Reviews == null)
             {
             return NotFound();
