@@ -5,11 +5,13 @@ namespace CoolBooks_NinjaExperts.ViewModels
 {
     public class BookReviewsViewModel
     {
-        public Books Book { get; set; }
-        public UserInfo User { get; set; }
+        public Books? Book { get; set; }
+        public UserInfo? User { get; set; }
         public string UserId { get; set; }
-        public Reviews Review { get; set; }
-        public List<Reviews> Reviews { get; set; } = new List<Reviews>();
+        public Reviews? Review { get; set; }
+        public string ReviewId { get; set; }
+        public Comments Comment { get; set; }
+        public List<Reviews>? Reviews { get; set; } = new List<Reviews>();
 
         public int CurrentPage { get; set; } // for our partial view (pageselector)
         public int PageCount { get; set; } // for our partial view (pageselector)

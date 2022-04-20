@@ -26,25 +26,19 @@ namespace CoolBooks_NinjaExperts.Models
       }
 
       // [Authorize(Roles = "User, Admin, Mod")]
-      public IActionResult Index(string sortOrder, string searchString)
+      public IActionResult Index(string sortOrder, string searchString, string currentFilter)
       {
-         int bookOnPage = 10;
-         var VM = new DisplayBooksViewModel();
 
-         VM.Books = _context.Books
-             .Include(b => b.Authors)
-             .Include(b => b.Genres)
-             .Include(b => b.Image)
-             .ToList();
+            int bookOnPage = 10;
+            var VM = new DisplayBooksViewModel();
 
-         double pagecount = VM.Books.Count();
-         pagecount /= bookOnPage;
-         pagecount = Math.Ceiling(pagecount);
-         VM.PageCount = (int)pagecount;
-         VM.CurrentPage = 0;
-         VM.Books = VM.Books.Take(10);
-         return View(VM);
-
+            VM.Books = _context.Books
+                .Include(b => b.Authors)
+                .Include(b => b.Genres)
+                .ThenInclude(g => g.Books)
+                .ThenInclude(bg => bg.Genres)
+                .Include(b => b.Image)
+                .ToList();
 
          ViewBag.CurrentSort = sortOrder;
          ViewBag.TitleSort = String.IsNullOrEmpty(sortOrder) ? "title_desc" : "";
@@ -54,24 +48,38 @@ namespace CoolBooks_NinjaExperts.Models
          ViewBag.RatingSort = sortOrder == "Rating" ? "Rating_desc" : "Rating";
          ViewBag.CreatedSort = sortOrder == "Created" ? "Created_desc" : "Created";
 
-         if (!String.IsNullOrEmpty(searchString))
-         {
+            if(searchString == null)
+            {
+                searchString = currentFilter;
+            }
+            ViewBag.CurrentFilter = searchString;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
             VM.Books =
                 VM.Books.Where(s => s.Title.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
                 s.BookSeries.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
-                s.Authors.All(a => a.FullName.Contains(searchString)) ||
-                s.Genres.All(a => a.Name.Contains(searchString)));
-         }
+                s.Authors.Any(a => a.FullName.Contains(searchString, StringComparison.OrdinalIgnoreCase)) ||
+                s.Genres.Any(a => a.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)));
+            }
 
-         switch (sortOrder)
+
+            double pagecount = VM.Books.Count();
+            pagecount /= bookOnPage;
+            pagecount = Math.Ceiling(pagecount);
+            VM.PageCount = (int)pagecount;
+            VM.CurrentPage = 0;
+            VM.Books = VM.Books.Take(10);
+
+            switch (sortOrder)
          {
             case "title_desc":
                VM.Books = VM.Books.OrderByDescending(b => b.Title);
                break;
-            case "Serie":
+            case "Author":
                VM.Books = VM.Books.OrderBy(b => b.BookSeries);
                break;
-            case "Serie_desc":
+            case "Author_desc":
                VM.Books = VM.Books.OrderByDescending(b => b.BookSeries);
                break;
             case "Rating":
@@ -80,6 +88,12 @@ namespace CoolBooks_NinjaExperts.Models
             case "Rating_desc":
                VM.Books = VM.Books.OrderByDescending(r => r.Rating);
                break;
+            //case "Genre":
+            //    VM.Books = VM.Books.OrderBy(c => c.Genres);
+            //    break;
+            //case "Genre_desc":
+            //    VM.Books = VM.Books.OrderByDescending(c => c.Genres);
+                break;
             case "Created":
                VM.Books = VM.Books.OrderBy(c => c.Created);
                break;
@@ -119,6 +133,11 @@ namespace CoolBooks_NinjaExperts.Models
       //[Authorize(Roles = "Admin, Moderator, User")]
       public async Task<IActionResult> Details(int? id)
       {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the user's userId
             var userName = User.FindFirstValue(ClaimTypes.Name); // will give the user's userName
 
@@ -131,23 +150,24 @@ namespace CoolBooks_NinjaExperts.Models
                 .Where(x => x.UserId == userId)
                 .ToList();
 
-            VM.Book = _context.Books.FirstOrDefault(x => x.Id == id);
             if (id == null)
             {
-            return NotFound();
+                return NotFound();
             }
-            
+
             //Lägg till fler filtreringsalternativ på reviews, ex. högst poäng, flest gillade review etc.
             VM.Reviews = _context.Reviews
                 .Include(r => r.User)
                 .Include(r => r.Book)
-                .ThenInclude(b => b.Image)
-                .Include(r => r.Book)
-                .ThenInclude(b => b.Authors)
-                .Include(r => r.Book)
-                .ThenInclude(b => b.Genres)
-                .Where(r => r.BookId == id)
+                .Where(r => r.BookId == id && r.IsBlocked == null || false) 
                 .OrderByDescending(r=>r.Created).ToList();
+
+            VM.Book = _context.Books
+                .Include(x=>x.Image)
+                .Include(x=>x.Authors)
+                .Include(x=>x.Genres)
+                .FirstOrDefault(x => x.Id == id);
+
             if (VM.Reviews == null)
             {
             return NotFound();
