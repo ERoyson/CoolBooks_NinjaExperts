@@ -19,8 +19,6 @@ namespace CoolBooks_NinjaExperts.Models
         public ICollection<ReviewDislikes>? ReviewDislikes { get; set; }//many to many = list of likes on this review
         public ICollection<FlaggedReviews>? FlaggedReviews { get; set; } //many to many
 
-
-        //public bool? IsFlagged { get; set; }
         public bool? IsBlocked { get; set; }
 
         public Reviews()

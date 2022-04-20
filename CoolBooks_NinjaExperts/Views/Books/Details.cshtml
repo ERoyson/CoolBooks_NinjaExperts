@@ -15,7 +15,6 @@
 @inject SignInManager<UserInfo> SignInManager
 @inject UserManager<UserInfo> UserManager
 
-<h1>Details</h1>
 
 <div>
     @if (SignInManager.IsSignedIn(User))
@@ -164,18 +163,24 @@
                       <div class="g-mb-15">
                         <div class="d-flex justify-content-between">
                         <h5 class="h5 g-color-gray-dark-v1 mb-0">@review.Title</h5>
-                       @{
-                            
-                            if(@Model.FlaggedReviews.Where(x=>x.ReviewId == review.Id).Count() > 0)
+                        <form asp-controller="Flagged" asp-action="FlagReview">
+                        @{
+                            if(@Model.FlaggedReviews.Where(x=>x.ReviewId == review.Id && x.FlaggedId == 2).Count() > 0)
                             {
-                                <button class="bi bi-flag btn-danger"><small> | Reported</small></button>
+                                <input type="hidden" name="isFlagged" value="false">
+                                <input type="hidden" name="ReviewId" value="@review.Id">
+                                <input type="hidden" name="UserId" value="@Model.UserId">
+                                <button type="submit" onclick="reloadPage();" class="bi bi-flag btn-danger"><small> | Reported</small></button>
                             }
                             else
                             {
-                                <button class="bi bi-flag btn-outline-danger"></button>
+                                <input type="hidden" name="isFlagged" value="true">
+                                <input type="hidden" name="ReviewId" value="@review.Id">
+                                <input type="hidden" name="UserId" value="@Model.UserId">
+                                <button type="submit" onclick="reloadPage();" class="bi bi-flag btn-outline-danger"></button>
                             }
-                            
                         }
+                        </form>
                        
                         </div>
                         <span class="fa fa-star checked"></span>
@@ -265,3 +270,17 @@
 </div>
 }
         
+
+@*Scroll back to Page-position*@
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function(event) { 
+            var scrollpos = localStorage.getItem('scrollpos');
+            if (scrollpos) window.scrollTo(0, scrollpos);
+        });
+
+        window.onbeforeunload = function(e) {
+            localStorage.setItem('scrollpos', window.scrollY);
+        };
+    </script>
+
