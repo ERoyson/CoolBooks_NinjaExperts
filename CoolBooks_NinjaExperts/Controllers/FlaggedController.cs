@@ -32,8 +32,13 @@ namespace CoolBooks_NinjaExperts.Controllers
 
             var IsFlagged = _context.Flagged.Where(x => x.IsFlagged == isFlagged).Select(x => x.Id).FirstOrDefault();
             var book = _context.Books.Where(x => x.Reviews.Any(y => y.Id == reviewId)).FirstOrDefault();
+
             if (oldflaggedreview != null) // update existing flagged - flag / unflag
             {
+                if (oldflaggedreview.FlaggedId == IsFlagged)
+                {
+                    return RedirectToAction("Details", "Books", book);
+                }
                 newFlaggedReview.ReviewId = reviewId;
                 newFlaggedReview.UserId = userId;
                 newFlaggedReview.FlaggedId = IsFlagged;
