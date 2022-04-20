@@ -90,16 +90,15 @@
             <h5 class="mb-4">Leave a Review</h5>
             @*<div class="d-flex flex-row">*@
 @*            <p class="mb-2" style="padding-right:10px">Rate this book</p>*@
-            <div class="rating">
+@*            <div class="rating">
                 <span class="rating__result"></span> 
-                <i class="rating__star far fa-star"></i>
-                <i class="rating__star far fa-star"></i>
-                <i class="rating__star far fa-star"></i>
-                <i class="rating__star far fa-star"></i>
-                <i class="rating__star far fa-star"></i>
+                <i class="rating__star far fa-star" value="1"></i>
+                <i class="rating__star far fa-star" value="2"></i>
+                <i class="rating__star far fa-star" value="3"></i>
+                <i class="rating__star far fa-star" value="4"></i>
+                <i class="rating__star far fa-star" value="5"></i>
+            </div>*@
             @*</div>*@
-            </div>
-
 
             <div>
             <form asp-controller="Reviews" asp-action="Create" method="post">
@@ -107,9 +106,23 @@
                 <input type="hidden" asp-for="Review.UserId" value="@Model.UserId"/>
                 <input type="hidden" asp-for="Review.BookId" value="@Model.Book.Id" />
                 <div class="form-group">
-                    <label asp-for="Review.Rating" class="control-label"></label>
-                    <input asp-for="Review.Rating" class="form-control" />
-                    <span asp-validation-for="Review.Rating" class="text-danger"></span>
+                    <fieldset>
+                        <span class="star-cb-group">
+                            <input type="radio" id="rating-5" name="bookRating" value="5" />
+                            <label for="rating-5">5</label>
+                            <input type="radio" id="rating-4" name="bookRating" value="4" />
+                            <label for="rating-4">4</label>
+                            <input type="radio" id="rating-3" name="bookRating" value="3" checked="checked"/>
+                            <label for="rating-3">3</label>
+                            <input type="radio" id="rating-2" name="bookRating" value="2" />
+                            <label for="rating-2">2</label>
+                            <input type="radio" id="rating-1" name="bookRating" value="1" />
+                            <label for="rating-1">1</label>
+                        </span>
+                    </fieldset>
+                    @*<label asp-for="Review.Rating" class="control-label"></label>*@
+                    @*<input type="hidden" asp-for="Review.Rating" class="form-control" />*@
+                    @*<span asp-validation-for="Review.Rating" class="text-danger"></span>*@
                 </div>
                 <div class="form-group">
                     <label asp-for="Review.Title" class="control-label"></label>
@@ -133,8 +146,7 @@
     </div>
 </div>
 
-<script src="~/js/review-form.js"></script>
-<script src="~/js/chacacter-counter.js"></script>
+
 
 
 @*------------------------------Reviews------------------------------*@
@@ -193,12 +205,16 @@
                             34
                           </a>
                         </li>
-                        <li class="list-inline-item ml-auto">
-                          <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!">
-                            <i class="fa fa-reply g-pos-rel g-top-1 g-mr-3"></i>
-                            Reply
-                          </a>
-                        </li>
+                        <form>
+                            <li class="list-inline-item ml-auto">
+                            <input type="hidden" name="currentReviewId" value="@review.Id" />
+                              <label for="currentReviewId" class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" onclick="myFunction()" id="changeCursor">
+                                <i class="fa fa-reply g-pos-rel g-top-1 g-mr-3"></i>
+                                Comment
+                              </label>
+                            </li>
+                             @*<partial name="_CommentForm"/> *@
+                        </form>
                       </ul>
                     </div>
                 </div>
@@ -206,6 +222,54 @@
         }
     </div>
 </div>
+
+<script>
+    //function myFunction()
+    //{
+    //  document.getElementById("hidden").style.display = "block";
+    //}
+    function myFunction() {
+      var x = document.getElementById("hidden");
+      if (x.style.display === "block") {
+        x.style.display = "none";
+      } else {
+        x.style.display = "block";
+      }
+}
+</script>
+
+
+@*----------------------------------------Comment Form-----------------------------------------*@
+@foreach (var review in Model.Reviews) 
+{
+<div id="hidden" class="container">
+    <div class="row">
+        <div class="bg-white rounded shadow-sm p-4 mb-5 rating-review-select-page col-md-8">
+            <h5 class="mb-4">Leave a Comment</h5>
+
+            <div>
+            <form asp-controller="Comments" asp-action="Create" method="post">
+                <input type="hidden" asp-for="Comment.UserId" value="@Model.UserId"/>
+                <input type="hidden" asp-for="Comment.ReviewsId" value="@review.Id"/>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Comment.Comment" class="control-label"></label>
+                    <textarea id="desc-area" placeholder="Review: @review.Title" asp-for="Comment.Comment" class="form-control row-cols-6" rows="5" cols="75" maxlength="500"></textarea>
+                    <span id="count_message" asp-validation-for="Comment.Comment" class="text-danger"></span>
+                    <div id="chars-remaining" style="text-align:right; font-weight:bold;">500 characters remaining</div>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+}
+        
 
 @*Scroll back to Page-position*@
 
@@ -219,3 +283,4 @@
             localStorage.setItem('scrollpos', window.scrollY);
         };
     </script>
+
