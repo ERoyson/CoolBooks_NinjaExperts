@@ -20,14 +20,13 @@ public class UserInfo : IdentityUser
         this.Created = DateTime.Now;
     }
 
-    //public List<ReviewLikes> Likes { get; set; } = new List<ReviewLikes>(); //many to many = list of likes on this review
-    //public List<ReviewDislikes> Dislikes { get; set; } = new List<ReviewDislikes>(); //many to many = list of dislikes on this review
+    
     public virtual ICollection<ReviewLikes> ReviewLikes { get; set; }
     public virtual ICollection<ReviewDislikes> ReviewDislikes { get; set; }
     public virtual ICollection<CommentLikes> CommentLikes { get; set; }
     public virtual ICollection<CommentDislikes> CommentDislikes { get; set; }
     public virtual ICollection<ReplyLikes> ReplyLikes { get; set; }
     public virtual ICollection<ReplyDislikes> ReplyDislikes { get; set; }
-    //public virtual IdentityUserRole<string> UserRole { get; set; }
+    public virtual ICollection<FlaggedReviews> FlaggedReviews { get; set; }
 }
 
