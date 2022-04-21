@@ -59,6 +59,7 @@ namespace CoolBooks_NinjaExperts.Models
             VM.Books =
                 VM.Books.Where(s => s.Title.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
                 s.BookSeries.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+                s.Description.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
                 s.Authors.Any(a => a.FullName.Contains(searchString, StringComparison.OrdinalIgnoreCase)) ||
                 s.Genres.Any(a => a.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)));
             }
@@ -207,9 +208,12 @@ namespace CoolBooks_NinjaExperts.Models
          // Add-Genres to book
          foreach (var genre in FormBook.ListGenres)
          {
-            var bookGenre = new Genres { Id = genre.Genres.Id };
-            _context.Genres.Attach(bookGenre);
-            book.Genres.Add(bookGenre);
+            if(genre.IsSelected == true)
+                {
+                    var bookGenre = new Genres { Id = genre.Genres.Id };
+                    _context.Genres.Attach(bookGenre);
+                    book.Genres.Add(bookGenre);
+                }
          }
 
 
