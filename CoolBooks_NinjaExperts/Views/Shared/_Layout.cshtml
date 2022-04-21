@@ -69,10 +69,10 @@
 </nav>
 
     <!--Search-->
-             <form class="bg-light" id="showhideForm" asp-controller="Books" asp-action="Index" method="post">
+             <form class="bg-light" id="showhideForm" asp-controller="Books" asp-action="Index" method="get">
             @using (Html.BeginForm())
                 {    
-                    <p> Search Title/Author:<br> @Html.TextBox("SearchString")   
+                    <p> Search Title/Author/Genre:<br> @Html.TextBox("SearchString")   
                     <input type="submit" value="Search" /></p> 
                 } 
             </form>
