@@ -49,13 +49,16 @@ namespace CoolBooks_NinjaExperts.Controllers
         }
 
         // GET: CommentsController1/Create
-        public IActionResult Create()
+        public IActionResult Create(int review)
         {
-            ViewData["UserId"] = new SelectList(_context.UserInfo, "Id", "Id");
-            return View();
+            var VM = new BookReviewsViewModel(); //ViewModel-object
+            VM.Review = _context.Reviews.Where(r => r.Id == review).FirstOrDefault();
+            //ViewData["UserId"] = new SelectList(_context.UserInfo, "Id", "Id");
+            return RedirectToAction("LoadPartialView",VM);
         }
 
-
+        //Hämta reviewlista
+        //Ladda nuvarande review med en kommentar
 
 
         // POST: CommentsController1/Create
@@ -65,11 +68,12 @@ namespace CoolBooks_NinjaExperts.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(int currentReviewId, [Bind("Id,UserId,ReviewsId,Comment,Created")] Comments comment)
         {
+            //Add(new Comments { Comment = "" });
             if (ModelState.IsValid)
             {
                 _context.Add(comment);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("LoadPartialView", comment);
             }
             //ViewData["UserId"] = new SelectList(_context.UserInfo, "Id", "Id", comment.UserId);
             return View(comment);
@@ -163,9 +167,9 @@ namespace CoolBooks_NinjaExperts.Controllers
             return _context.Comments.Any(e => e.Id == id);
         }
 
-        public ActionResult LoadPartialView()
+        public ActionResult LoadPartialView(BookReviewsViewModel VM)
         {
-            return PartialView("_CommentForm", new Comments());
+            return PartialView("_CommentForm", VM);
         }
     }
 }

@@ -9,6 +9,7 @@ namespace CoolBooks_NinjaExperts.Models
         public string? UserId { get; set; } // FK UserId
         public Reviews? Reviews { get; set; } // FK
         public int ReviewsId { get; set; } // FK ReviewId
+        public List<Replies> Replies { get; set; } = new List<Replies>();
         public string Comment { get; set; }
         public DateTime Created { get; set; }
         public DateTime? Deleted { get; set; }

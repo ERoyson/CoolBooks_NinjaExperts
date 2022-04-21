@@ -9,6 +9,7 @@ namespace CoolBooks_NinjaExperts.Models
         public string? UserId { get; set; } // FK UserId
         public Books? Book { get; set; } // FK BookId
         public int BookId { get; set; }
+        public List<Comments> Comments { get; set; } = new List<Comments>();
         public string Title { get; set; }
         public string Text { get; set; }
         public double Rating { get; set; } // Give the book a rating

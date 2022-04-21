@@ -205,16 +205,17 @@
                             34
                           </a>
                         </li>
-                        <form>
+                        @*<form>*@
                             <li class="list-inline-item ml-auto">
-                            <input type="hidden" name="currentReviewId" value="@review.Id" />
-                              <label for="currentReviewId" class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" onclick="myFunction()" id="changeCursor">
-                                <i class="fa fa-reply g-pos-rel g-top-1 g-mr-3"></i>
-                                Comment
-                              </label>
+                                <input type="hidden" name="currentReviewId" value="@review.Id" />
+                                  <label for="currentReviewId" class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" onclick="myFunction()" id="changeCursor">
+                                      <a>hej</a>
+                                    @*<i class="fa fa-reply g-pos-rel g-top-1 g-mr-3"></i>*@
+                                    @*@Html.ActionLink("Comment", "Create", "Comments", new { review = @review.Id})*@
+                                  </label>
+                             <partial name="_CommentForm"/> 
                             </li>
-                             @*<partial name="_CommentForm"/> *@
-                        </form>
+                        @*</form>*@
                       </ul>
                     </div>
                 </div>
@@ -240,7 +241,7 @@
 
 
 @*----------------------------------------Comment Form-----------------------------------------*@
-@foreach (var review in Model.Reviews) 
+@*@foreach (var review in Model.Reviews) 
 {
 <div id="hidden" class="container">
     <div class="row">
@@ -268,7 +269,7 @@
         </div>
     </div>
 </div>
-}
+}*@
         
 
 @*Scroll back to Page-position*@
@@ -284,3 +285,16 @@
         };
     </script>
 
+<script>
+//Books/Create - Description character counter
+//const descArea = document.getElementById('desc-area');
+//const charsRemaining = document.getElementById('chars-remaining');
+//const MAX_CHARS = 500;
+//descArea.addEventListener('input', () =>
+//{
+//    const remaining = MAX_CHARS - descArea.value.length;
+//    const color = remaining < MAX_CHARS * 0.1 ? 'red' : null;
+//    charsRemaining.textContent = remaining + ' characters remaining';
+//    charsRemaining.style.color = color;
+//})
+</script>
