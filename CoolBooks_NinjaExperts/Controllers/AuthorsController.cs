@@ -28,7 +28,10 @@ namespace CoolBooks_NinjaExperts.Models
             ViewBag.CurrentSort = sortOrder;
             ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
 
-            var authors = _context.Authors.Include(a => a.Image).Include(a => a.Books).ToList();
+            var authors = _context.Authors
+                .Include(a => a.Image)
+                .Include(a => a.Books)
+                .ToList();
 
             switch (sortOrder)
             {

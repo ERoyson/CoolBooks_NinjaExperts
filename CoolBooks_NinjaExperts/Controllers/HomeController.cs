@@ -36,7 +36,7 @@ namespace CoolBooks_NinjaExperts.Controllers
             VM.PageCount = (int)pagecount;
 
             Random random = new Random();
-            int rndmBook = random.Next(1,VM.Books.Count()+1);
+            int rndmBook = random.Next(1,VM.Books.Count());
 
             VM.RandomBooks = VM.Books.Where(b => b.Id == rndmBook).ToList();
             VM.CurrentPage = 0;

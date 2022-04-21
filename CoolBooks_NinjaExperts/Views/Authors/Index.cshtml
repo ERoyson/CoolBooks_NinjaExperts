@@ -22,7 +22,7 @@
     <thead>
         <tr>
             <th>
-                @Html.ActionLink("Title", "Index", new { sortOrder = ViewBag.NameSort })
+                @Html.ActionLink("Name", "Index", new {sortOrder = ViewBag.NameSort}, new{  @class="text-dark", @style="text-decoration:none;"})
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Image)
@@ -46,9 +46,13 @@
             </td>
             
             <td>
-                @{
-                    var baseThumb = Convert.ToBase64String(author.Image.Thumbnail);
-                    var imgsrc2 = string.Format("data:image/thumbnail;base64,{0}", baseThumb);
+                    @{
+                        string imgsrc2 = "";
+                        @if(author.Image != null)
+                        {
+                            var baseThumb = Convert.ToBase64String(author.Image.Thumbnail);
+                            imgsrc2 = string.Format("data:image/thumbnail;base64,{0}", baseThumb);
+                        }
                 }
                 <img src="@imgsrc2">
             </td>
