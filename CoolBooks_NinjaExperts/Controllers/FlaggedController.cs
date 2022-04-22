@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using CoolBooks_NinjaExperts.Areas.Identity.Data;
 using CoolBooks_NinjaExperts.Models;
+using System.Security.Claims;
 
 namespace CoolBooks_NinjaExperts.Controllers
 {
@@ -25,10 +26,11 @@ namespace CoolBooks_NinjaExperts.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> FlagReview(string userId, int reviewId, bool? isFlagged)
+        public async Task<IActionResult> FlagReview(int reviewId, bool? isFlagged)
         {
-            var oldflaggedreview = _context.FlaggedReviews.Where(x => x.ReviewId == reviewId && x.UserId == userId).FirstOrDefault();
             var newFlaggedReview = new FlaggedReviews();
+            newFlaggedReview.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var oldflaggedreview = _context.FlaggedReviews.Where(x => x.ReviewId == reviewId && x.UserId == newFlaggedReview.UserId).FirstOrDefault();
 
             var IsFlagged = _context.Flagged.Where(x => x.IsFlagged == isFlagged).Select(x => x.Id).FirstOrDefault();
             var book = _context.Books.Where(x => x.Reviews.Any(y => y.Id == reviewId)).FirstOrDefault();
@@ -40,19 +42,17 @@ namespace CoolBooks_NinjaExperts.Controllers
                     return RedirectToAction("Details", "Books", book);
                 }
                 newFlaggedReview.ReviewId = reviewId;
-                newFlaggedReview.UserId = userId;
                 newFlaggedReview.FlaggedId = IsFlagged;
 
                 _context.Remove(oldflaggedreview);
                 _context.Add(newFlaggedReview);
                 _context.SaveChanges();
 
-                return RedirectToAction("Details","Books", book);
+                return RedirectToAction("Details", "Books", book);
             }
 
             // new flag
             newFlaggedReview.ReviewId = reviewId;
-            newFlaggedReview.UserId = userId;
             newFlaggedReview.FlaggedId = IsFlagged;
 
             _context.Add(newFlaggedReview);
