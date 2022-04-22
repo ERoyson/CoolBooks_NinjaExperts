@@ -15,7 +15,6 @@
 @inject SignInManager<UserInfo> SignInManager
 @inject UserManager<UserInfo> UserManager
 
-
 <div>
     @if (SignInManager.IsSignedIn(User))
     {
@@ -153,9 +152,12 @@
 
 <div class="container">
     <div class="row">
+        @{
+            int f = 0; /*Index for different forms/partialViews*/
+        }
         @foreach (var review in Model.Reviews) 
         {
-            
+            f++;
             <div class="col-md-8">
                 <div class="media g-mb-30 media-comment">
                     <img class="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-15" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Image Description">
@@ -205,17 +207,36 @@
                             34
                           </a>
                         </li>
-                        @*<form>*@
+                        <script type="text/javascript">
+                                $(function () {
+                                    $('.comments_@f').click(function () {
+                                        var $buttonClicked = $(this);
+                                        var id = $buttonClicked.attr('data');
+
+                                        $.ajax({
+                                            url: '@Url.Action("Create", "Comments", new { review = review.Id })',
+                                            type: 'GET',
+                                            data: { id: id },
+                                            success: function (partialView) {
+                                                $('#_CommentForm_@f').html(partialView);
+                                                $('#_CommentForm_@f').show();
+                                            }
+                                        });
+                                    });
+                                });
+                            </script>
                             <li class="list-inline-item ml-auto">
-                                <input type="hidden" name="currentReviewId" value="@review.Id" />
-                                  <label for="currentReviewId" class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" onclick="myFunction()" id="changeCursor">
-                                      <a>hej</a>
-                                    @*<i class="fa fa-reply g-pos-rel g-top-1 g-mr-3"></i>*@
-                                    @*@Html.ActionLink("Comment", "Create", "Comments", new { review = @review.Id})*@
-                                  </label>
-                             <partial name="_CommentForm"/> 
+                                <i class="fa fa-reply g-pos-rel g-top-1 g-mr-3">
+                                 <a id="changeCursor" class="comments_@f text-dark" style="text-decoration:none;" data="@review.Id">Comment</a>
+                                 </i>
+                                 
+                                <div id="_CommentForm_@f" style="display:none">
+                                   
+                                </div>
+                                @*Visa lista av kommentarer här typ...*@
+                                  
                             </li>
-                        @*</form>*@
+                        
                       </ul>
                     </div>
                 </div>
@@ -239,6 +260,17 @@
 }
 </script>
 
+
+
+
+
+
+@*<script type="text/javascript">
+
+    function loadPartialView() {
+        $("#partialDiv").load('@Url.Action("Create","Comments")');
+    }
+</script>*@
 
 @*----------------------------------------Comment Form-----------------------------------------*@
 @*@foreach (var review in Model.Reviews) 
