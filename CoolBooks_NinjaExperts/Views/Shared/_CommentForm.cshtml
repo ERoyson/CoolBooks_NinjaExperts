@@ -33,7 +33,12 @@
 }
 else
 {
-    <p>Endast inloggade har behörighet att kommentera</p>
+   <p>
+        <a class="text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        or
+        <a class="text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        to write a comment
+   </p>
 }
 
 @*Books/Details - Comment character counter*@

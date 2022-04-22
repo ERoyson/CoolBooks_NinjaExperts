@@ -154,55 +154,83 @@
                       <div class="g-mb-15">
                         <div class="d-flex justify-content-between">
                         <h5 class="h5 g-color-gray-dark-v1 mb-0">@review.Title</h5>
-                        <form asp-controller="Flagged" asp-action="FlagReview">
                         @{
                             if(@Model.FlaggedReviews.Where(x=>x.ReviewId == review.Id && x.FlaggedId == 2).Count() > 0)
                             {
-                                <input type="hidden" name="isFlagged" value="false">
-                                <input type="hidden" name="ReviewId" value="@review.Id">
-                                <input type="hidden" name="UserId" value="@Model.UserId">
-                                <button type="submit" onclick="reloadPage();" class="bi bi-flag btn-danger"><small> | Reported</small></button>
+                                    @Html.ActionLink("", "FlagReview","Flagged", 
+                                        new{  isFlagged = false, reviewId=review.Id }, // values
+                                        new{  @class="bi bi-flag", @style="color:Red;"}); // style
                             }
                             else
                             {
-                                <input type="hidden" name="isFlagged" value="true">
-                                <input type="hidden" name="ReviewId" value="@review.Id">
-                                <input type="hidden" name="UserId" value="@Model.UserId">
-                                <button type="submit" onclick="reloadPage();" class="bi bi-flag btn-outline-danger"></button>
+                                @Html.ActionLink("", "FlagReview","Flagged", 
+                                        new{  isFlagged = true, reviewId=review.Id }, // values
+                                        new{  @class="bi bi-flag", @style="color:grey;"}); // style
                             }
                         }
-                        </form>
-                       
                         </div>
-                            @for (var i = 1; i <= 5; i++)
-                            {
-                                if (review.Rating >= i)
-                                {
-                                    <span class="fa fa-star checked"></span>
-                                }
-                                else
-                                {
-                                    <span class="fa fa-star"></span>
-                                }
-                            }
-
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star checked"></span>
+                        <span class="fa fa-star"></span>
+                        <span class="fa fa-star"></span>
                       </div>
                       <p style="margin-top:1rem;">@review.Text </p>
                         <span class="g-color-gray-dark-v4 g-font-size-12">Created by: @review.User.UserName | @review.Created</span>
         
+                        @*REVIEW LIKES AND DISLIKES*@
                       <ul class="list-inline d-sm-flex my-0">
                         <li class="list-inline-item g-mr-20">
-                          <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!">
-                            <i class="fa fa-thumbs-up g-pos-rel g-top-1 g-mr-3"></i>
-                            178
+                          <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!"> @*list of users who liked?*@
+                            @{
+                                if(@review.ReviewLikes.Where(x=>x.ReviewId == review.Id && x.UserId == @Model.UserId).Count() > 0)
+                                {
+                                      
+                                    @Html.ActionLink("", "LikeReviews","ManageContent", 
+                                        new{ userId = @Model.UserId, check = false, reviewId=review.Id }, // values
+                                        new{  @class="fa fa-thumbs-up g-pos-rel g-top-1 g-mr-3", @style="color:green;"}); // style
+                                        
+                                }
+                                else
+                                {
+                                    @Html.ActionLink("", "LikeReviews","ManageContent", 
+                                        new{  check = true, reviewId=review.Id}, // values
+                                        new{  @class="fa fa-thumbs-up g-pos-rel g-top-1 g-mr-3", @style="color:grey;"}); // style
+                                }
+                                @if(review.ReviewLikes.Where(x=>x.ReviewId == review.Id).Count()>0)
+                                    @review.ReviewLikes.Where(x=>x.ReviewId == review.Id).Count(); // Total Likes on this review
+                            }
+                            
                           </a>
+
+
                         </li>
                         <li class="list-inline-item g-mr-20">
                           <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!">
-                            <i class="fa fa-thumbs-down g-pos-rel g-top-1 g-mr-3"></i>
-                            34
+                            @{
+                                if(@review.ReviewDislikes.Where(x=>x.ReviewId == review.Id && x.UserId == @Model.UserId).Count() > 0)
+                                {
+                                      
+                                    @Html.ActionLink("", "DislikeReviews","ManageContent", 
+                                        new{ check = false, reviewId=review.Id }, // values
+                                        new{ @class="fa fa-thumbs-down g-pos-rel g-top-1 g-mr-3", @style="color:red;"}); // style
+                                        
+                                }
+                                else
+                                {
+                                    @Html.ActionLink("", "DislikeReviews","ManageContent", 
+                                        new{ userId = @Model.UserId, check = true, reviewId=review.Id}, // values
+                                        new{  @class="fa fa-thumbs-down g-pos-rel g-top-1 g-mr-3", @style="color:grey;"}); // style
+                                }
+                                @if(review.ReviewDislikes.Where(x=>x.ReviewId == review.Id).Count()>0)
+                                    @review.ReviewDislikes.Where(x=>x.ReviewId == review.Id).Count(); // Total Likes on this review
+                            }
                           </a>
                         </li>
+                          
+                   
+
+
                         <script type="text/javascript">
                                 $(function () {
                                     $('.comments_@f').click(function () {
@@ -221,7 +249,6 @@
                                     });
                                 });
                             </script>
-
                             <li class="list-inline-item ml-auto">
                                 <i class="fa fa-reply g-pos-rel g-top-1 g-mr-3">
                                  <a id="changeCursor" class="comments_@f text-dark" style="text-decoration:none;" data="@review.Id">Comment</a>
@@ -267,6 +294,7 @@
                                     }
                                 </details>
                             </li>
+                        
                       </ul>
                     </div>
                 </div>
