@@ -15,7 +15,6 @@
 @inject SignInManager<UserInfo> SignInManager
 @inject UserManager<UserInfo> UserManager
 
-
 <div>
     @if (SignInManager.IsSignedIn(User))
     {
@@ -88,17 +87,6 @@
     <div class="row">
         <div class="bg-white rounded shadow-sm p-4 mb-5 rating-review-select-page col-md-8">
             <h5 class="mb-4">Leave a Review</h5>
-            @*<div class="d-flex flex-row">*@
-@*            <p class="mb-2" style="padding-right:10px">Rate this book</p>*@
-@*            <div class="rating">
-                <span class="rating__result"></span> 
-                <i class="rating__star far fa-star" value="1"></i>
-                <i class="rating__star far fa-star" value="2"></i>
-                <i class="rating__star far fa-star" value="3"></i>
-                <i class="rating__star far fa-star" value="4"></i>
-                <i class="rating__star far fa-star" value="5"></i>
-            </div>*@
-            @*</div>*@
 
             <div>
             <form asp-controller="Reviews" asp-action="Create" method="post">
@@ -153,9 +141,12 @@
 
 <div class="container">
     <div class="row">
+        @{
+            int f = 0; /*Index for different forms/partialViews*/
+        }
         @foreach (var review in Model.Reviews) 
         {
-            
+            f++;
             <div class="col-md-8">
                 <div class="media g-mb-30 media-comment">
                     <img class="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-15" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Image Description">
@@ -183,11 +174,18 @@
                         </form>
                        
                         </div>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
+                            @for (var i = 1; i <= 5; i++)
+                            {
+                                if (review.Rating >= i)
+                                {
+                                    <span class="fa fa-star checked"></span>
+                                }
+                                else
+                                {
+                                    <span class="fa fa-star"></span>
+                                }
+                            }
+
                       </div>
                       <p style="margin-top:1rem;">@review.Text </p>
                         <span class="g-color-gray-dark-v4 g-font-size-12">Created by: @review.User.UserName | @review.Created</span>
@@ -205,17 +203,36 @@
                             34
                           </a>
                         </li>
-                        @*<form>*@
+                        <script type="text/javascript">
+                                $(function () {
+                                    $('.comments_@f').click(function () {
+                                        var $buttonClicked = $(this);
+                                        var id = $buttonClicked.attr('data');
+
+                                        $.ajax({
+                                            url: '@Url.Action("Create", "Comments", new { review = review.Id })',
+                                            type: 'GET',
+                                            data: { id: id },
+                                            success: function (partialView) {
+                                                $('#_CommentForm_@f').html(partialView);
+                                                $('#_CommentForm_@f').show();
+                                            }
+                                        });
+                                    });
+                                });
+                            </script>
+
                             <li class="list-inline-item ml-auto">
-                                <input type="hidden" name="currentReviewId" value="@review.Id" />
-                                  <label for="currentReviewId" class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" onclick="myFunction()" id="changeCursor">
-                                      <a>hej</a>
-                                    @*<i class="fa fa-reply g-pos-rel g-top-1 g-mr-3"></i>*@
-                                    @*@Html.ActionLink("Comment", "Create", "Comments", new { review = @review.Id})*@
-                                  </label>
-                             <partial name="_CommentForm"/> 
+                                <i class="fa fa-reply g-pos-rel g-top-1 g-mr-3">
+                                 <a id="changeCursor" class="comments_@f text-dark" style="text-decoration:none;" data="@review.Id">Comment</a>
+                                 </i>
+                                 
+                                <div id="_CommentForm_@f" style="display:none">
+                                   
+                                </div>
+                                @*Visa lista av kommentarer här typ...*@
+                                  
                             </li>
-                        @*</form>*@
                       </ul>
                     </div>
                 </div>
@@ -223,6 +240,7 @@
         }
     </div>
 </div>
+
 
 <script>
     //function myFunction()
@@ -240,37 +258,12 @@
 </script>
 
 
-@*----------------------------------------Comment Form-----------------------------------------*@
-@*@foreach (var review in Model.Reviews) 
-{
-<div id="hidden" class="container">
-    <div class="row">
-        <div class="bg-white rounded shadow-sm p-4 mb-5 rating-review-select-page col-md-8">
-            <h5 class="mb-4">Leave a Comment</h5>
+@*<script type="text/javascript">
 
-            <div>
-            <form asp-controller="Comments" asp-action="Create" method="post">
-                <input type="hidden" asp-for="Comment.UserId" value="@Model.UserId"/>
-                <input type="hidden" asp-for="Comment.ReviewsId" value="@review.Id"/>
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Comment.Comment" class="control-label"></label>
-                    <textarea id="desc-area" placeholder="Review: @review.Title" asp-for="Comment.Comment" class="form-control row-cols-6" rows="5" cols="75" maxlength="500"></textarea>
-                    <span id="count_message" asp-validation-for="Comment.Comment" class="text-danger"></span>
-                    <div id="chars-remaining" style="text-align:right; font-weight:bold;">500 characters remaining</div>
-                </div>
-
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
-                </div>
-            </form>
-            </div>
-
-        </div>
-    </div>
-</div>
-}*@
-        
+    function loadPartialView() {
+        $("#partialDiv").load('@Url.Action("Create","Comments")');
+    }
+</script>*@        
 
 @*Scroll back to Page-position*@
 

@@ -61,7 +61,7 @@ namespace CoolBooks_NinjaExperts.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(float bookRating, [Bind("Id,UserId,BookId,Title,Text,Rating,Created")] Reviews review)
+        public async Task<IActionResult> Create(int bookRating, [Bind("Id,UserId,BookId,Title,Text,Rating,Created")] Reviews review)
         {
             review.Rating = bookRating;
             if (ModelState.IsValid)

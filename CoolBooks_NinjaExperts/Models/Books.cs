@@ -28,7 +28,7 @@ namespace CoolBooks_NinjaExperts.Models
         public long ISBN { get; set; }
 
 
-        public double? Rating { get; set; }
+        public int? Rating { get; set; }
 
         public Images? Image { get; set; } // FK ImageId
         public int? ImageId { get; set; }

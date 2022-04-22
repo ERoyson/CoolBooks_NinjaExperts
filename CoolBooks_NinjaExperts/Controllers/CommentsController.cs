@@ -49,12 +49,16 @@ namespace CoolBooks_NinjaExperts.Controllers
         }
 
         // GET: CommentsController1/Create
-        public IActionResult Create(int review)
+        public PartialViewResult Create(string review)
         {
+            int reviewId = int.Parse(review);
             var VM = new BookReviewsViewModel(); //ViewModel-object
-            VM.Review = _context.Reviews.Where(r => r.Id == review).FirstOrDefault();
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            VM.UserId = userId;
+            VM.Review = _context.Reviews.Where(r => r.Id == reviewId)
+                .FirstOrDefault();
             //ViewData["UserId"] = new SelectList(_context.UserInfo, "Id", "Id");
-            return RedirectToAction("LoadPartialView",VM);
+            return PartialView("_CommentForm", VM);
         }
 
         //Hämta reviewlista
@@ -66,16 +70,22 @@ namespace CoolBooks_NinjaExperts.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(int currentReviewId, [Bind("Id,UserId,ReviewsId,Comment,Created")] Comments comment)
+        public async Task<IActionResult> Create(int reviewId, string userId, [Bind("Id,Comment")] Comments comment)
         {
-            //Add(new Comments { Comment = "" });
+            var VM = new BookReviewsViewModel();
+            VM.User = _context.UserInfo.FirstOrDefault(u => u.Id == userId);
+            comment.UserId = userId;
+            VM.Review = _context.Reviews.FirstOrDefault(r => r.Id == reviewId);
+            VM.Review.Comments.Add(comment);
+
+            VM.Book = _context.Books.Where(b => b.Reviews.Any(r => r.Id == reviewId)).FirstOrDefault();
+
             if (ModelState.IsValid)
             {
-                _context.Add(comment);
+                _context.Update(VM.Review);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("LoadPartialView", comment);
+                return RedirectToAction("Details","Books", VM.Book);
             }
-            //ViewData["UserId"] = new SelectList(_context.UserInfo, "Id", "Id", comment.UserId);
             return View(comment);
         }
 
@@ -167,9 +177,9 @@ namespace CoolBooks_NinjaExperts.Controllers
             return _context.Comments.Any(e => e.Id == id);
         }
 
-        public ActionResult LoadPartialView(BookReviewsViewModel VM)
-        {
-            return PartialView("_CommentForm", VM);
-        }
+        //public ActionResult LoadPartialView(BookReviewsViewModel VM)
+        //{
+        //    return PartialView("_CommentForm", VM);
+        //}
     }
 }
