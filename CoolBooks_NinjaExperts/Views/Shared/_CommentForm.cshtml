@@ -33,15 +33,24 @@
 }
 else
 {
-
    <p>
         <a class="text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
         or
         <a class="text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
         to write a comment
    </p>
-    
-        
-   
-  
 }
+
+@*Books/Details - Comment character counter*@
+<script>
+    const descArea = document.getElementById('desc-area');
+    const charsRemaining = document.getElementById('chars-remaining');
+    const MAX_CHARS = 500;
+    descArea.addEventListener('input', () =>
+    {
+        const remaining = MAX_CHARS - descArea.value.length;
+        const color = remaining < MAX_CHARS * 0.1 ? 'red' : null;
+        charsRemaining.textContent = remaining + ' characters remaining';
+        charsRemaining.style.color = color;
+    })
+</script>

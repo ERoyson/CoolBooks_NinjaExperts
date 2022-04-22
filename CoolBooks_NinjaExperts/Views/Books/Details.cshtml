@@ -257,7 +257,42 @@
                                 <div id="_CommentForm_@f" style="display:none">
                                    
                                 </div>
+                                  
+                            </li>
+                            <li>
+                                <details>
+                                    <summary>View Comments [@review.Comments.Count()]</summary>
+                                    @{int f2 = 0;}
+                                    @foreach (var comment in review.Comments)
+                                    {
+                                        f2++;
+                                        <script type="text/javascript">
+                                        $(function () {
+                                        $('.comments_@f2').click(function () {
+                                        var $buttonClicked = $(this);
+                                        var id = $buttonClicked.attr('data');
 
+                                        $.ajax({
+                                        url: '@Url.Action("Create", "Replies", new { comment = comment.Id })',
+                                        type: 'GET',
+                                        data: { id: id },
+                                        success: function (partialView) {
+                                        $('#_ReplyForm_@f2').html(partialView);
+                                        $('#_ReplyForm_@f2').show();
+                                        }
+                                        });
+                                        });
+                                        });
+                                        </script>
+
+                                        <p class="list-inline-item ml-auto">@comment.User.UserName | @comment.Comment
+                                        <i class="fa fa-reply g-pos-rel g-top-1 g-mr-3">
+                                            <a id="changeCursor" class="comments_@f2 text-dark" style="text-decoration:none;" data="@comment.Id">Reply</a>
+                                        </i>
+                                        <div id="_ReplyForm_@f2" style="display:none"></div>
+                                        </p>
+                                    }
+                                </details>
                             </li>
                         
                       </ul>
