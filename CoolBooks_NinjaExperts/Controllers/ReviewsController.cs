@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using CoolBooks_NinjaExperts.Data;
 using CoolBooks_NinjaExperts.Models;
 using CoolBooks_NinjaExperts.ViewModels;
+using System.Security.Claims;
 
 namespace CoolBooks_NinjaExperts.Controllers
 {
@@ -31,6 +32,7 @@ namespace CoolBooks_NinjaExperts.Controllers
         public async Task<IActionResult> Details(int? id)
         {
             var VM = new BookReviewsViewModel();
+            VM.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the user's userId
             VM.Book = _context.Books.FirstOrDefault(x => x.Id == id);
             if (id == null)
             {
@@ -57,18 +59,19 @@ namespace CoolBooks_NinjaExperts.Controllers
 
         // POST: Reviews/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Title,Text,Rating,Created,Deleted")] Reviews reviews)
+        public async Task<IActionResult> Create(int bookRating, [Bind("Id,UserId,BookId,Title,Text,Rating,Created")] Reviews review)
         {
+            review.Rating = bookRating;
             if (ModelState.IsValid)
             {
-                _context.Add(reviews);
+                Books books = _context.Books.Where(x=>x.Id == review.BookId).FirstOrDefault();
+                _context.Add(review);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Books", books); //Skickar användaren till samma sida efter inskickad review
             }
-            return View(reviews);
+            return View(review); //Ändra till annan sida ifall reviewn misslyckas.
         }
 
         // GET: Reviews/Edit/5

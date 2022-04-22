@@ -32,13 +32,13 @@
     <thead>
         <tr>
             <th>
-                @Html.ActionLink("Title", "Index", new { sortOrder = ViewBag.TitleSort })
+                @Html.ActionLink("Title", "Index", new { sortOrder = ViewBag.TitleSort, currentFilter=ViewBag.CurrentFilter }, new{  @class="text-dark", @style="text-decoration:none;"})
             </th>
             <th>
-                @Html.ActionLink("Author", "Index", new { sortOrder = ViewBag.AuthorSort })
+                @Html.ActionLink("Author", "Index", new { sortOrder = ViewBag.AuthorSort, currentFilter=ViewBag.CurrentFilter }, new{  @class="text-dark", @style="text-decoration:none;"})
             </th>
              <th>
-                @Html.ActionLink("Genre", "Index", new { sortOrder = ViewBag.GenreSort })
+                @Html.ActionLink("Genre", "Index", new { sortOrder = ViewBag.GenreSort, currentFilter=ViewBag.CurrentFilter }, new{  @class="text-dark", @style="text-decoration:none;"})
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Book.Image)
@@ -47,14 +47,14 @@
                 @Html.DisplayNameFor(model => model.Book.Description)
             </th>
              <th>
-               @Html.ActionLink("Rating", "Index", new { sortOrder = ViewBag.RatingSort })
+               @Html.ActionLink("Rating", "Index", new { sortOrder = ViewBag.RatingSort, currentFilter=ViewBag.CurrentFilter }, new{  @class="text-dark", @style="text-decoration:none;"})
             </th>
             @if (SignInManager.IsSignedIn(User))
             {
                 if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
                 {
                 <th>
-                   @Html.ActionLink("Created", "Index", new { sortOrder = ViewBag.CreatedSort })
+                   @Html.ActionLink("Created", "Index", new { sortOrder = ViewBag.CreatedSort, currentFilter=ViewBag.CurrentFilter }, new{  @class="text-dark", @style="text-decoration:none;"})
                 </th>
                 }
             }
@@ -126,7 +126,7 @@
                 else if(User.IsInRole("User"))
                 {
                     <td>
-                        <a asp-action="Details" asp-route-id="@book.Id">Details</a>
+                        <a class="btn btn-primary" asp-action="Details" asp-route-id="@book.Id">More</a>
                     </td>
                 }
            }

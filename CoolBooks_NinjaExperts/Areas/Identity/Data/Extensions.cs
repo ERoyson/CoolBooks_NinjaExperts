@@ -160,7 +160,7 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                     UserId = "0cgg7156-dee2-fe6g-4df6-147f5836e357", //Karl
                     Title = "The book was magical!",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
-                    Rating = 4.5
+                    Rating = 4
                 },
                 new Reviews
                 {
@@ -169,7 +169,7 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                     UserId = "0cgg7156-dee2-fe6g-4df6-147f5836e357", //Karl
                     Title = "I never stopped reading",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
-                    Rating = 5.0
+                    Rating = 5
                 },
                 new Reviews
                 {
@@ -178,7 +178,7 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                     UserId = "85e508e4-80ce-9d68-84c3-g1gd726e97g1", //Anna
                     Title = "Boring book",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
-                    Rating = 1.0
+                    Rating = 1
                 },
                 new Reviews
                 {
@@ -187,7 +187,7 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                     UserId = "be661gc4-d6b6-3b1d-23d4-2485c1bf5c0d", //Per
                     Title = "Read this book if you like to be mindblown",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
-                    Rating = 4.0
+                    Rating = 4
                 },
                 new Reviews
                 {
@@ -196,7 +196,7 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                     UserId = "be661gc4-d6b6-3b1d-23d4-2485c1bf5c0d", //Per
                     Title = "The shortstories are something else",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
-                    Rating = 4.5
+                    Rating = 4
                 },
                 new Reviews
                 {
@@ -205,7 +205,7 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                     UserId = "be661gc4-d6b6-3b1d-23d4-2485c1bf5c0d", //Per
                     Title = "Meh.. Was kind of disapoitend",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
-                    Rating = 2.5
+                    Rating = 2
                 },
                 new Reviews
                 {
@@ -223,7 +223,7 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                     UserId = "be661gc4-d6b6-3b1d-23d4-2485c1bf5c0d", //Per
                     Title = "Loved it!",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
-                    Rating = 4.2
+                    Rating = 4
                 },
                 new Reviews
                 {
@@ -250,7 +250,7 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                     UserId = "bd332a8c-b4e4-5cg1-b68d-g25g3cg8dgc5", //Berit
                     Title = "Don't bother reading, it sucks (my opinion)",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
-                    Rating = 1.5
+                    Rating = 1
                 },
                 new Reviews
                 {
@@ -259,7 +259,7 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                     UserId = "bd332a8c-b4e4-5cg1-b68d-g25g3cg8dgc5", //Berit
                     Title = "Well, this was a waste of time",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
-                    Rating = 2.5
+                    Rating = 2
                 },
                 new Reviews
                 {
@@ -268,7 +268,7 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                     UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f", //Mats
                     Title = "Wow.. just wow",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
-                    Rating = 4.0
+                    Rating = 4
                 },
                 new Reviews
                 {
@@ -280,6 +280,49 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                     Rating = 5
                 }
             );
+        }
+
+        public static void SeedReviewComments(this ModelBuilder builder)
+        {
+            builder.Entity<Comments>().HasData(
+                new Comments
+                {
+                    Id = 1,
+                    ReviewsId = 1, //Harry Potter & The Sorcerer's Stone: "The book was magical!" -Karl
+                    UserId = "85e508e4-80ce-9d68-84c3-g1gd726e97g1", //Anna
+                    Comment = "I couldn't agree more!"
+                },
+                new Comments
+                {
+                    Id = 2,
+                    ReviewsId = 1, //Harry Potter & The Sorcerer's Stone: "The book was magical!" -Karl
+                    UserId = "bd332a8c-b4e4-5cg1-b68d-g25g3cg8dgc5", //Berit
+                    Comment = "I thought the book was boring..."
+                },
+                new Comments
+                {
+                    Id = 3,
+                    ReviewsId = 7, //Fifty Shades of Grey: "Mr Grey.. What a man" -Berit
+                    UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f", //Mats
+                    Comment = "Really...?"
+                });
+        }
+
+            public static void SeedFlaggedTable(this ModelBuilder builder)
+        {
+            builder.Entity<Flagged>().HasData(
+                new Flagged { Id = 1, IsFlagged = false },
+                new Flagged { Id = 2, IsFlagged = true }
+                );
+        }
+        public static void SeedFlaggedReviews(this ModelBuilder builder)
+        {
+            builder.Entity<FlaggedReviews>().HasData(
+                new FlaggedReviews { UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f", FlaggedId = 2, ReviewId = 1 },
+                new FlaggedReviews { UserId = "0cgg7156-dee2-fe6g-4df6-147f5836e357", FlaggedId = 2, ReviewId = 2 },
+                new FlaggedReviews { UserId = "0cgg7156-dee2-fe6g-4df6-147f5836e357", FlaggedId = 2, ReviewId = 3 }
+              
+                );
         }
 
         public static byte[] ReadFile(string imageFileName) // Get images from filepath
