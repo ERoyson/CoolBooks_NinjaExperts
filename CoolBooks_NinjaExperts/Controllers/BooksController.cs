@@ -130,10 +130,10 @@ namespace CoolBooks_NinjaExperts.Models
          return View("Index", VM);        
       }
 
-      // GET: Books/Details/5
-      //[Authorize(Roles = "Admin, Moderator, User")]
-      public async Task<IActionResult> Details(int? id)
-      {
+        // GET: Books/Details/5
+        //[Authorize(Roles = "Admin, Moderator, User")]
+        public async Task<IActionResult> Details(int? id)
+        {
             if (id == null)
             {
                 return NotFound();
@@ -144,12 +144,15 @@ namespace CoolBooks_NinjaExperts.Models
 
             var VM = new BookReviewsViewModel();
             VM.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the logged in user's userId
+
             VM.FlaggedReviews = _context.FlaggedReviews
-                .Include(x=>x.Review)
-                .Include(x=>x.Flagged)
-                .Include(x=>x.User)
+                .Include(x => x.Review)
+                .ThenInclude(x => x.Comments)
+                .Include(x => x.Flagged)
+                .Include(x => x.User)
                 .Where(x => x.UserId == userId)
                 .ToList();
+
 
             if (id == null)
             {
@@ -158,27 +161,31 @@ namespace CoolBooks_NinjaExperts.Models
 
             //Lägg till fler filtreringsalternativ på reviews, ex. högst poäng, flest gillade review etc.
             VM.Reviews = _context.Reviews
+                .Include(r => r.Comments)
                 .Include(r => r.User)
                 .Include(r => r.Book)
-                .Where(r => r.BookId == id && r.IsBlocked == null || false) 
-                .OrderByDescending(r=>r.Created).ToList();
+                .Include(r => r.ReviewLikes)
+                .Include(r => r.ReviewDislikes)
+                .Where(r => r.BookId == id && r.IsBlocked == null || false)
+                .OrderByDescending(r => r.Created).ToList();
 
             VM.Book = _context.Books
-                .Include(x=>x.Image)
-                .Include(x=>x.Authors)
-                .Include(x=>x.Genres)
+                .Include(x => x.Image)
+                .Include(x => x.Authors)
+                .Include(x => x.Genres)
                 .FirstOrDefault(x => x.Id == id);
 
             if (VM.Reviews == null)
             {
-            return NotFound();
+                return NotFound();
             }
 
             return View(VM);
-      }
+        }
 
-      // GET: Books/Create
-      [Authorize(Roles = "Admin")]
+
+        // GET: Books/Create
+        [Authorize(Roles = "Admin")]
       public IActionResult Create()
       {
          var book = new CreateBookViewModel();
