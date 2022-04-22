@@ -6,7 +6,7 @@
 
 <ul class="navbar-nav">
 @{
-    if (SignInManager.IsSignedIn(User) && User.IsInRole("User") && User.IsInRole("Moderator"))
+    if (SignInManager.IsSignedIn(User) && User.IsInRole("User") || User.IsInRole("Moderator"))
 {
     <li class="nav-item">
         <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>

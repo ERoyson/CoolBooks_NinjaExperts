@@ -10,9 +10,11 @@ using CoolBooks_NinjaExperts.Data;
 using CoolBooks_NinjaExperts.Models;
 using CoolBooks_NinjaExperts.ViewModels;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoolBooks_NinjaExperts.Controllers
 {
+    
     public class CommentsController : Controller
     {
         private readonly CoolBooks_NinjaExpertsContext _context;
@@ -48,7 +50,7 @@ namespace CoolBooks_NinjaExperts.Controllers
             return View(comments);
         }
 
-        // GET: CommentsController1/Create
+        [Authorize(Roles = "User, Moderator, Admin")]
         public PartialViewResult Create(string review)
         {
             int reviewId = int.Parse(review);
@@ -70,6 +72,7 @@ namespace CoolBooks_NinjaExperts.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "User, Moderator, Admin")]
         public async Task<IActionResult> Create(int reviewId, string userId, [Bind("Id,Comment")] Comments comment)
         {
             var VM = new BookReviewsViewModel();
