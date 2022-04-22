@@ -87,17 +87,6 @@
     <div class="row">
         <div class="bg-white rounded shadow-sm p-4 mb-5 rating-review-select-page col-md-8">
             <h5 class="mb-4">Leave a Review</h5>
-            @*<div class="d-flex flex-row">*@
-@*            <p class="mb-2" style="padding-right:10px">Rate this book</p>*@
-@*            <div class="rating">
-                <span class="rating__result"></span> 
-                <i class="rating__star far fa-star" value="1"></i>
-                <i class="rating__star far fa-star" value="2"></i>
-                <i class="rating__star far fa-star" value="3"></i>
-                <i class="rating__star far fa-star" value="4"></i>
-                <i class="rating__star far fa-star" value="5"></i>
-            </div>*@
-            @*</div>*@
 
             <div>
             <form asp-controller="Reviews" asp-action="Create" method="post">
@@ -185,11 +174,18 @@
                         </form>
                        
                         </div>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
+                            @for (var i = 1; i <= 5; i++)
+                            {
+                                if (review.Rating >= i)
+                                {
+                                    <span class="fa fa-star checked"></span>
+                                }
+                                else
+                                {
+                                    <span class="fa fa-star"></span>
+                                }
+                            }
+
                       </div>
                       <p style="margin-top:1rem;">@review.Text </p>
                         <span class="g-color-gray-dark-v4 g-font-size-12">Created by: @review.User.UserName | @review.Created</span>
@@ -225,6 +221,7 @@
                                     });
                                 });
                             </script>
+
                             <li class="list-inline-item ml-auto">
                                 <i class="fa fa-reply g-pos-rel g-top-1 g-mr-3">
                                  <a id="changeCursor" class="comments_@f text-dark" style="text-decoration:none;" data="@review.Id">Comment</a>
@@ -236,7 +233,6 @@
                                 @*Visa lista av kommentarer här typ...*@
                                   
                             </li>
-                        
                       </ul>
                     </div>
                 </div>
@@ -244,6 +240,7 @@
         }
     </div>
 </div>
+
 
 <script>
     //function myFunction()
@@ -261,48 +258,12 @@
 </script>
 
 
-
-
-
-
 @*<script type="text/javascript">
 
     function loadPartialView() {
         $("#partialDiv").load('@Url.Action("Create","Comments")');
     }
-</script>*@
-
-@*----------------------------------------Comment Form-----------------------------------------*@
-@*@foreach (var review in Model.Reviews) 
-{
-<div id="hidden" class="container">
-    <div class="row">
-        <div class="bg-white rounded shadow-sm p-4 mb-5 rating-review-select-page col-md-8">
-            <h5 class="mb-4">Leave a Comment</h5>
-
-            <div>
-            <form asp-controller="Comments" asp-action="Create" method="post">
-                <input type="hidden" asp-for="Comment.UserId" value="@Model.UserId"/>
-                <input type="hidden" asp-for="Comment.ReviewsId" value="@review.Id"/>
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Comment.Comment" class="control-label"></label>
-                    <textarea id="desc-area" placeholder="Review: @review.Title" asp-for="Comment.Comment" class="form-control row-cols-6" rows="5" cols="75" maxlength="500"></textarea>
-                    <span id="count_message" asp-validation-for="Comment.Comment" class="text-danger"></span>
-                    <div id="chars-remaining" style="text-align:right; font-weight:bold;">500 characters remaining</div>
-                </div>
-
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
-                </div>
-            </form>
-            </div>
-
-        </div>
-    </div>
-</div>
-}*@
-        
+</script>*@        
 
 @*Scroll back to Page-position*@
 
