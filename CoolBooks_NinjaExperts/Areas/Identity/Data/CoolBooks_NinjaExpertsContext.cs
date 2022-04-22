@@ -100,6 +100,8 @@ public class CoolBooks_NinjaExpertsContext : IdentityDbContext<UserInfo>
         builder.SeedBooks();
         // Reviews 
         builder.SeedBookReviews();
+        // Comments
+        builder.SeedReviewComments();
         //Flagged
         builder.SeedFlaggedTable();
         //builder.SeedFlaggedReviews();

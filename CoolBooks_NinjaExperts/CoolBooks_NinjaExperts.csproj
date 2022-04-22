@@ -9,12 +9,16 @@
   <ItemGroup>
     <Compile Remove="Areas\Index\**" />
     <Compile Remove="Data\**" />
+    <Compile Remove="wwwroot\images\**" />
     <Content Remove="Areas\Index\**" />
     <Content Remove="Data\**" />
+    <Content Remove="wwwroot\images\**" />
     <EmbeddedResource Remove="Areas\Index\**" />
     <EmbeddedResource Remove="Data\**" />
+    <EmbeddedResource Remove="wwwroot\images\**" />
     <None Remove="Areas\Index\**" />
     <None Remove="Data\**" />
+    <None Remove="wwwroot\images\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,7 +38,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\images\" />
     <Folder Include="wwwroot\lib\bootstrap\" />
     <Folder Include="wwwroot\lib\bootstrap\dist\js\" />
     <Folder Include="wwwroot\lib\jquery-validation-unobtrusive\" />

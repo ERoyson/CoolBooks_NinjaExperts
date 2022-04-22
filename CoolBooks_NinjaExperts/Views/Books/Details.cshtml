@@ -183,11 +183,18 @@
                         </form>
                        
                         </div>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
+                            @for (var i = 1; i <= 5; i++)
+                            {
+                                if (review.Rating >= i)
+                                {
+                                    <span class="fa fa-star checked"></span>
+                                }
+                                else
+                                {
+                                    <span class="fa fa-star"></span>
+                                }
+                            }
+
                       </div>
                       <p style="margin-top:1rem;">@review.Text </p>
                         <span class="g-color-gray-dark-v4 g-font-size-12">Created by: @review.User.UserName | @review.Created</span>
@@ -205,7 +212,7 @@
                             34
                           </a>
                         </li>
-                        @*<form>*@
+                        <form>
                             <li class="list-inline-item ml-auto">
                                 <input type="hidden" name="currentReviewId" value="@review.Id" />
                                   <label for="currentReviewId" class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" onclick="myFunction()" id="changeCursor">
@@ -215,7 +222,7 @@
                                   </label>
                              <partial name="_CommentForm"/> 
                             </li>
-                        @*</form>*@
+                        </form>
                       </ul>
                     </div>
                 </div>
@@ -223,6 +230,7 @@
         }
     </div>
 </div>
+
 
 <script>
     //function myFunction()
