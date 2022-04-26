@@ -258,12 +258,8 @@
                             <li class="list-inline-item ml-auto">
                                 <i class="fa fa-reply g-pos-rel g-top-1 g-mr-3">
                                  <a id="changeCursor" class="comments_@f text-dark" style="text-decoration:none;" data="@review.Id">Comment</a>
-                                 </i>
-                                 
-                                <div id="_CommentForm_@f" style="display:none">
-                                   
-                                </div>
-                                  
+                                 </i>                                
+                                <div id="_CommentForm_@f" style="display:none"></div>                                
                             </li>
                             <li>
                                 <details>
@@ -272,18 +268,36 @@
                                     <ul>        
                             <h5>Comments</h5>
                             @foreach (var comment in review.Comments)
-                                        {
-                                            f2--;
-                                            <p>@comment.Comment </p>
-                                    <span>Created by: @comment.User.UserName | @comment.Created
-                                        <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!">
-                                            <i class="fa fa-thumbs-up g-pos-rel g-top-1 g-mr-3"></i>
-                                            178
-                                        </a>
-                                        <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!">
-                                            <i class="fa fa-thumbs-down g-pos-rel g-top-1 g-mr-3"></i>
-                                            34
-                                        </a>
+                            {
+                                        f2++;
+                                        <script type="text/javascript">
+                                            $(function () {
+                                                $('.comments_@f2').click(function () {
+                                                    var $buttonClicked = $(this);
+                                                    var id = $buttonClicked.attr('data');
+
+                                                    $.ajax({
+                                                        url: '@Url.Action("Create", "Replies", new { comment = comment.Id })',
+                                                        type: 'GET',
+                                                        data: { id: id },
+                                                        success: function (partialView)
+                                                        {
+                                                            $('#_ReplyForm_@f2').html(partialView);
+                                                            $('#_ReplyForm_@f2').show();
+                                                        }
+                                                    });
+                                                });
+                                            });
+                                        </script>
+
+                                        <p class="list-inline-item ml-auto">@comment.User.UserName | @comment.Comment
+                                        <i class="fa fa-reply g-pos-rel g-top-1 g-mr-3">
+                                            <a id="changeCursor" class="comments_@f2 text-dark" style="text-decoration:none;" data="@comment.Id">Reply</a>
+                                        </i>
+                                        <div id="_ReplyForm_@f2" style="display:none"></div>
+                                        </p>
+
+
                                         <div class="d-flex justify-content-between">
                                          <form asp-controller="Flagged" asp-action="FlagComment">
                                                 @{  
@@ -338,7 +352,7 @@
                                         </details>
                                         <p>----------------------------------------</p>
 
-                                    </span>
+                                    
 
                                 }
 
