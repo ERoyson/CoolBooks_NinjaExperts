@@ -10,28 +10,28 @@ using CoolBooks_NinjaExperts.Data;
 using CoolBooks_NinjaExperts.Models;
 using CoolBooks_NinjaExperts.ViewModels;
 using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
 
 namespace CoolBooks_NinjaExperts.Controllers
 {
-    
-    public class CommentsController : Controller
+    public class RepliesController : Controller
     {
         private readonly CoolBooks_NinjaExpertsContext _context;
 
-        public CommentsController(CoolBooks_NinjaExpertsContext context)
+        public RepliesController(CoolBooks_NinjaExpertsContext context)
         {
             _context = context;
         }
 
-        // GET: CommentsController1
+        // GET: Replies
         public async Task<IActionResult> Index()
         {
-            var coolBooks_NinjaExpertsContext = _context.Comments.Include(c => c.User);
+            //return View(await _context.Replies.ToListAsync());
+
+            var coolBooks_NinjaExpertsContext = _context.Replies.Include(c => c.User);
             return View(await coolBooks_NinjaExpertsContext.ToListAsync());
         }
 
-        // GET: CommentsController1/Details/5
+        // GET: Replies/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -39,60 +39,55 @@ namespace CoolBooks_NinjaExperts.Controllers
                 return NotFound();
             }
 
-            var comments = await _context.Comments
+            var replies = await _context.Replies
                 .Include(c => c.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (comments == null)
+            if (replies == null)
             {
                 return NotFound();
             }
 
-            return View(comments);
+            return View(replies);
         }
 
-        //[Authorize(Roles = "User, Moderator, Admin")]
-        public PartialViewResult Create(string review)
+        // GET: RepliesController/Create
+        public PartialViewResult Create(string comment)
         {
-            int reviewId = int.Parse(review);
+            int commentId = int.Parse(comment);
             var VM = new BookReviewsViewModel(); //ViewModel-object
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             VM.UserId = userId;
-            VM.Review = _context.Reviews.Where(r => r.Id == reviewId)
+            VM.CommentId = commentId;
+            VM.Review = _context.Reviews.Where(r => r.Comments.Any(c=>c.Id == commentId)) //Hämta reviewID där reviewID == commentID
                 .FirstOrDefault();
             //ViewData["UserId"] = new SelectList(_context.UserInfo, "Id", "Id");
-            return PartialView("_CommentForm", VM);
+            return PartialView("_ReplyForm", VM);
         }
 
-        //Hämta reviewlista
-        //Ladda nuvarande review med en kommentar
-
-
-        // POST: CommentsController1/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: RepliesController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "User, Moderator, Admin")]
-        public async Task<IActionResult> Create(int reviewId, string userId, [Bind("Id,Comment")] Comments comment)
+        public async Task<IActionResult> Create(int commentId, string userId, [Bind("Id,Reply")] Replies reply)
         {
             var VM = new BookReviewsViewModel();
             VM.User = _context.UserInfo.FirstOrDefault(u => u.Id == userId);
-            comment.UserId = userId;
-            VM.Review = _context.Reviews.FirstOrDefault(r => r.Id == reviewId);
-            VM.Review.Comments.Add(comment);
+            reply.UserId = userId;
+            VM.Comment = _context.Comments.FirstOrDefault(r => r.Id == commentId);
+            VM.Comment.Replies.Add(reply);
 
-            VM.Book = _context.Books.Where(b => b.Reviews.Any(r => r.Id == reviewId)).FirstOrDefault();
+            VM.Book = _context.Books.Where(b => b.Reviews.Any(r => r.Comments.Any(c=>c.Id == commentId))).FirstOrDefault();
 
             if (ModelState.IsValid)
             {
-                _context.Update(VM.Review);
+                _context.Update(VM.Comment);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Details","Books", VM.Book);
+                return RedirectToAction("Details", "Books", VM.Book);
             }
-            return View(comment);
+            return View(reply);
         }
 
-        // GET: CommentsController1/Edit/5
+
+        // GET: RepliesController/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -100,23 +95,24 @@ namespace CoolBooks_NinjaExperts.Controllers
                 return NotFound();
             }
 
-            var comments = await _context.Comments.FindAsync(id);
-            if (comments == null)
+            var replies = await _context.Replies.FindAsync(id);
+            if (replies == null)
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.UserInfo, "Id", "Id", comments.UserId);
-            return View(comments);
+            ViewData["UserId"] = new SelectList(_context.UserInfo, "Id", "Id", replies.UserId);
+            return View(replies);
         }
 
-        // POST: CommentsController1/Edit/5
+
+        // POST: Replies/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,ReviewId,Comment,Created,Deleted,IsFlagged,IsBlocked")] Comments comments)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Created,Deleted,IsFlagged,IsBlocked")] Replies replies)
         {
-            if (id != comments.Id)
+            if (id != replies.Id)
             {
                 return NotFound();
             }
@@ -125,12 +121,12 @@ namespace CoolBooks_NinjaExperts.Controllers
             {
                 try
                 {
-                    _context.Update(comments);
+                    _context.Update(replies);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CommentsExists(comments.Id))
+                    if (!RepliesExists(replies.Id))
                     {
                         return NotFound();
                     }
@@ -141,11 +137,11 @@ namespace CoolBooks_NinjaExperts.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UserId"] = new SelectList(_context.UserInfo, "Id", "Id", comments.UserId);
-            return View(comments);
+            ViewData["UserId"] = new SelectList(_context.UserInfo, "Id", "Id", replies.UserId);
+            return View(replies);
         }
 
-        // GET: CommentsController1/Delete/5
+        // GET: RepliesController/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -153,36 +149,31 @@ namespace CoolBooks_NinjaExperts.Controllers
                 return NotFound();
             }
 
-            var comments = await _context.Comments
-                .Include(c => c.User)
+            var replies = await _context.Replies
+                .Include(r => r.User)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (comments == null)
+            if (replies == null)
             {
                 return NotFound();
             }
 
-            return View(comments);
+            return View(replies);
         }
 
-        // POST: CommentsController1/Delete/5
+        // POST: RepliesController/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var comments = await _context.Comments.FindAsync(id);
-            _context.Comments.Remove(comments);
+            var replies = await _context.Replies.FindAsync(id);
+            _context.Replies.Remove(replies);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool CommentsExists(int id)
+        private bool RepliesExists(int id)
         {
-            return _context.Comments.Any(e => e.Id == id);
+            return _context.Replies.Any(e => e.Id == id);
         }
-
-        //public ActionResult LoadPartialView(BookReviewsViewModel VM)
-        //{
-        //    return PartialView("_CommentForm", VM);
-        //}
     }
 }

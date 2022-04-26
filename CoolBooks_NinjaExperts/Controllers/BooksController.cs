@@ -159,9 +159,32 @@ namespace CoolBooks_NinjaExperts.Models
                 return NotFound();
             }
 
+            VM.FlaggedComments = _context.FlaggedComments
+                .Include(x => x.Comments)
+                .Include(x => x.Flagged)
+                .Include(x => x.User)
+                .Where(x => x.UserId == userId)
+                .ToList();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            VM.Comments = _context.Comments
+                .Include(r => r.Replies)
+                .ThenInclude(c => c.User)
+                .Include(r => r.User)
+                .ToList();
+
+            VM.Comments = _context.Comments
+                .Include(r => r.Replies)
+                .ThenInclude(c => c.User)
+                .Include(r => r.User).ToList();
+
             //Lägg till fler filtreringsalternativ på reviews, ex. högst poäng, flest gillade review etc.
             VM.Reviews = _context.Reviews
                 .Include(r => r.Comments)
+                .ThenInclude(c => c.User)
                 .Include(r => r.User)
                 .Include(r => r.Book)
                 .Include(r => r.ReviewLikes)
