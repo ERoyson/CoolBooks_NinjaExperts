@@ -28,5 +28,6 @@ public class UserInfo : IdentityUser
     public virtual ICollection<ReplyLikes> ReplyLikes { get; set; }
     public virtual ICollection<ReplyDislikes> ReplyDislikes { get; set; }
     public virtual ICollection<FlaggedReviews> FlaggedReviews { get; set; }
+    public virtual ICollection<FlaggedComments> FlaggedComments { get; set; }
 }
 
