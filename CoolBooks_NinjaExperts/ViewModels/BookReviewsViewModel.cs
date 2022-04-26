@@ -18,5 +18,6 @@ namespace CoolBooks_NinjaExperts.ViewModels
         public int PageCount { get; set; } // for our partial view (pageselector)
 
         public List<FlaggedReviews>? FlaggedReviews { get; set; }
+        public List<FlaggedComments>? FlaggedComments { get; set; }
     }
 }

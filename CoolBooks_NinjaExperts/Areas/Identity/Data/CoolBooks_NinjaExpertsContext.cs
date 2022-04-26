@@ -81,7 +81,26 @@ public class CoolBooks_NinjaExpertsContext : IdentityDbContext<UserInfo>
             .HasOne(x => x.Flagged)
             .WithMany(x => x.FlaggedReviews)
             .HasForeignKey(x => x.FlaggedId);
-
+        //----------------------------------------------------
+        //Flagged Comments
+        builder.Entity<FlaggedComments>().HasKey(x => new { x.UserId, x.FlaggedId, x.CommentId, x.ReviewId });
+        
+        builder.Entity<FlaggedComments>()
+            .HasOne(x => x.Comments)
+            .WithMany(x => x.FlaggedComments)
+            .HasForeignKey(x => x.CommentId);
+        //builder.Entity<FlaggedComments>()
+        //     .HasOne(x => x.Review)
+        //     .WithMany(x => x.)
+        //     .HasForeignKey(x => x.ReviewId);
+        builder.Entity<FlaggedComments>()
+           .HasOne(x => x.User)
+           .WithMany(x => x.FlaggedComments)
+           .HasForeignKey(x => x.UserId);
+        builder.Entity<FlaggedComments>()
+            .HasOne(x => x.Flagged)
+            .WithMany(x => x.FlaggedComments)
+            .HasForeignKey(x => x.FlaggedId);
 
         // --------- seed database here :) -------------------
 
@@ -122,5 +141,6 @@ public class CoolBooks_NinjaExpertsContext : IdentityDbContext<UserInfo>
     public DbSet<Replies> Replies { get; set; }
     public DbSet<FlaggedReviews> FlaggedReviews { get; set; }   
     public DbSet<Flagged> Flagged { get; set; }
+    public DbSet<FlaggedComments> FlaggedComments { get; set; }
 }
 

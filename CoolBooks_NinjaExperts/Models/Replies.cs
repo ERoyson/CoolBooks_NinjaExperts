@@ -6,7 +6,10 @@ namespace CoolBooks_NinjaExperts.Models
     {
         public int Id { get; set; }
         public UserInfo User { get; set; }
-        public Comments Comments { get; set; }
+        public Comments? Comments { get; set; }
+        public int CommentsId { get; set; }
+        public string Reply { get; set; }
+
         public DateTime Created { get; set; }
         public DateTime? Deleted { get; set; }
         public ICollection<ReplyLikes>? ReplyLikes { get; set; }//many to many = list of likes on this Reply

@@ -72,6 +72,22 @@ namespace CoolBooks_NinjaExperts.Controllers
             return RedirectToAction("FlaggedReviews");
         }
 
+        public IActionResult FlaggedComments()
+        {
+            var FlaggedComments = _context.FlaggedComments
+                .Include(x => x.User)
+                .Include(x => x.Comments)
+                .Include(x => x.Flagged)
+                .Where(x => x.FlaggedId == 2)
+                .ToList();
+
+            if (!FlaggedComments.Any())
+            {
+                return View("NothingFlagged");
+            }
+
+            return View(FlaggedComments);
+        }
         //public IActionResult FlaggedComments()
         //public IActionResult FlaggedReplies()
     }

@@ -1,4 +1,4 @@
-﻿@model CoolBooks_NinjaExperts.Models.FlaggedReviews //FlaggedComments
+﻿@model IEnumerable<CoolBooks_NinjaExperts.Models.FlaggedComments>
 
 
 @{
@@ -69,3 +69,67 @@
 </table>*@
 @*
 <partial name="_PageSelect"/> *@
+<table class="table">
+    <thead>
+        <tr>
+            @*<th>
+                @Html.DisplayNameFor(model => model.User.Id) 
+            </th> *@
+
+             <th>
+                Flagged By:
+            </th>
+            <th>
+                Flagged Comment ID:
+            </th>
+              <th>
+                Flagged Review ID:
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comments.Comment) @*FlaggedCommentTITLE*@
+            </th>
+           
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) 
+{
+        <tr>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.User.Id)
+            </td>*@
+             <td>
+                @Html.DisplayFor(modelItem => item.User.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CommentId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ReviewId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comments.Comment)
+            </td>
+            
+          
+            @*<td>
+                <form>
+                    <input type="hidden" name="CommentId" value="@item.CommentId">
+                    <input type="hidden" name="userId" value="@item.User.Id">
+                    <button class="btn btn-success" type="submit" asp-controller="ManageContent" asp-action="UnFlagReview">UnFlag</button>
+                </form>
+                <form>
+                    <input type="hidden" name="CommentId" value="@item.CommentId">
+                    <input type="hidden" name="userId" value="@item.User.Id">
+                    <button class="btn btn-warning" type="submit" asp-controller="ManageContent" asp-action="BlockReview">Block</button>
+                </form>
+                <form>
+                    <input type="hidden" name="CommentId" value="@item.CommentId">
+                    <input type="hidden" name="userId" value="@item.User.Id">
+                    <button class="btn btn-danger" type="submit" asp-controller="ManageContent" asp-action="DeleteReview">Delete</button>
+                </form>
+            </td>*@
+        </tr>
+}
+    </tbody>
+</table>
