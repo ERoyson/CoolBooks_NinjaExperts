@@ -50,7 +50,7 @@ namespace CoolBooks_NinjaExperts.Controllers
             return View(comments);
         }
 
-        [Authorize(Roles = "User, Moderator, Admin")]
+        //[Authorize(Roles = "User, Moderator, Admin")]
         public PartialViewResult Create(string review)
         {
             int reviewId = int.Parse(review);
