@@ -275,7 +275,7 @@
                             <h5>Comments</h5>
                             @foreach (var comment in review.Comments)
                             {
-                                        f2++;
+                                        f2--;
                                         <script type="text/javascript">
                                             $(function () {
                                                 $('.comments_@f2').click(function () {
@@ -283,7 +283,7 @@
                                                     var id = $buttonClicked.attr('data');
 
                                                     $.ajax({
-                                                        url: '@Url.Action("Create", "Replies", new { comment = comment.Id })',
+                                                        url: '@Url.Action("Create", "Replies", new { comment = comment.Id, review = review.Id })',
                                                         type: 'GET',
                                                         data: { id: id },
                                                         success: function (partialView)
@@ -328,31 +328,12 @@
                                          </div>
                                          <details>
                                          <summary>View Replies [@comment.Replies.Count()]</summary>
-                                        @{int f3 = 0; /*/Index for different forms/partialViews/*/}
+                                        
                                         @foreach (var reply in comment.Replies)
-                                                    {
-                                                        f3++;
-                                                        <script type="text/javascript">
-                                                    $(function () {
-                                                        $('.comments_@f3').click(function () {
-                                                            var $buttonClicked = $(this);
-                                                            var id = $buttonClicked.attr('data');
-
-                                                            $.ajax({
-                                                                url: '@Url.Action("Create", "Replies", new { comment = reply.Id })',
-                                                                type: 'GET',
-                                                                data: { id: id },
-                                                                success: function (partialView)
-                                                                {
-                                                                    $('#ReplyForm@f3').html(partialView);
-                                                                    $('#ReplyForm@f3').show();
-                                                                }
-                                                            });
-                                                        });
-                                                    });
-                                                </script>
+                                         {
 
                                                 <p class="list-inline-item ml-auto">@reply.User.UserName | @reply.Reply</p>
+                                                <br />
 
                                         }
                                         </details>
