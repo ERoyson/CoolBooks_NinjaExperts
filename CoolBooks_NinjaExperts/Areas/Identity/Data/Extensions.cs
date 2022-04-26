@@ -314,23 +314,23 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
         //        new Replies
         //        {
         //            Id = 1,
-        //            ReviewsId = 1, //Harry Potter & The Sorcerer's Stone: "The book was magical!" -Karl
+        //            CommentsId = 1, //Harry Potter & The Sorcerer's Stone: "The book was magical!" -Karl
         //            UserId = "85e508e4-80ce-9d68-84c3-g1gd726e97g1", //Anna
-        //            Comment = "I couldn't agree more!"
+        //            Reply = "I couldn't agree more!"
         //        },
         //        new Replies
         //        {
         //            Id = 2,
-        //            ReviewsId = 1, //Harry Potter & The Sorcerer's Stone: "The book was magical!" -Karl
+        //            CommentsId = 1, //Harry Potter & The Sorcerer's Stone: "The book was magical!" -Karl
         //            UserId = "bd332a8c-b4e4-5cg1-b68d-g25g3cg8dgc5", //Berit
-        //            Comment = "I thought the book was boring..."
+        //            Reply = "I thought the book was boring..."
         //        },
         //        new Replies
         //        {
         //            Id = 3,
-        //            ReviewsId = 7, //Fifty Shades of Grey: "Mr Grey.. What a man" -Berit
+        //            CommentsId = 7, //Fifty Shades of Grey: "Mr Grey.. What a man" -Berit, "
         //            UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f", //Mats
-        //            Comment = "Really...?"
+        //            Reply = "Really...?"
         //        });
         //}
 
