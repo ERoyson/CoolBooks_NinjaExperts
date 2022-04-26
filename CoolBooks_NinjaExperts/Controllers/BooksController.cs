@@ -159,6 +159,23 @@ namespace CoolBooks_NinjaExperts.Models
                 return NotFound();
             }
 
+            VM.FlaggedComments = _context.FlaggedComments
+                .Include(x => x.Comments)
+                .Include(x => x.Flagged)
+                .Include(x => x.User)
+                .Where(x => x.UserId == userId)
+                .ToList();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            VM.Comments = _context.Comments
+                .Include(r => r.Replies)
+                .ThenInclude(c => c.User)
+                .Include(r => r.User)
+                .ToList();
+
             VM.Comments = _context.Comments
                 .Include(r => r.Replies)
                 .ThenInclude(c => c.User)

@@ -24,7 +24,8 @@ namespace CoolBooks_NinjaExperts.Controllers
         {
             _context = context;
         }
-
+        //REVIEWS
+        //------------------------------------------
         [Authorize(Roles = "Admin, Moderator")]
         public IActionResult FlaggedReviews()
         {
@@ -75,15 +76,7 @@ namespace CoolBooks_NinjaExperts.Controllers
             return RedirectToAction("FlaggedReviews");
         }
 
-        // -------------------------------------------
-        //public IActionResult FlaggedComments()
-
-        // -------------------------------------------
-        //public IActionResult FlaggedReplies()
-
-        // -------------------------------------------
-
-
+      
 
         [Authorize(Roles = "User, Admin, Moderator")]
         public IActionResult LikeReviews(bool check, int reviewId)
@@ -165,8 +158,31 @@ namespace CoolBooks_NinjaExperts.Controllers
             return View();
         }
 
+        //COMMENTS
+        // -------------------------------------------
+        public IActionResult FlaggedComments()
+        {
+            var FlaggedComments = _context.FlaggedComments
+                .Include(x => x.User)
+                .Include(x => x.Comments)
+                .Include(x => x.Flagged)
+                .Where(x => x.FlaggedId == 2)
+                .ToList();
+
+            if (!FlaggedComments.Any())
+            {
+                return View("NothingFlagged");
+            }
+
+            return View(FlaggedComments);
+        }
 
         // -------------------------------------------
+        //public IActionResult FlaggedReplies()
+
+        // -------------------------------------------
+
+
     }
 
 }
