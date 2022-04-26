@@ -69,12 +69,18 @@
                 </span><br />
                 <span>ISBN: @Html.DisplayFor(model => Model.Book.ISBN)</span>
                                 
-                <div class="d-flex small text-warning mb-2">
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
+                <div>
+                    @for (var i = 1; i <= 5; i++)
+                        {
+                            if (@Model.Book.Rating >= i)
+                            {
+                                <span class="fa fa-star checked"></span>
+                            }
+                            else
+                            {
+                                <span class="fa fa-star"></span>
+                            }
+                        }
                 </div>
             </div>
             <p class="lead">@Html.DisplayFor(model => Model.Book.Description)</p>
