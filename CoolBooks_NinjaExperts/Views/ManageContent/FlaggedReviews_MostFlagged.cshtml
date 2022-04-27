@@ -1,14 +1,9 @@
-﻿@model IEnumerable<CoolBooks_NinjaExperts.Models.FlaggedReviews>
+﻿@model CoolBooks_NinjaExperts.ViewModels.MostFlagged_Reviews_ViewModel
 
 
 @{
-    ViewData["Title"] = "Manage Reviews";
+    ViewData["Title"] = "Manage Comments";
 }
-
-<h1>
-    <p class="bi bi-flag" style="color:red"> Reviews</p>
-</h1>
-
 <nav class="mt-5 d-flex justify-content-lg-center">
 
     @Html.ActionLink("Newest", "FlaggedReviews","ManageContent", 
@@ -27,65 +22,56 @@
 <table class="table">
     <thead>
         <tr>
-            @*<th>
-                @Html.DisplayNameFor(model => model.User.Id) 
-            </th> *@
-
-             <th>
-                Flagged By:
-            </th>
+            <th new class="bi bi-flag" style="color:Red;">
+                Total Flags:
+            </th> 
             <th>
                 Flagged Review ID:
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Review.Title) @*FlaggedReviewTITLE*@
+              <th>
+                Review Title:
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Review.Text) @*FlaggedContent*@
+                Review Text:
             </th>
-            <th>
-                Flag Created:
+             <th>
+                Comment Created:
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) 
+@for (int i = 0; i<Model.MostFlagged.Count(); i++) 
 {
         <tr>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.User.Id)
-            </td>*@
-             <td>
-                @Html.DisplayFor(modelItem => item.User.UserName)
-            </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Review.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Review.Title)
+                @Html.DisplayFor(modelItem => Model.TotalFlags[i])
             </td>
              <td>
-                @Html.DisplayFor(modelItem => item.Review.Text)
+                @Html.DisplayFor(modelItem => Model.MostFlagged[i])
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Created)
+                @Html.DisplayFor(modelItem => @Model.Reviews[i].Title)
             </td>
-          
+            <td>
+                @Html.DisplayFor(modelItem => @Model.Reviews[i].Text)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => @Model.Reviews[i].Created)
+            </td>
+
+
             <td>
                 <form>
-                    <input type="hidden" name="reviewId" value="@item.Review.Id">
-                    <input type="hidden" name="userId" value="@item.User.Id">
+                    <input type="hidden" name="ReviewId" value="@Model.Reviews[i].Id">
                     <button class="btn btn-success" type="submit" asp-controller="ManageContent" asp-action="UnFlagReview">UnFlag</button>
                 </form>
                 <form>
-                    <input type="hidden" name="reviewId" value="@item.Review.Id">
-                    <input type="hidden" name="userId" value="@item.User.Id">
+                    <input type="hidden" name="ReviewId" value="@Model.Reviews[i].Id">
                     <button class="btn btn-warning" type="submit" asp-controller="ManageContent" asp-action="BlockReview">Block</button>
                 </form>
                 <form>
-                    <input type="hidden" name="reviewId" value="@item.Review.Id">
-                    <input type="hidden" name="userId" value="@item.User.Id">
+                    <input type="hidden" name="ReviewId" value="@Model.Reviews[i].Id">
                     <button class="btn btn-danger" type="submit" asp-controller="ManageContent" asp-action="DeleteReview">Delete</button>
                 </form>
             </td>
