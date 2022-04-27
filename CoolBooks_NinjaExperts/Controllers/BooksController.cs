@@ -172,16 +172,16 @@ namespace CoolBooks_NinjaExperts.Models
 
 
 
-            //VM.Comments = _context.Comments
-            //   .Include(r => r.Replies)
-            //   .ThenInclude(c => c.User)
-            //   .Include(c => c.Reviews)
-            //   .ThenInclude(c => c.Book)
-            //   .Include(r => r.User)
-            //   .Include(r => r.CommentLikes)
-            //   .Include(r => r.CommentDislikes)
-            //   .Where(c => c.IsBlocked == null || false)
-            //   .OrderByDescending(r => r.Created).ToList();
+            VM.Comments = _context.Comments
+               .Include(r => r.Replies)
+               .ThenInclude(c => c.User)
+               .Include(c => c.Reviews)
+               .ThenInclude(c => c.Book)
+               .Include(r => r.User)
+               .Include(r => r.CommentLikes)
+               .Include(r => r.CommentDislikes)
+               .Where(c => c.IsBlocked == null || false)
+               .OrderByDescending(r => r.Created).ToList();
 
 
             //Lägg till fler filtreringsalternativ på reviews, ex. högst poäng, flest gillade review etc.
