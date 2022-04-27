@@ -392,7 +392,7 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                     Id = 3,
                     CommentsId = 3, //Fifty Shades of Grey: "Mr Grey.. What a man" -Berit, "
                     UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f", //Mats
-                    Reply = "Really...?"
+                    Reply = "Really what?"
                 });
         }
 
