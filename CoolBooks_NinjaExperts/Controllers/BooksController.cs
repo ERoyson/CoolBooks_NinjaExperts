@@ -94,7 +94,7 @@ namespace CoolBooks_NinjaExperts.Models
             //    break;
             //case "Genre_desc":
             //    VM.Books = VM.Books.OrderByDescending(c => c.Genres);
-                break;
+                //break;
             case "Created":
                VM.Books = VM.Books.OrderBy(c => c.Created);
                break;
@@ -170,27 +170,36 @@ namespace CoolBooks_NinjaExperts.Models
                 return NotFound();
             }
 
-            VM.Comments = _context.Comments
-                .Include(r => r.Replies)
-                .ThenInclude(c => c.User)
-                .Include(r => r.User)
-                .ToList();
 
-            VM.Comments = _context.Comments
-                .Include(r => r.Replies)
-                .ThenInclude(c => c.User)
-                .Include(r => r.User).ToList();
+
+            //VM.Comments = _context.Comments
+            //   .Include(r => r.Replies)
+            //   .ThenInclude(c => c.User)
+            //   .Include(c => c.Reviews)
+            //   .ThenInclude(c => c.Book)
+            //   .Include(r => r.User)
+            //   .Include(r => r.CommentLikes)
+            //   .Include(r => r.CommentDislikes)
+            //   .Where(c => c.IsBlocked == null || false)
+            //   .OrderByDescending(r => r.Created).ToList();
+
 
             //Lägg till fler filtreringsalternativ på reviews, ex. högst poäng, flest gillade review etc.
             VM.Reviews = _context.Reviews
-                .Include(r => r.Comments)
-                .ThenInclude(c => c.User)
-                .Include(r => r.User)
-                .Include(r => r.Book)
-                .Include(r => r.ReviewLikes)
-                .Include(r => r.ReviewDislikes)
-                .Where(r => r.BookId == id && r.IsBlocked == null || false)
-                .OrderByDescending(r => r.Created).ToList();
+                    .Include(r => r.Comments.Where(c => c.IsBlocked == null || false))
+                    .ThenInclude(c => c.CommentLikes)
+                    .Include(r => r.Comments.Where(c => c.IsBlocked == null || false))
+                    .ThenInclude(c => c.CommentDislikes)
+                    .Include(c => c.Comments.Where(c => c.IsBlocked == null || false))
+                    .ThenInclude(c => c.User)
+                    .Include(r => r.User)
+                    .Include(r => r.Book)
+                    .Include(r => r.ReviewLikes)
+                    .Include(r => r.ReviewDislikes)
+                    .Where(r => r.BookId == id && r.IsBlocked == null || false)
+                    
+                    .OrderByDescending(r => r.Created).ToList();
+
 
             VM.Book = _context.Books
                 .Include(x => x.Image)

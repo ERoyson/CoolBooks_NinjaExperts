@@ -8,6 +8,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link rel="stylesheet" href="~/css/ReviewsStyle.css" />
+<link rel="stylesheet" href="~/css/CommentsStyle.css" />
 
 @using Microsoft.AspNetCore.Identity
 @using CoolBooks_NinjaExperts.Areas.Identity.Data
@@ -54,26 +55,32 @@
                 <span>
                     @{
                         for(int i = 0;  i < Model.Book.Authors.Count(); i++)
+                        {
+                            if (i == Model.Book.Authors.Count()-1)
                             {
-                                if (i == Model.Book.Authors.Count()-1)
-                                {
-                                    <a class="text-dark" asp-controller="Authors" asp-action="Details" asp-route-id="@Model.Book.Authors[i].Id" style="text-decoration: none">@Model.Book.Authors[i].FullName</a>
-                                }
-                                else
-                                {
-                                    <a class="text-dark" asp-controller="Authors" asp-action="Details" asp-route-id="@Model.Book.Authors[i].Id" style="text-decoration: none">@Model.Book.Authors[i].FullName & </a>
-                                }
+                                <a class="text-dark" asp-controller="Authors" asp-action="Details" asp-route-id="@Model.Book.Authors[i].Id" style="text-decoration: none">@Model.Book.Authors[i].FullName</a>
                             }
+                            else
+                            {
+                                <a class="text-dark" asp-controller="Authors" asp-action="Details" asp-route-id="@Model.Book.Authors[i].Id" style="text-decoration: none">@Model.Book.Authors[i].FullName & </a>
+                            }
+                        }
                     }
                 </span><br />
                 <span>ISBN: @Html.DisplayFor(model => Model.Book.ISBN)</span>
                                 
-                <div class="d-flex small text-warning mb-2">
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
-                    <div class="bi-star-fill"></div>
+                <div>
+                    @for (var i = 1; i <= 5; i++)
+                        {
+                            if (@Model.Book.Rating >= i)
+                            {
+                                <span class="fa fa-star checked"></span>
+                            }
+                            else
+                            {
+                                <span class="fa fa-star"></span>
+                            }
+                        }
                 </div>
             </div>
             <p class="lead">@Html.DisplayFor(model => Model.Book.Description)</p>
@@ -108,9 +115,6 @@
                             <label for="rating-1">1</label>
                         </span>
                     </fieldset>
-                    @*<label asp-for="Review.Rating" class="control-label"></label>*@
-                    @*<input type="hidden" asp-for="Review.Rating" class="form-control" />*@
-                    @*<span asp-validation-for="Review.Rating" class="text-danger"></span>*@
                 </div>
                 <div class="form-group">
                     <label asp-for="Review.Title" class="control-label"></label>
@@ -169,69 +173,79 @@
                             }
                         }
                         </div>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star checked"></span>
-                        <span class="fa fa-star"></span>
-                        <span class="fa fa-star"></span>
+
+                        @*Dynamic star rating in reviews*@
+                        @for (var i = 1; i <= 5; i++)
+                        {
+                            if (review.Rating >= i)
+                            {
+                                <span class="fa fa-star checked"></span>
+                            }
+                            else
+                            {
+                                <span class="fa fa-star"></span>
+                            }
+                        }
                       </div>
                       <p style="margin-top:1rem;">@review.Text </p>
                         <span class="g-color-gray-dark-v4 g-font-size-12">Created by: @review.User.UserName | @review.Created</span>
         
                         @*REVIEW LIKES AND DISLIKES*@
-                      <ul class="list-inline d-sm-flex my-0">
-                        <li class="list-inline-item g-mr-20">
-                          <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!"> @*list of users who liked?*@
-                            @{
-                                if(@review.ReviewLikes.Where(x=>x.ReviewId == review.Id && x.UserId == @Model.UserId).Count() > 0)
-                                {
+                        <ul class="list-inline d-sm-flex my-0">
+                            <li class="list-inline-item g-mr-20">
+                              <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!"> @*list of users who liked?*@
+                                @{
+                                    if(@review.ReviewLikes.Where(x=>x.ReviewId == review.Id && x.UserId == @Model.UserId).Count() > 0)
+                                    {
                                       
-                                    @Html.ActionLink("", "LikeReviews","ManageContent", 
-                                        new{ userId = @Model.UserId, check = false, reviewId=review.Id }, // values
-                                        new{  @class="fa fa-thumbs-up g-pos-rel g-top-1 g-mr-3", @style="color:green;"}); // style
+                                        @Html.ActionLink("", "LikeReviews","ManageContent", 
+                                            new{ userId = @Model.UserId, check = false, reviewId=review.Id }, // values
+                                            new{  @class="fa fa-thumbs-up g-pos-rel g-top-1 g-mr-3", @style="color:green;"}); // style
                                         
+                                    }
+                                    else
+                                    {
+                                        @Html.ActionLink("", "LikeReviews","ManageContent", 
+                                            new{  check = true, reviewId=review.Id}, // values
+                                            new{  @class="fa fa-thumbs-up g-pos-rel g-top-1 g-mr-3", @style="color:grey;"}); // style
+                                    }
+                                    @if(review.ReviewLikes.Where(x=>x.ReviewId == review.Id).Count()>0)
+                                        @review.ReviewLikes.Where(x=>x.ReviewId == review.Id).Count(); // Total Likes on this review
                                 }
-                                else
-                                {
-                                    @Html.ActionLink("", "LikeReviews","ManageContent", 
-                                        new{  check = true, reviewId=review.Id}, // values
-                                        new{  @class="fa fa-thumbs-up g-pos-rel g-top-1 g-mr-3", @style="color:grey;"}); // style
-                                }
-                                @if(review.ReviewLikes.Where(x=>x.ReviewId == review.Id).Count()>0)
-                                    @review.ReviewLikes.Where(x=>x.ReviewId == review.Id).Count(); // Total Likes on this review
-                            }
                             
-                          </a>
+                              </a>
 
 
-                        </li>
-                        <li class="list-inline-item g-mr-20">
-                          <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!">
-                            @{
-                                if(@review.ReviewDislikes.Where(x=>x.ReviewId == review.Id && x.UserId == @Model.UserId).Count() > 0)
-                                {
+                            </li>
+                            <li class="list-inline-item g-mr-20">
+                              <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!">
+                                @{
+                                    if(@review.ReviewDislikes.Where(x=>x.ReviewId == review.Id && x.UserId == @Model.UserId).Count() > 0)
+                                    {
                                       
-                                    @Html.ActionLink("", "DislikeReviews","ManageContent", 
-                                        new{ check = false, reviewId=review.Id }, // values
-                                        new{ @class="fa fa-thumbs-down g-pos-rel g-top-1 g-mr-3", @style="color:red;"}); // style
+                                        @Html.ActionLink("", "DislikeReviews","ManageContent", 
+                                            new{ check = false, reviewId=review.Id }, // values
+                                            new{ @class="fa fa-thumbs-down g-pos-rel g-top-1 g-mr-3", @style="color:red;"}); // style
                                         
+                                    }
+                                    else
+                                    {
+                                        @Html.ActionLink("", "DislikeReviews","ManageContent", 
+                                            new{ userId = @Model.UserId, check = true, reviewId=review.Id}, // values
+                                            new{  @class="fa fa-thumbs-down g-pos-rel g-top-1 g-mr-3", @style="color:grey;"}); // style
+                                    }
+                                    @if(review.ReviewDislikes.Where(x=>x.ReviewId == review.Id).Count()>0)
+                                        @review.ReviewDislikes.Where(x=>x.ReviewId == review.Id).Count(); // Total Likes on this review
                                 }
-                                else
-                                {
-                                    @Html.ActionLink("", "DislikeReviews","ManageContent", 
-                                        new{ userId = @Model.UserId, check = true, reviewId=review.Id}, // values
-                                        new{  @class="fa fa-thumbs-down g-pos-rel g-top-1 g-mr-3", @style="color:grey;"}); // style
-                                }
-                                @if(review.ReviewDislikes.Where(x=>x.ReviewId == review.Id).Count()>0)
-                                    @review.ReviewDislikes.Where(x=>x.ReviewId == review.Id).Count(); // Total Likes on this review
-                            }
-                          </a>
-                        </li>
+                              </a>
+                            </li>
                           
+
                    
 
 
-                        <script type="text/javascript">
+                            <script type="text/javascript">
+
                                 $(function () {
                                     $('.comments_@f').click(function () {
                                         var $buttonClicked = $(this);
@@ -252,92 +266,132 @@
                             <li class="list-inline-item ml-auto">
                                 <i class="fa fa-reply g-pos-rel g-top-1 g-mr-3">
                                  <a id="changeCursor" class="comments_@f text-dark" style="text-decoration:none;" data="@review.Id">Comment</a>
-                                 </i>
-                                 
-                                <div id="_CommentForm_@f" style="display:none">
-                                   
-                                </div>
-                                  
+                                 </i>                                
+                                <div id="_CommentForm_@f" style="display:none"></div>                                
                             </li>
                             <li>
+
                                 <details>
                                     <summary>View Comments [@review.Comments.Count()]</summary>
                                     @{int f2 = 0;}
                                     <ul>        
                             <h5>Comments</h5>
                             @foreach (var comment in review.Comments)
-                                        {
-                                            f2--;
-                                            <p>@comment.Comment </p>
-                                    <span>Created by: @comment.User.UserName | @comment.Created
-                                        <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!">
-                                            <i class="fa fa-thumbs-up g-pos-rel g-top-1 g-mr-3"></i>
-                                            178
-                                        </a>
-                                        <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!">
-                                            <i class="fa fa-thumbs-down g-pos-rel g-top-1 g-mr-3"></i>
-                                            34
-                                        </a>
-                                        <div class="d-flex justify-content-between">
-                                         <form asp-controller="Flagged" asp-action="FlagComment">
-                                                @{  
-                                                    if(@Model.FlaggedComments.Where(x=>x.CommentId == comment.Id && x.FlaggedId == 2).Count() > 0)
-                                                    {
-                                                        <input type="hidden" name="isFlagged" value="false">
-                                                        <input type="hidden" name="CommentId" value="@comment.Id">
-                                                        <input type="hidden" name="UserId" value="@Model.UserId">
-                                                        <input type="hidden" name="ReviewId" value="@review.Id">
-                                                        <button type="submit" onclick="reloadPage();" class="bi bi-flag btn-danger"><small> | Reported</small></button>
-                                                    }
+                            {
+                                f2++;
+                                <script type="text/javascript">
+                                    $(function () {
+                                        $('.replies_@f2@review.Id').click(function () {
+                                            var $buttonClicked = $(this);
+                                            var id = $buttonClicked.attr('data');
+
+                                            $.ajax({
+                                                url: '@Url.Action("Create", "Replies", new { comment_and_review = @comment.Id + "," + @review.Id })',
+                                                type: 'GET',
+                                                data: { id: id },
+                                                success: function (partialView)
+                                                {
+                                                    $('#_ReplyForm_@f2@review.Id').html(partialView);
+                                                    $('#_ReplyForm_@f2@review.Id').show();
+                                                }
+                                            });
+                                        });
+                                    });
+                                </script>
+
+                                <p class="list-inline-item ml-auto">@comment.User.UserName | @comment.Comment
+                                  //-------------------------------------------------------------
+                                                 <li class="list-inline-item g-mr-20">
+                                            <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!"> @*list of users who liked?*@
+                                                @{
+                                                    if(@comment.CommentLikes.Where(x=>x.CommentId == comment.Id && x.UserId == @Model.UserId).Count() > 0)
+                                                     {
+                                      
+                                                         @Html.ActionLink("", "LikeComments","ManageContent", 
+                                                         new{  check = false, commentId=comment.Id }, // values
+                                                         new{  @class="fa fa-thumbs-up g-pos-rel g-top-1 g-mr-3", @style="color:green;"}); // style
+                                        
+                                                     }
                                                     else
                                                     {
-                                                        <input type="hidden" name="isFlagged" value="true">
-                                                        <input type="hidden" name="CommentId" value="@comment.Id">
-                                                        <input type="hidden" name="UserId" value="@Model.UserId">
-                                                        <input type="hidden" name="ReviewId" value="@review.Id">
-                                                        <button type="submit" onclick="reloadPage();" class="bi bi-flag btn-outline-danger"></button>
+                                                         @Html.ActionLink("", "LikeComments","ManageContent", 
+                                                         new{  check = true, commentId=comment.Id}, // values
+                                                         new{  @class="fa fa-thumbs-up g-pos-rel g-top-1 g-mr-3", @style="color:grey;"}); // style
                                                     }
+                                                    @if(comment.CommentLikes.Where(x=>x.CommentId == comment.Id).Count()>0)
+
+                                                        @comment.CommentLikes.Where(x=>x.CommentId == comment.Id).Count(); // Total Likes on this Comment
                                                 }
-                                         </form>
-                                         </div>
-                                         <details>
-                                         <summary>View Replies [@comment.Replies.Count()]</summary>
-                                        @{int f3 = 0; /*/Index for different forms/partialViews/*/}
-                                        @foreach (var reply in comment.Replies)
-                                                    {
-                                                        f3++;
-                                                        <script type="text/javascript">
-                                                    $(function () {
-                                                        $('.comments_@f3').click(function () {
-                                                            var $buttonClicked = $(this);
-                                                            var id = $buttonClicked.attr('data');
+                            
+                                            </a>
+                                      </li>
+                                      <li class="list-inline-item g-mr-20">
+                                        <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!">
+                                            @{
+                                                if(@comment.CommentDislikes.Where(x=>x.CommentId == comment.Id && x.UserId == @Model.UserId).Count() > 0)
+                                                {
+                                      
+                                                    @Html.ActionLink("", "DislikeComments","ManageContent", 
+                                                    new{ check = false, commentId=comment.Id }, // values
+                                                    new{ @class="fa fa-thumbs-down g-pos-rel g-top-1 g-mr-3", @style="color:red;"}); // style
+                                        
+                                                }
+                                                else
+                                                {
+                                                    @Html.ActionLink("", "DislikeComments","ManageContent", 
+                                                    new{  check = true, commentId=comment.Id}, // values
+                                                    new{  @class="fa fa-thumbs-down g-pos-rel g-top-1 g-mr-3", @style="color:grey;"}); // style
+                                                }
+                                                @if(comment.CommentDislikes.Where(x=>x.CommentId == comment.Id).Count()>0)
 
-                                                            $.ajax({
-                                                                url: '@Url.Action("Create", "Replies", new { comment = reply.Id })',
-                                                                type: 'GET',
-                                                                data: { id: id },
-                                                                success: function (partialView)
-                                                                {
-                                                                    $('#ReplyForm@f3').html(partialView);
-                                                                    $('#ReplyForm@f3').show();
-                                                                }
-                                                            });
-                                                        });
-                                                    });
-                                                </script>
+                                                    @comment.CommentDislikes.Where(x=>x.CommentId == comment.Id).Count(); // Total Dislikes on this comment
+                                            }
+                                        </a>
+                                      </li>
+                                  //-------------------------------------------------------
+                                <i class="fa fa-reply g-pos-rel g-top-1 g-mr-3">
+                                    <a id="changeCursor" class="replies_@f2@review.Id text-dark" style="text-decoration:none;" data="@comment.Id">Reply</a> 
+                                </i>
+                                <div id="_ReplyForm_@f2@review.Id" style="display:none"></div>
+                                </p>
 
-                                                <p class="list-inline-item ml-auto">@reply.User.UserName | @reply.Reply</p>
 
+                                <div class="d-flex justify-content-between">
+                                        @{  
+                                            if(@Model.FlaggedComments.Where(x=>x.CommentId == comment.Id && x.FlaggedId == 2).Count() > 0)
+                                            {
+                                                @Html.ActionLink("", "FlagComment","Flagged", 
+                                                        new{  isFlagged = false, commentId=comment.Id }, // values
+                                                        new{  @class="bi bi-flag", @style="color:Red;"}); // style
+                                            }
+                                            else
+                                            {
+                                                @Html.ActionLink("", "FlagComment","Flagged", 
+                                                        new{  isFlagged = true, commentId=comment.Id, reviewId=review.Id }, // values
+                                                        new{  @class="bi bi-flag", @style="color:grey;"}); // style
+                                            }
                                         }
-                                        </details>
-                                        <p>----------------------------------------</p>
+                                    </div>
+                                    <details>
+                                    <summary>View Replies [@comment.Replies.Count()]</summary>
+                                        
+                                @foreach (var reply in comment.Replies)
+                                    {
 
-                                    </span>
+                                        <p class="list-inline-item ml-auto">@reply.User.UserName | @reply.Reply</p>
+                                        <br />
 
                                 }
-
-                        </ul>
                                 </details>
+                                <p>----------------------------------------</p>
+
+                                    
+
+                            }
+
+
+                                    </ul>
+                                 </details>
                             </li>
                         
                       </ul>
@@ -349,20 +403,6 @@
 </div>
 
 
-<script>
-    //function myFunction()
-    //{
-    //  document.getElementById("hidden").style.display = "block";
-    //}
-    function myFunction() {
-      var x = document.getElementById("hidden");
-      if (x.style.display === "block") {
-        x.style.display = "none";
-      } else {
-        x.style.display = "block";
-      }
-}
-</script>
 
 
 @*<script type="text/javascript">
@@ -372,29 +412,56 @@
     }
 </script>*@        
 
-@*Scroll back to Page-position*@
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function(event) { 
-            var scrollpos = localStorage.getItem('scrollpos');
-            if (scrollpos) window.scrollTo(0, scrollpos);
-        });
 
-        window.onbeforeunload = function(e) {
-            localStorage.setItem('scrollpos', window.scrollY);
-        };
-    </script>
+ <script>
 
-<script>
+//Hide/Show comments
+function myFunction() {
+    var x = document.getElementById("hidden");
+    if (x.style.display === "block") {
+    x.style.display = "none";
+    } 
+    else {
+    x.style.display = "block";
+    }
+}
+
+//Scroll back to Page-position
+document.addEventListener("DOMContentLoaded", function(event) { 
+    var scrollpos = localStorage.getItem('scrollpos');
+    if (scrollpos) window.scrollTo(0, scrollpos);
+});
+
+window.onbeforeunload = function(e) {
+    localStorage.setItem('scrollpos', window.scrollY);
+};
+
+
 //Books/Create - Description character counter
-//const descArea = document.getElementById('desc-area');
-//const charsRemaining = document.getElementById('chars-remaining');
-//const MAX_CHARS = 500;
-//descArea.addEventListener('input', () =>
-//{
-//    const remaining = MAX_CHARS - descArea.value.length;
-//    const color = remaining < MAX_CHARS * 0.1 ? 'red' : null;
-//    charsRemaining.textContent = remaining + ' characters remaining';
-//    charsRemaining.style.color = color;
-//})
-</script>
+const descArea = document.getElementById('desc-area');
+const charsRemaining = document.getElementById('chars-remaining');
+const MAX_CHARS = 500;
+descArea.addEventListener('input', () =>
+{
+    const remaining = MAX_CHARS - descArea.value.length;
+    const color = remaining < MAX_CHARS * 0.1 ? 'red' : null;
+    charsRemaining.textContent = remaining + ' characters remaining';
+    charsRemaining.style.color = color;
+});
+
+//CommentSection
+const showContainers = document.querySelectorAll(".show-replies");
+
+ showContainers.forEach((btn) => 
+    btn.addEventListener("click", (e) => {
+        let parentContainer = e.target.closest("comment__container");
+        let _id = parentContainer.id;
+        if (_id){
+            let childrenContainer = parentContainer.querySelectorAll(`[dataset=${_id}]`);
+            childrenContainer.forEach(child => child.classList.toggle('opened'));
+        }
+    })
+);
+
+ </script>

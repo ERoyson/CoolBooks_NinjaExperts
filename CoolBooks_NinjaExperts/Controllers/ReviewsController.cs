@@ -65,10 +65,19 @@ namespace CoolBooks_NinjaExperts.Controllers
         [Authorize(Roles = "User, Moderator, Admin")]
         public async Task<IActionResult> Create(int bookRating, [Bind("Id,UserId,BookId,Title,Text,Rating,Created")] Reviews review)
         {
+            // Books totala rating skall ändras varje gång en review skapas...
+            // calc total count of bookreviews and add it to Book.Rating...
+
             review.Rating = bookRating;
             if (ModelState.IsValid)
             {
+                double getRating = _context.Reviews.Select(x => x.Rating).Sum();
+                getRating = getRating / (_context.Reviews.Count() + 1); // +1 review to be created.
+                int totalRating = (int)Math.Round(getRating);
+
                 Books books = _context.Books.Where(x=>x.Id == review.BookId).FirstOrDefault();
+                books.Rating = totalRating;
+                _context.Books.Update(books);
                 _context.Add(review);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Details", "Books", books); //Skickar användaren till samma sida efter inskickad review

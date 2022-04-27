@@ -108,6 +108,7 @@ namespace CoolBooks_NinjaExperts.Controllers
 
             return RedirectToAction("Details", "Books", book);
         }
+
         [Authorize(Roles = "User, Admin, Moderator")]
         public IActionResult DislikeReviews(bool check, int reviewId)
         {
@@ -137,16 +138,7 @@ namespace CoolBooks_NinjaExperts.Controllers
 
             return RedirectToAction("Details", "Books", book);
         }
-        [Authorize(Roles = "User, Admin, Moderator")]
-        public IActionResult LikeComments()
-        {
-            return View();
-        }
-        [Authorize(Roles = "User, Admin, Moderator")]
-        public IActionResult DislikeComments()
-        {
-            return View();
-        }
+       
         [Authorize(Roles = "User, Admin, Moderator")]
         public IActionResult LikeReplies()
         {
@@ -160,6 +152,7 @@ namespace CoolBooks_NinjaExperts.Controllers
 
         //COMMENTS
         // -------------------------------------------
+        [Authorize(Roles = "Admin, Moderator")]
         public IActionResult FlaggedComments()
         {
             var FlaggedComments = _context.FlaggedComments
@@ -177,6 +170,103 @@ namespace CoolBooks_NinjaExperts.Controllers
             return View(FlaggedComments);
         }
 
+        [Authorize(Roles = "Admin, Moderator")]
+        public IActionResult UnFlagComment([Bind("UserId, CommentId")] FlaggedComments flagged)
+        {
+            var flaggedComment = _context.FlaggedComments.Where(x => x.UserId == flagged.UserId && x.CommentId == flagged.CommentId).FirstOrDefault();
+            _context.FlaggedComments.Remove(flaggedComment);
+            _context.SaveChanges();
+
+            return RedirectToAction("FlaggedComments");
+        }
+
+        [Authorize(Roles = "Admin, Moderator")]
+        public IActionResult BlockComment([Bind("UserId, CommentId")] FlaggedComments flagged)
+        {
+            var selectedComment = _context.Comments.Where(x => x.Id == flagged.CommentId).FirstOrDefault();
+            selectedComment.IsBlocked = true;
+
+            _context.Update(selectedComment);
+            _context.SaveChanges();
+
+            return RedirectToAction("UnFlagComment", flagged);
+        }
+
+        [Authorize(Roles = "Admin, Moderator")]
+        public IActionResult DeleteComment([Bind("UserId, CommentId")] FlaggedComments flagged)
+        {
+            var selectedComment = _context.Comments.Where(x => x.Id == flagged.CommentId).FirstOrDefault();
+            var flaggedComment = _context.FlaggedComments.Where(x => x.UserId == flagged.UserId && x.CommentId == flagged.CommentId).FirstOrDefault();
+
+            _context.FlaggedComments.Remove(flaggedComment);
+            _context.Comments.Remove(selectedComment);
+            _context.SaveChanges();
+
+            return RedirectToAction("FlaggedComments");
+        }
+
+        [Authorize(Roles = "User, Admin, Moderator")]
+        public IActionResult LikeComments(bool check, int commentId)
+        {
+            
+            var book = _context.Books.FirstOrDefault(x => x.Reviews.Any(y => y.Comments.Any(z => z.Id == commentId)));
+            var CL = new CommentLikes();
+            CL.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (check == false)
+            {
+                CL = _context.CommentLikes.FirstOrDefault(x => x.UserId == CL.UserId && x.CommentId == commentId);
+                _context.Remove(CL);
+            }
+            if (check == true)
+            {
+                // ADD TO COMMENTLIKES
+
+                CL.CommentId = commentId;
+                _context.Add(CL);
+
+                // REMOVE FROM DISLIKES IF EXISTS
+                var CDL = _context.CommentDislikes.FirstOrDefault(x => x.UserId == CL.UserId && x.CommentId == commentId);
+                if (CDL != null)
+                {
+                    _context.CommentDislikes.Remove(CDL);
+                }
+            }
+            _context.SaveChanges();
+
+            return RedirectToAction("Details", "Books", book);
+        }
+
+        [Authorize(Roles = "User, Admin, Moderator")]
+  
+        public IActionResult DisLikeComments(bool check, int commentId)
+        {                                             
+            var book = _context.Books.FirstOrDefault(x => x.Reviews.Any(y => y.Comments.Any(z => z.Id == commentId)));
+            var CDL = new CommentDislikes();
+            CDL.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Get userID
+
+            if (check == false)
+            {
+                CDL = _context.CommentDislikes.FirstOrDefault(x => x.UserId == CDL.UserId && x.CommentId == commentId);
+                _context.Remove(CDL);
+            }
+            if (check == true)
+            {
+                // ADD TO COMMENTDISLIKES
+                CDL.CommentId = commentId;
+                _context.Add(CDL);
+
+                // REMOVE FROM LIKES IF EXISTS
+                var CL = _context.CommentLikes.FirstOrDefault(x => x.UserId == CDL.UserId && x.CommentId == commentId);
+                if (CL != null)
+                {
+                    _context.CommentLikes.Remove(CL);
+                }
+            }
+            _context.SaveChanges();
+
+            return RedirectToAction("Details", "Books", book);
+        }
         // -------------------------------------------
         //public IActionResult FlaggedReplies()
 

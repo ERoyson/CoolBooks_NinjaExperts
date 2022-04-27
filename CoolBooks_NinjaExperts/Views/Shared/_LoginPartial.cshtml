@@ -18,7 +18,9 @@
     </li>
 }
 else if (User.IsInRole("Admin"))
-{
+{    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="Identity" asp-action="FlaggedComments" asp-controller="ManageContent">Flagged Comments</a>
+    </li>
       <li class="nav-item">
         <a class="nav-link text-dark" asp-area="Identity" asp-action="FlaggedReviews" asp-controller="ManageContent">Flagged Reviews</a>
     </li>

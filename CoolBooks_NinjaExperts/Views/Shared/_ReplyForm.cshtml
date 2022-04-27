@@ -7,34 +7,34 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    @*foreach (var review in Model.Reviews)
-    {*@
-    
-
-        <div class="row">
-            <div class="bg-white rounded shadow-sm p-4 mb-5 rating-review-select-page col-md-8">
-                <h5 class="mb-4">Leave a Reply</h5>
-                <div>
-                <form asp-controller="Replies" asp-action="Create" method="post">
-                    <input type="hidden" name="commentId" value="@Model.CommentId"/>
-                    <input type="hidden" name="userId" value="@Model.UserId"/>
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group">
-                        <label asp-for="Reply" class="control-label"></label>
-                        <textarea id="desc-area"  asp-for="Reply.Reply" class="form-control row-cols-6" rows="5" cols="75" maxlength="500"></textarea>
-                        <span id="count_message" asp-validation-for="Reply" class="text-danger"></span>
-                        <div id="chars-remaining" style="text-align:right; font-weight:bold;">500 characters remaining</div>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" value="Send" class="btn btn-primary" />
-                    </div>
-                </form>
+    <div class="row">
+        <div class="bg-white rounded shadow-sm p-4 mb-5 rating-review-select-page col-md-8">
+            <h5 class="mb-4">Leave a Reply</h5>
+            <div>
+            <form asp-controller="Replies" asp-action="Create" method="post">
+                <input type="hidden" name="commentId" value="@Model.CommentId"/>
+                <input type="hidden" name="userId" value="@Model.UserId"/>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Reply" class="control-label"></label>
+                    <textarea id="desc-area"  asp-for="Reply.Reply" class="form-control row-cols-6" rows="5" cols="75" maxlength="500"></textarea>
+                    <span id="count_message" asp-validation-for="Reply" class="text-danger"></span>
+                    <div id="chars-remaining" style="text-align:right; font-weight:bold;">500 characters remaining</div>
                 </div>
+                <div class="form-group">
+                    <input type="submit" value="Send" class="btn btn-primary" />
+                </div>
+            </form>
             </div>
         </div>
-    @*}*@
+    </div>
 }
 else
 {
-    <p>Endast inloggade har behörighet att svara på kommentarer</p>
+   <p>
+        <a class="text-dark" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        or
+        <a class="text-dark" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        to write a comment
+   </p>
 }
