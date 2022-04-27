@@ -16,6 +16,7 @@ using CoolBooks_NinjaExperts.Models;
 
 namespace CoolBooks_NinjaExperts.Models
 {
+    [Authorize(Roles = "Admin, Moderator")]
     public class StatisticsController : Controller
     {
 		private readonly CoolBooks_NinjaExpertsContext _context;
@@ -27,21 +28,33 @@ namespace CoolBooks_NinjaExperts.Models
 
 
 		// GET: Home
-		public ActionResult Index(List<DataPoint> dataPoints)
+		public ActionResult Index()
 		{
-            //List<DataPoint> dataPoints = new List<DataPoint>();
-
-            //var genres = _context.Genres.ToList();
-            //foreach (var item in genres)
-            //{
-            //	dataPoints.Add(new DataPoint(item.Name, 121));
-            //}
+            List<DataPoint> dataPoints = new List<DataPoint>();
 
             var VM = new ShowStatisticsViewModel();
             VM.Genres = _context.Genres.ToList();
             VM.Authors = _context.Authors.ToList();
 
-            dataPoints.Add(new DataPoint("Test", 121));
+            VM.Comments = _context.Comments
+                .Include(c => c.Reviews)
+                .ThenInclude(c => c.Book)
+                .ThenInclude(c => c.Genres)
+                .ThenInclude(bg => bg.Books)
+                .ToList();
+
+            //Summering av dagens kommentarer
+            var commentsToday = VM.Comments.Where(c => c.Created.Date == DateTime.Today).Count();
+
+            //Summering av veckans kommentarer
+            var commentsWeek = VM.Comments.Where(c => c.Created.Date <= DateTime.Today || c.Created.Date >= DateTime.Today.AddDays(-7)).Count();
+
+            //Summering av alla kommentarer
+            var commentsTotal = VM.Comments.Count();
+
+            dataPoints.Add(new DataPoint("Today", commentsToday));
+            dataPoints.Add(new DataPoint("This week", commentsWeek));
+            dataPoints.Add(new DataPoint("Total", commentsTotal));
 
             ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
 
@@ -71,8 +84,7 @@ namespace CoolBooks_NinjaExperts.Models
             return View();
 
 		}
-
-        public ActionResult GenresStats() //list<commentsCount>
+        public ActionResult GenresStats()
         {
             List<DataPoint> dataPoints = new List<DataPoint>();
             var comments = _context.Comments.ToList();
@@ -110,45 +122,10 @@ namespace CoolBooks_NinjaExperts.Models
 
         }
 
-        public ActionResult DailyAndWeeklyComments()
-        {
-            List<DataPoint> dataPoints = new List<DataPoint>();
-            var comments = _context.Comments.ToList();
-            var reviews = _context.Reviews.ToList();
-            var books = _context.Books.ToList();
-            var genres = _context.Genres.ToList();
-            var VM = new ShowStatisticsViewModel();
-
-            VM.Comments = _context.Comments
-                .Include(c => c.Reviews)
-                .ThenInclude(c => c.Book)
-                .ThenInclude(c => c.Genres)
-                .ThenInclude(bg => bg.Books)
-                .ToList();
-
-
-            //Summering av dagens kommentarer
-            var commentsToday = VM.Comments.Where(c => c.Created.Date == DateTime.Today).Count();
-
-            //Summering av veckans kommentarer
-            var commentsWeek = VM.Comments.Where(c => c.Created.Date <= DateTime.Today || c.Created.Date >= DateTime.Today.AddDays(-7)).Count();
-
-            dataPoints.Add(new DataPoint("Today", commentsToday));
-            dataPoints.Add(new DataPoint("This week", commentsWeek));
-
-            ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
-
-            return View();
-
-        }
 
         public ActionResult CreateGenreGraph(string genre)
         {
             List<DataPoint> dataPoints = new List<DataPoint>();
-            var comments = _context.Comments.ToList();
-            var reviews = _context.Reviews.ToList();
-            var books = _context.Books.ToList();
-            var genres = _context.Genres.ToList();
             var VM = new ShowStatisticsViewModel();
 
             VM.Comments = _context.Comments
@@ -158,14 +135,9 @@ namespace CoolBooks_NinjaExperts.Models
                 .ThenInclude(bg => bg.Books)
                 .ToList();
 
-            //Ex. Genren Romance finns bara på en bok, "50 Shades...", som i sin tur har en review med 2 kommentarer
             var dailyComments = VM.Comments.Where(c => c.Reviews.Book.Genres.Any(g => g.Name == genre) && c.Created.Date == DateTime.Today).ToList();
             var weeklyComments = VM.Comments.Where(c => c.Reviews.Book.Genres.Any(g => g.Name == genre) && (c.Created.Date <= DateTime.Today || c.Created.Date >= DateTime.Today.AddDays(-7))).ToList();
             var totalComments = VM.Comments.Where(c => c.Reviews.Book.Genres.Any(g => g.Name == genre)).ToList();
-
-            //dataPoints.Add(new DataPoint("Today", dailyComments.Count()));
-            //dataPoints.Add(new DataPoint("This week", weeklyComments.Count()));
-            //dataPoints.Add(new DataPoint("Total", totalComments.Count()));
 
             int daily = dailyComments.Count();
             int weekly = weeklyComments.Count();
@@ -176,7 +148,37 @@ namespace CoolBooks_NinjaExperts.Models
             dataPoints.Add(new DataPoint("Total", total));
 
             ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
-            ViewBag.GenreName = genre.ToString();
+            ViewBag.GenreName = genre;
+
+            return View();
+        }
+
+        public ActionResult CreateAuthorGraph(string author)
+        {
+            List<DataPoint> dataPoints = new List<DataPoint>();
+            var VM = new ShowStatisticsViewModel();
+
+            VM.Comments = _context.Comments
+                .Include(c => c.Reviews)
+                .ThenInclude(c => c.Book)
+                .ThenInclude(c => c.Authors)
+                .ThenInclude(bg => bg.Books)
+                .ToList();
+
+            var dailyComments = VM.Comments.Where(c => c.Reviews.Book.Authors.Any(g => g.FullName == author) && c.Created.Date == DateTime.Today).ToList();
+            var weeklyComments = VM.Comments.Where(c => c.Reviews.Book.Authors.Any(g => g.FullName == author) && (c.Created.Date <= DateTime.Today || c.Created.Date >= DateTime.Today.AddDays(-7))).ToList();
+            var totalComments = VM.Comments.Where(c => c.Reviews.Book.Authors.Any(g => g.FullName == author)).ToList();
+
+            int daily = dailyComments.Count();
+            int weekly = weeklyComments.Count();
+            int total = totalComments.Count();
+
+            dataPoints.Add(new DataPoint("Today", daily));
+            dataPoints.Add(new DataPoint("This week", weekly));
+            dataPoints.Add(new DataPoint("Total", total));
+
+            ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
+            ViewBag.AuthorName = author;
 
             return View();
         }
