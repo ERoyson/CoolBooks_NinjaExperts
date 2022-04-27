@@ -191,56 +191,61 @@
                         <span class="g-color-gray-dark-v4 g-font-size-12">Created by: @review.User.UserName | @review.Created</span>
         
                         @*REVIEW LIKES AND DISLIKES*@
-                      <ul class="list-inline d-sm-flex my-0">
-                        <li class="list-inline-item g-mr-20">
-                          <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!"> @*list of users who liked?*@
-                            @{
-                                if(@review.ReviewLikes.Where(x=>x.ReviewId == review.Id && x.UserId == @Model.UserId).Count() > 0)
-                                {
+                        <ul class="list-inline d-sm-flex my-0">
+                            <li class="list-inline-item g-mr-20">
+                              <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!"> @*list of users who liked?*@
+                                @{
+                                    if(@review.ReviewLikes.Where(x=>x.ReviewId == review.Id && x.UserId == @Model.UserId).Count() > 0)
+                                    {
                                       
-                                    @Html.ActionLink("", "LikeReviews","ManageContent", 
-                                        new{ userId = @Model.UserId, check = false, reviewId=review.Id }, // values
-                                        new{  @class="fa fa-thumbs-up g-pos-rel g-top-1 g-mr-3", @style="color:green;"}); // style
+                                        @Html.ActionLink("", "LikeReviews","ManageContent", 
+                                            new{ userId = @Model.UserId, check = false, reviewId=review.Id }, // values
+                                            new{  @class="fa fa-thumbs-up g-pos-rel g-top-1 g-mr-3", @style="color:green;"}); // style
                                         
+                                    }
+                                    else
+                                    {
+                                        @Html.ActionLink("", "LikeReviews","ManageContent", 
+                                            new{  check = true, reviewId=review.Id}, // values
+                                            new{  @class="fa fa-thumbs-up g-pos-rel g-top-1 g-mr-3", @style="color:grey;"}); // style
+                                    }
+                                    @if(review.ReviewLikes.Where(x=>x.ReviewId == review.Id).Count()>0)
+                                        @review.ReviewLikes.Where(x=>x.ReviewId == review.Id).Count(); // Total Likes on this review
                                 }
-                                else
-                                {
-                                    @Html.ActionLink("", "LikeReviews","ManageContent", 
-                                        new{  check = true, reviewId=review.Id}, // values
-                                        new{  @class="fa fa-thumbs-up g-pos-rel g-top-1 g-mr-3", @style="color:grey;"}); // style
-                                }
-                                @if(review.ReviewLikes.Where(x=>x.ReviewId == review.Id).Count()>0)
-                                    @review.ReviewLikes.Where(x=>x.ReviewId == review.Id).Count(); // Total Likes on this review
-                            }
                             
-                          </a>
+                              </a>
 
 
-                        </li>
-                        <li class="list-inline-item g-mr-20">
-                          <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!">
-                            @{
-                                if(@review.ReviewDislikes.Where(x=>x.ReviewId == review.Id && x.UserId == @Model.UserId).Count() > 0)
-                                {
+                            </li>
+                            <li class="list-inline-item g-mr-20">
+                              <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!">
+                                @{
+                                    if(@review.ReviewDislikes.Where(x=>x.ReviewId == review.Id && x.UserId == @Model.UserId).Count() > 0)
+                                    {
                                       
-                                    @Html.ActionLink("", "DislikeReviews","ManageContent", 
-                                        new{ check = false, reviewId=review.Id }, // values
-                                        new{ @class="fa fa-thumbs-down g-pos-rel g-top-1 g-mr-3", @style="color:red;"}); // style
+                                        @Html.ActionLink("", "DislikeReviews","ManageContent", 
+                                            new{ check = false, reviewId=review.Id }, // values
+                                            new{ @class="fa fa-thumbs-down g-pos-rel g-top-1 g-mr-3", @style="color:red;"}); // style
                                         
+                                    }
+                                    else
+                                    {
+                                        @Html.ActionLink("", "DislikeReviews","ManageContent", 
+                                            new{ userId = @Model.UserId, check = true, reviewId=review.Id}, // values
+                                            new{  @class="fa fa-thumbs-down g-pos-rel g-top-1 g-mr-3", @style="color:grey;"}); // style
+                                    }
+                                    @if(review.ReviewDislikes.Where(x=>x.ReviewId == review.Id).Count()>0)
+                                        @review.ReviewDislikes.Where(x=>x.ReviewId == review.Id).Count(); // Total Likes on this review
                                 }
-                                else
-                                {
-                                    @Html.ActionLink("", "DislikeReviews","ManageContent", 
-                                        new{ userId = @Model.UserId, check = true, reviewId=review.Id}, // values
-                                        new{  @class="fa fa-thumbs-down g-pos-rel g-top-1 g-mr-3", @style="color:grey;"}); // style
-                                }
-                                @if(review.ReviewDislikes.Where(x=>x.ReviewId == review.Id).Count()>0)
-                                    @review.ReviewDislikes.Where(x=>x.ReviewId == review.Id).Count(); // Total Likes on this review
-                            }
-                          </a>
-                        </li>
+                              </a>
+                            </li>
                           
-                        <script type="text/javascript">
+
+                   
+
+
+                            <script type="text/javascript">
+
                                 $(function () {
                                     $('.comments_@f').click(function () {
                                         var $buttonClicked = $(this);
@@ -265,6 +270,7 @@
                                 <div id="_CommentForm_@f" style="display:none"></div>                                
                             </li>
                             <li>
+
                                 <details>
                                     <summary>View Comments [@review.Comments.Count()]</summary>
                                     @{int f2 = 0;}
@@ -294,6 +300,55 @@
                                 </script>
 
                                 <p class="list-inline-item ml-auto">@comment.User.UserName | @comment.Comment
+                                  //-------------------------------------------------------------
+                                                 <li class="list-inline-item g-mr-20">
+                                            <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!"> @*list of users who liked?*@
+                                                @{
+                                                    if(@comment.CommentLikes.Where(x=>x.CommentId == comment.Id && x.UserId == @Model.UserId).Count() > 0)
+                                                     {
+                                      
+                                                         @Html.ActionLink("", "LikeComments","ManageContent", 
+                                                         new{  check = false, commentId=comment.Id }, // values
+                                                         new{  @class="fa fa-thumbs-up g-pos-rel g-top-1 g-mr-3", @style="color:green;"}); // style
+                                        
+                                                     }
+                                                    else
+                                                    {
+                                                         @Html.ActionLink("", "LikeComments","ManageContent", 
+                                                         new{  check = true, commentId=comment.Id}, // values
+                                                         new{  @class="fa fa-thumbs-up g-pos-rel g-top-1 g-mr-3", @style="color:grey;"}); // style
+                                                    }
+                                                    @if(comment.CommentLikes.Where(x=>x.CommentId == comment.Id).Count()>0)
+
+                                                        @comment.CommentLikes.Where(x=>x.CommentId == comment.Id).Count(); // Total Likes on this Comment
+                                                }
+                            
+                                            </a>
+                                      </li>
+                                      <li class="list-inline-item g-mr-20">
+                                        <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!">
+                                            @{
+                                                if(@comment.CommentDislikes.Where(x=>x.CommentId == comment.Id && x.UserId == @Model.UserId).Count() > 0)
+                                                {
+                                      
+                                                    @Html.ActionLink("", "DislikeComments","ManageContent", 
+                                                    new{ check = false, commentId=comment.Id }, // values
+                                                    new{ @class="fa fa-thumbs-down g-pos-rel g-top-1 g-mr-3", @style="color:red;"}); // style
+                                        
+                                                }
+                                                else
+                                                {
+                                                    @Html.ActionLink("", "DislikeComments","ManageContent", 
+                                                    new{  check = true, commentId=comment.Id}, // values
+                                                    new{  @class="fa fa-thumbs-down g-pos-rel g-top-1 g-mr-3", @style="color:grey;"}); // style
+                                                }
+                                                @if(comment.CommentDislikes.Where(x=>x.CommentId == comment.Id).Count()>0)
+
+                                                    @comment.CommentDislikes.Where(x=>x.CommentId == comment.Id).Count(); // Total Dislikes on this comment
+                                            }
+                                        </a>
+                                      </li>
+                                  //-------------------------------------------------------
                                 <i class="fa fa-reply g-pos-rel g-top-1 g-mr-3">
                                     <a id="changeCursor" class="replies_@f2@review.Id text-dark" style="text-decoration:none;" data="@comment.Id">Reply</a> 
                                 </i>
@@ -334,8 +389,9 @@
 
                             }
 
-                        </ul>
-                                </details>
+
+                                    </ul>
+                                 </details>
                             </li>
                         
                       </ul>
