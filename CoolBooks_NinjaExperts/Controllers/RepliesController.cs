@@ -51,17 +51,24 @@ namespace CoolBooks_NinjaExperts.Controllers
         }
 
         // GET: RepliesController/Create
-        public PartialViewResult Create(string comment, string review)
+        public PartialViewResult Create(string comment_and_review)
         {
+            string[] temp = comment_and_review.Split(',');
+            string comment = temp[0];
+            string review = temp[1];
+
+            int reviewId = int.Parse(review);
             int commentId = int.Parse(comment);
+
             var VM = new BookReviewsViewModel(); //ViewModel-object
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             VM.UserId = userId;
             VM.CommentId = commentId;
-            VM.Review = _context.Reviews.Where(r => r.Comments.Any(c=>c.Id == commentId)) //Hämta reviewID där reviewID == commentID
+            VM.ReviewId = review;
+
+            VM.Review = _context.Reviews.Where(r => r.Id == reviewId && r.Comments.Any(c=>c.Id == commentId)) 
                 .FirstOrDefault();
 
-            //ViewData["UserId"] = new SelectList(_context.UserInfo, "Id", "Id");
             return PartialView("_ReplyForm", VM);
         }
 

@@ -61,21 +61,21 @@ namespace CoolBooks_NinjaExperts.Controllers
             return RedirectToAction("Details", "Books", book);
         }
 
-        public async Task<IActionResult> FlagComment(string userId, int CommentId, bool? isFlagged, int ReviewId)
+        public async Task<IActionResult> FlagComment(int commentId, bool? isFlagged, int ReviewId)
         {
-            var oldflaggedComment = _context.FlaggedComments.Where(x => x.CommentId == CommentId && x.UserId == userId).FirstOrDefault();
             var newFlaggedComment = new FlaggedComments();
+            newFlaggedComment.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var oldflaggedComment = _context.FlaggedComments.Where(x => x.CommentId == commentId && x.UserId == newFlaggedComment.UserId).FirstOrDefault();
 
             var IsFlagged = _context.Flagged.Where(x => x.IsFlagged == isFlagged).Select(x => x.Id).FirstOrDefault();
-            var book = _context.Books.Where(x => x.Reviews.Any(y => y.Comments.Any(z => z.Id == CommentId))).FirstOrDefault();
+            var book = _context.Books.Where(x => x.Reviews.Any(y => y.Comments.Any(z => z.Id == commentId))).FirstOrDefault();
             if (oldflaggedComment != null) // update existing flagged - flag / unflag
             {
                 if (oldflaggedComment.FlaggedId == IsFlagged)
                 {
                     return RedirectToAction("Details", "Books", book);
                 }
-                newFlaggedComment.CommentId = CommentId;
-                newFlaggedComment.UserId = userId;
+                newFlaggedComment.CommentId = commentId;
                 newFlaggedComment.FlaggedId = IsFlagged;
                 newFlaggedComment.ReviewId = ReviewId;
 
@@ -87,8 +87,7 @@ namespace CoolBooks_NinjaExperts.Controllers
             }
 
             // new flag
-            newFlaggedComment.CommentId = CommentId;
-            newFlaggedComment.UserId = userId;
+            newFlaggedComment.CommentId = commentId;
             newFlaggedComment.FlaggedId = IsFlagged;
             newFlaggedComment.ReviewId = ReviewId;
 
