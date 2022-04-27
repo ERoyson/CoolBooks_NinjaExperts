@@ -55,16 +55,16 @@
                 <span>
                     @{
                         for(int i = 0;  i < Model.Book.Authors.Count(); i++)
+                        {
+                            if (i == Model.Book.Authors.Count()-1)
                             {
-                                if (i == Model.Book.Authors.Count()-1)
-                                {
-                                    <a class="text-dark" asp-controller="Authors" asp-action="Details" asp-route-id="@Model.Book.Authors[i].Id" style="text-decoration: none">@Model.Book.Authors[i].FullName</a>
-                                }
-                                else
-                                {
-                                    <a class="text-dark" asp-controller="Authors" asp-action="Details" asp-route-id="@Model.Book.Authors[i].Id" style="text-decoration: none">@Model.Book.Authors[i].FullName & </a>
-                                }
+                                <a class="text-dark" asp-controller="Authors" asp-action="Details" asp-route-id="@Model.Book.Authors[i].Id" style="text-decoration: none">@Model.Book.Authors[i].FullName</a>
                             }
+                            else
+                            {
+                                <a class="text-dark" asp-controller="Authors" asp-action="Details" asp-route-id="@Model.Book.Authors[i].Id" style="text-decoration: none">@Model.Book.Authors[i].FullName & </a>
+                            }
+                        }
                     }
                 </span><br />
                 <span>ISBN: @Html.DisplayFor(model => Model.Book.ISBN)</span>
@@ -240,9 +240,6 @@
                           </a>
                         </li>
                           
-                   
-
-
                         <script type="text/javascript">
                                 $(function () {
                                     $('.comments_@f').click(function () {
@@ -275,73 +272,67 @@
                             <h5>Comments</h5>
                             @foreach (var comment in review.Comments)
                             {
-                                        f2--;
-                                        <script type="text/javascript">
-                                            $(function () {
-                                                $('.comments_@f2').click(function () {
-                                                    var $buttonClicked = $(this);
-                                                    var id = $buttonClicked.attr('data');
+                                f2++;
+                                <script type="text/javascript">
+                                    $(function () {
+                                        $('.replies_@f2@review.Id').click(function () {
+                                            var $buttonClicked = $(this);
+                                            var id = $buttonClicked.attr('data');
 
-                                                    $.ajax({
-                                                        url: '@Url.Action("Create", "Replies", new { comment = comment.Id, review = review.Id })',
-                                                        type: 'GET',
-                                                        data: { id: id },
-                                                        success: function (partialView)
-                                                        {
-                                                            $('#_ReplyForm_@f2').html(partialView);
-                                                            $('#_ReplyForm_@f2').show();
-                                                        }
-                                                    });
-                                                });
-                                            });
-                                        </script>
-
-                                        <p class="list-inline-item ml-auto">@comment.User.UserName | @comment.Comment
-                                        <i class="fa fa-reply g-pos-rel g-top-1 g-mr-3">
-                                            <a id="changeCursor" class="comments_@f2 text-dark" style="text-decoration:none;" data="@comment.Id">Reply</a>
-                                        </i>
-                                        <div id="_ReplyForm_@f2" style="display:none"></div>
-                                        </p>
-
-
-                                        <div class="d-flex justify-content-between">
-                                         <form asp-controller="Flagged" asp-action="FlagComment">
-                                                @{  
-                                                    if(@Model.FlaggedComments.Where(x=>x.CommentId == comment.Id && x.FlaggedId == 2).Count() > 0)
-                                                    {
-                                                        <input type="hidden" name="isFlagged" value="false">
-                                                        <input type="hidden" name="CommentId" value="@comment.Id">
-                                                        <input type="hidden" name="UserId" value="@Model.UserId">
-                                                        <input type="hidden" name="ReviewId" value="@review.Id">
-                                                        <button type="submit" onclick="reloadPage();" class="bi bi-flag btn-danger"><small> | Reported</small></button>
-                                                    }
-                                                    else
-                                                    {
-                                                        <input type="hidden" name="isFlagged" value="true">
-                                                        <input type="hidden" name="CommentId" value="@comment.Id">
-                                                        <input type="hidden" name="UserId" value="@Model.UserId">
-                                                        <input type="hidden" name="ReviewId" value="@review.Id">
-                                                        <button type="submit" onclick="reloadPage();" class="bi bi-flag btn-outline-danger"></button>
-                                                    }
+                                            $.ajax({
+                                                url: '@Url.Action("Create", "Replies", new { comment_and_review = @comment.Id + "," + @review.Id })',
+                                                type: 'GET',
+                                                data: { id: id },
+                                                success: function (partialView)
+                                                {
+                                                    $('#_ReplyForm_@f2@review.Id').html(partialView);
+                                                    $('#_ReplyForm_@f2@review.Id').show();
                                                 }
-                                         </form>
-                                         </div>
-                                         <details>
-                                         <summary>View Replies [@comment.Replies.Count()]</summary>
-                                        
-                                        @foreach (var reply in comment.Replies)
-                                         {
+                                            });
+                                        });
+                                    });
+                                </script>
 
-                                                <p class="list-inline-item ml-auto">@reply.User.UserName | @reply.Reply</p>
-                                                <br />
+                                <p class="list-inline-item ml-auto">@comment.User.UserName | @comment.Comment
+                                <i class="fa fa-reply g-pos-rel g-top-1 g-mr-3">
+                                    <a id="changeCursor" class="replies_@f2@review.Id text-dark" style="text-decoration:none;" data="@comment.Id">Reply</a> 
+                                </i>
+                                <div id="_ReplyForm_@f2@review.Id" style="display:none"></div>
+                                </p>
 
+
+                                <div class="d-flex justify-content-between">
+                                        @{  
+                                            if(@Model.FlaggedComments.Where(x=>x.CommentId == comment.Id && x.FlaggedId == 2).Count() > 0)
+                                            {
+                                                @Html.ActionLink("", "FlagComment","Flagged", 
+                                                        new{  isFlagged = false, commentId=comment.Id }, // values
+                                                        new{  @class="bi bi-flag", @style="color:Red;"}); // style
+                                            }
+                                            else
+                                            {
+                                                @Html.ActionLink("", "FlagComment","Flagged", 
+                                                        new{  isFlagged = true, commentId=comment.Id, reviewId=review.Id }, // values
+                                                        new{  @class="bi bi-flag", @style="color:grey;"}); // style
+                                            }
                                         }
-                                        </details>
-                                        <p>----------------------------------------</p>
+                                    </div>
+                                    <details>
+                                    <summary>View Replies [@comment.Replies.Count()]</summary>
+                                        
+                                @foreach (var reply in comment.Replies)
+                                    {
+
+                                        <p class="list-inline-item ml-auto">@reply.User.UserName | @reply.Reply</p>
+                                        <br />
+
+                                }
+                                </details>
+                                <p>----------------------------------------</p>
 
                                     
 
-                                }
+                            }
 
                         </ul>
                                 </details>
