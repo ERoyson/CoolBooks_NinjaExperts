@@ -47,7 +47,7 @@ namespace CoolBooks_NinjaExperts.Models
             var commentsToday = VM.Comments.Where(c => c.Created.Date == DateTime.Today).Count();
 
             //Summering av veckans kommentarer
-            var commentsWeek = VM.Comments.Where(c => c.Created.Date <= DateTime.Today || c.Created.Date >= DateTime.Today.AddDays(-7)).Count();
+            var commentsWeek = VM.Comments.Where(c => c.Created.Date >= DateTime.Today || c.Created.Date >= DateTime.Today.AddDays(-7)).Count();
 
             //Summering av alla kommentarer
             var commentsTotal = VM.Comments.Count();
@@ -61,29 +61,6 @@ namespace CoolBooks_NinjaExperts.Models
 			return View(VM);
 		}
 
-		public ActionResult ExampleChart()
-        {
-			List<DataPoint> dataPoints = new List<DataPoint>();
-            //var genres = _context.Genres.ToList();
-            //foreach (var item in genres)
-            //{
-            //	dataPoints.Add(new DataPoint(item.Name, 121));
-            //}
-            dataPoints.Add(new DataPoint("USA", 121));
-            dataPoints.Add(new DataPoint("Great Britain", 67));
-            dataPoints.Add(new DataPoint("China", 70));
-            dataPoints.Add(new DataPoint("Russia", 56));
-            dataPoints.Add(new DataPoint("Germany", 42));
-            dataPoints.Add(new DataPoint("Japan", 41));
-            dataPoints.Add(new DataPoint("France", 42));
-            dataPoints.Add(new DataPoint("South Korea", 21));
-
-            ViewBag.DataPoints = JsonConvert.SerializeObject(dataPoints);
-
-            //return RedirectToAction("Index", dataPoints);
-            return View();
-
-		}
         public ActionResult GenresStats()
         {
             List<DataPoint> dataPoints = new List<DataPoint>();
@@ -135,8 +112,10 @@ namespace CoolBooks_NinjaExperts.Models
                 .ThenInclude(bg => bg.Books)
                 .ToList();
 
+            DateTime week = DateTime.Today.AddDays(-7);
+
             var dailyComments = VM.Comments.Where(c => c.Reviews.Book.Genres.Any(g => g.Name == genre) && c.Created.Date == DateTime.Today).ToList();
-            var weeklyComments = VM.Comments.Where(c => c.Reviews.Book.Genres.Any(g => g.Name == genre) && (c.Created.Date <= DateTime.Today || c.Created.Date >= DateTime.Today.AddDays(-7))).ToList();
+            var weeklyComments = VM.Comments.Where(c => c.Reviews.Book.Genres.Any(g => g.Name == genre) && (c.Created.Date >= DateTime.Today || c.Created.Date >= DateTime.Today.AddDays(-7))).ToList();
             var totalComments = VM.Comments.Where(c => c.Reviews.Book.Genres.Any(g => g.Name == genre)).ToList();
 
             int daily = dailyComments.Count();
@@ -166,7 +145,7 @@ namespace CoolBooks_NinjaExperts.Models
                 .ToList();
 
             var dailyComments = VM.Comments.Where(c => c.Reviews.Book.Authors.Any(g => g.FullName == author) && c.Created.Date == DateTime.Today).ToList();
-            var weeklyComments = VM.Comments.Where(c => c.Reviews.Book.Authors.Any(g => g.FullName == author) && (c.Created.Date <= DateTime.Today || c.Created.Date >= DateTime.Today.AddDays(-7))).ToList();
+            var weeklyComments = VM.Comments.Where(c => c.Reviews.Book.Authors.Any(g => g.FullName == author) && (c.Created.Date >= DateTime.Today || c.Created.Date >= DateTime.Today.AddDays(-7))).ToList();
             var totalComments = VM.Comments.Where(c => c.Reviews.Book.Authors.Any(g => g.FullName == author)).ToList();
 
             int daily = dailyComments.Count();
