@@ -5,7 +5,6 @@ namespace CoolBooks_NinjaExperts.Models
     public class FlaggedComments
     {
         public Flagged? Flagged { get; set; }
-        // public Reviews? Review { get; set; }
         public Comments? Comments { get; set; }
         public UserInfo? User { get; set; }
 
