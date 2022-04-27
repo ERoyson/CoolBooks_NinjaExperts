@@ -1,4 +1,6 @@
-﻿@*@model CoolBooks_NinjaExperts.ViewModels.ShowStatisticsViewModel;*@
+﻿@*@model CoolBooks_NinjaExperts.ViewModels.DataPoint;*@
+@model CoolBooks_NinjaExperts.ViewModels.ShowStatisticsViewModel;
+
 @using Microsoft.AspNetCore.Identity
 @using CoolBooks_NinjaExperts.Areas.Identity.Data
 
@@ -20,7 +22,7 @@
  
 	var chart = new CanvasJS.Chart("chartContainer", {
 		animationEnabled: true,
-		theme: "light2", // "light1", "dark1", "dark2"
+		theme: "light2", //Other themes: "light1", "dark1", "dark2"
 		exportEnabled: true,
 		title: {
 			text: "Medals Won by Few Countries - 2016 Summer Olympics"
@@ -33,17 +35,39 @@
 	chart.render();
  
 	}
+
 </script>
 </head>
 <body>
 
-@*	@foreach (var item in Model.Genres)
-	{
-		<p>@item.Name</p>
-	}*@
+	@Html.ActionLink("Summary", "DailyAndWeeklyComments", "Statistics")
+	
+	<form asp-action="CreateGenreGraph">
+		<label for="genre">Choose a genre: </label>
+		<select name="genre">
+		@foreach (var genre in Model.Genres)
+		{
+			@*<input type="hidden" asp-for="@genre.Id"/>*@
+			<option value="@genre.Name">@genre.Name</option>
+		}
+		</select>
+		<input type="submit" name="chosenGenre" value="Run">
+	</form>
 
+
+
+	<form>
+		<label for="genre">Choose an author: </label>
+		<select name="author">
+		@foreach (var author in Model.Authors)
+		{
+			<option value="@author.FullName">@author.FullName</option>
+		}
+		</select>
+		<input type="submit" name="chosenAuthor" value="Run">
+	</form>
+	
 	<div id="chartContainer" style="height: 370px; width: 100%;"></div>
-
 
 	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 	<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>

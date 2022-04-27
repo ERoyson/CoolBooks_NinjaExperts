@@ -25,7 +25,7 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
         public static void SeedGenres(this ModelBuilder builder)
         {
             builder.Entity<Genres>().HasData(
-                    new Genres { Id = 1, Name = "Detective & Mystery", Description = "One of the toughest genres to write, this one centers on a mystery and involves either a professional or amateur sleuth. Examples: Murder on the the Orient Express by Agatha Christie." },
+                    new Genres { Id = 1, Name = "Detective and Mystery", Description = "One of the toughest genres to write, this one centers on a mystery and involves either a professional or amateur sleuth. Examples: Murder on the the Orient Express by Agatha Christie." },
                     new Genres { Id = 2, Name = "Thriller", Description = "This genre also has scary elements, but its main objective is to keep your reader in a state of suspense until the story’s resolution. Example: The Girl with the Dragon Tattoo by Stieg Larsson" },
                     new Genres { Id = 3, Name = "Romance", Description = "Any novel where the main storyline centers on a romantic relationship falls into this category, which has several subgenres. Examples include The Overdue Life of Amy Byler by Kelly Harms" },
                     new Genres { Id = 4, Name = "Science fiction", Description = " Similar to fantasy, this genre explores futuristic or technological themes and ideas to address scientific “what if” questions. Examples: The Hitchhiker’s Guide to the Galaxy by Douglas Adams and The Atlantis Gene by A.G. Riddle" },
