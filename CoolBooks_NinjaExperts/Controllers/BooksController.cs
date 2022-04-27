@@ -171,6 +171,7 @@ namespace CoolBooks_NinjaExperts.Models
             }
 
 
+
             //VM.Comments = _context.Comments
             //   .Include(r => r.Replies)
             //   .ThenInclude(c => c.User)
@@ -198,6 +199,7 @@ namespace CoolBooks_NinjaExperts.Models
                     .Where(r => r.BookId == id && r.IsBlocked == null || false)
                     
                     .OrderByDescending(r => r.Created).ToList();
+
 
             VM.Book = _context.Books
                 .Include(x => x.Image)

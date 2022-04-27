@@ -83,19 +83,19 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
 
 
             builder.Entity<Books>().HasData(
-                new Books { Id = 1, UserId = "0cgg7156-dee2-fe6g-4df6-147f5836e357", Title = "Harry Potter and The Sorcerer's Stone", BookSeries = "Harry Potter", Published = DateTime.Parse("1997-06-26"), Description = "The first novel in the Harry Potter series and Rowling's debut novel, it follows Harry Potter, a young wizard who discovers his magical heritage on his eleventh birthday, when he receives a letter of acceptance to Hogwarts School of Witchcraft and Wizardry.", ImageId = 9, ISBN = 9780590353403 },
-                new Books { Id = 2, UserId = "0cgg7156-dee2-fe6g-4df6-147f5836e357", Title = "Harry Potter and The Deathly Hallows", BookSeries = "Harry Potter", Published = DateTime.Parse("2007-07-21"), Description = "Harry Potter is a wizard...", ImageId = 10, ISBN = 9780545029377 },
-                new Books { Id = 3, UserId = "be661gc4-d6b6-3b1d-23d4-2485c1bf5c0d", Title = "Witcher: The Last Wish", BookSeries = "Witcher", Published = DateTime.Parse("1993-01-01"), Description = "Short stories - Geralt of Rivia is a mutated monsterhunter...", ImageId = 14, ISBN = 9781473231061 },
-                new Books { Id = 4, UserId = "be661gc4-d6b6-3b1d-23d4-2485c1bf5c0d", Title = "Witcher: Sword of Destiny", BookSeries = "Witcher", Published = DateTime.Parse("1992-01-01"), Description = "Short stories - Geralt of Rivia is a mutated monsterhunter...", ImageId = 1, ISBN = 978147323108 },
-                new Books { Id = 5, UserId = "be661gc4-d6b6-3b1d-23d4-2485c1bf5c0d", Title = "Witcher: Lady of the Lake", BookSeries = "Witcher", Published = DateTime.Parse("1999-01-01"), Description = "Geralt of Rivia is a mutated monsterhunter...", ImageId = 2, ISBN = 9781473231122 },
-                new Books { Id = 6, UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f", Title = "Fifthy Shades of Grey", BookSeries = "Fifthy Shades of Grey", Published = DateTime.Parse("2012-04-17"), Description = "Mr Grey is a rich dude with kinky stuff going on...", ImageId = 3, ISBN = 9780345803481 },
-                new Books { Id = 7, UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f", Title = "The Outsider", BookSeries = "The Outsider", Published = DateTime.Parse("2018-05-22"), Description = "An eleven-year-old boy’s violated corpse is discovered in a town park...", ImageId = 5, ISBN = 9781501180989 },
-                new Books { Id = 8, UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f", Title = "American Psycho", BookSeries = "American Psycho", Published = DateTime.Parse("1991-03-06"), Description = "Patrick Bateman is Harvard-educated and intelligent. He works by day on Wall Street, earning a fortune to complement the one he was born with. His nights he spends in ways we cannot begin to fathom - doing impermissible things to women. He is living his own American Dream....", ImageId = 6, ISBN = 9780330484770 },
-                new Books { Id = 9, UserId = "be661gc4-d6b6-3b1d-23d4-2485c1bf5c0d", Title = "Dune", BookSeries = "Dune", Published = DateTime.Parse("1965-08-01"), Description = "Dune is the story of the boy Paul Atreides, who would become the mysterious man...", ImageId = 7, ISBN = 9789178934751 },
-                new Books { Id = 10, UserId = "85e508e4-80ce-9d68-84c3-g1gd726e97g1", Title = "The Great Gatsby", BookSeries = "The Great Gatsby", Published = DateTime.Parse("1925-04-10"), Description = "Party hard...", ImageId = 8, ISBN = 9780020198819 },
-                new Books { Id = 11, UserId = "85e508e4-80ce-9d68-84c3-g1gd726e97g1", Title = "Jaws", BookSeries = "Jaws", Published = DateTime.Parse("1974-02-01"), Description = "Hungry Shark...", ImageId = 12, ISBN = 9780385047715 },
-                new Books { Id = 12, UserId = "bd332a8c-b4e4-5cg1-b68d-g25g3cg8dgc5", Title = "The Godfather", BookSeries = "The Godfather", Published = DateTime.Parse("1969-03-10"), Description = "Gangsters...", ImageId = 13, ISBN = 9780434604913 },
-                new Books { Id = 13, UserId = "bd332a8c-b4e4-5cg1-b68d-g25g3cg8dgc5", Title = "Lord of the Rings", BookSeries = "Lord of the Rings", Published = DateTime.Parse("1955-10-20"), Description = "The hobbit Frodo Baggins takes it upon himself to destroy the ring of power...", ImageId = 15, ISBN = 9780007136575 }
+                new Books { Id = 1, UserId = "0cgg7156-dee2-fe6g-4df6-147f5836e357", Title = "Harry Potter and The Sorcerer's Stone", BookSeries = "Harry Potter", Published = DateTime.Parse("1997-06-26"), Description = "The first novel in the Harry Potter series and Rowling's debut novel, it follows Harry Potter, a young wizard who discovers his magical heritage on his eleventh birthday, when he receives a letter of acceptance to Hogwarts School of Witchcraft and Wizardry.", ImageId = 9, ISBN = 9780590353403, Rating = 5 },
+                new Books { Id = 2, UserId = "0cgg7156-dee2-fe6g-4df6-147f5836e357", Title = "Harry Potter and The Deathly Hallows", BookSeries = "Harry Potter", Published = DateTime.Parse("2007-07-21"), Description = "Harry Potter is a wizard...", ImageId = 10, ISBN = 9780545029377, Rating = 5 },
+                new Books { Id = 3, UserId = "be661gc4-d6b6-3b1d-23d4-2485c1bf5c0d", Title = "Witcher: The Last Wish", BookSeries = "Witcher", Published = DateTime.Parse("1993-01-01"), Description = "Short stories - Geralt of Rivia is a mutated monsterhunter...", ImageId = 14, ISBN = 9781473231061, Rating = 5 },
+                new Books { Id = 4, UserId = "be661gc4-d6b6-3b1d-23d4-2485c1bf5c0d", Title = "Witcher: Sword of Destiny", BookSeries = "Witcher", Published = DateTime.Parse("1992-01-01"), Description = "Short stories - Geralt of Rivia is a mutated monsterhunter...", ImageId = 1, ISBN = 978147323108, Rating = 5 },
+                new Books { Id = 5, UserId = "be661gc4-d6b6-3b1d-23d4-2485c1bf5c0d", Title = "Witcher: Lady of the Lake", BookSeries = "Witcher", Published = DateTime.Parse("1999-01-01"), Description = "Geralt of Rivia is a mutated monsterhunter...", ImageId = 2, ISBN = 9781473231122, Rating = 5 },
+                new Books { Id = 6, UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f", Title = "Fifthy Shades of Grey", BookSeries = "Fifthy Shades of Grey", Published = DateTime.Parse("2012-04-17"), Description = "Mr Grey is a rich dude with kinky stuff going on...", ImageId = 3, ISBN = 9780345803481, Rating = 5 },
+                new Books { Id = 7, UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f", Title = "The Outsider", BookSeries = "The Outsider", Published = DateTime.Parse("2018-05-22"), Description = "An eleven-year-old boy’s violated corpse is discovered in a town park...", ImageId = 5, ISBN = 9781501180989, Rating = 5 },
+                new Books { Id = 8, UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f", Title = "American Psycho", BookSeries = "American Psycho", Published = DateTime.Parse("1991-03-06"), Description = "Patrick Bateman is Harvard-educated and intelligent. He works by day on Wall Street, earning a fortune to complement the one he was born with. His nights he spends in ways we cannot begin to fathom - doing impermissible things to women. He is living his own American Dream....", ImageId = 6, ISBN = 9780330484770, Rating = 5 },
+                new Books { Id = 9, UserId = "be661gc4-d6b6-3b1d-23d4-2485c1bf5c0d", Title = "Dune", BookSeries = "Dune", Published = DateTime.Parse("1965-08-01"), Description = "Dune is the story of the boy Paul Atreides, who would become the mysterious man...", ImageId = 7, ISBN = 9789178934751, Rating = 5 },
+                new Books { Id = 10, UserId = "85e508e4-80ce-9d68-84c3-g1gd726e97g1", Title = "The Great Gatsby", BookSeries = "The Great Gatsby", Published = DateTime.Parse("1925-04-10"), Description = "Party hard...", ImageId = 8, ISBN = 9780020198819, Rating = 5 },
+                new Books { Id = 11, UserId = "85e508e4-80ce-9d68-84c3-g1gd726e97g1", Title = "Jaws", BookSeries = "Jaws", Published = DateTime.Parse("1974-02-01"), Description = "Hungry Shark...", ImageId = 12, ISBN = 9780385047715, Rating = 5 },
+                new Books { Id = 12, UserId = "bd332a8c-b4e4-5cg1-b68d-g25g3cg8dgc5", Title = "The Godfather", BookSeries = "The Godfather", Published = DateTime.Parse("1969-03-10"), Description = "Gangsters...", ImageId = 13, ISBN = 9780434604913, Rating = 5 },
+                new Books { Id = 13, UserId = "bd332a8c-b4e4-5cg1-b68d-g25g3cg8dgc5", Title = "Lord of the Rings", BookSeries = "Lord of the Rings", Published = DateTime.Parse("1955-10-20"), Description = "The hobbit Frodo Baggins takes it upon himself to destroy the ring of power...", ImageId = 15, ISBN = 9780007136575, Rating = 5 }
                 );
         }
 
@@ -314,23 +314,23 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
         //        new Replies
         //        {
         //            Id = 1,
-        //            ReviewsId = 1, //Harry Potter & The Sorcerer's Stone: "The book was magical!" -Karl
+        //            CommentsId = 1, //Harry Potter & The Sorcerer's Stone: "The book was magical!" -Karl
         //            UserId = "85e508e4-80ce-9d68-84c3-g1gd726e97g1", //Anna
-        //            Comment = "I couldn't agree more!"
+        //            Reply = "I couldn't agree more!"
         //        },
         //        new Replies
         //        {
         //            Id = 2,
-        //            ReviewsId = 1, //Harry Potter & The Sorcerer's Stone: "The book was magical!" -Karl
+        //            CommentsId = 1, //Harry Potter & The Sorcerer's Stone: "The book was magical!" -Karl
         //            UserId = "bd332a8c-b4e4-5cg1-b68d-g25g3cg8dgc5", //Berit
-        //            Comment = "I thought the book was boring..."
+        //            Reply = "I thought the book was boring..."
         //        },
         //        new Replies
         //        {
         //            Id = 3,
-        //            ReviewsId = 7, //Fifty Shades of Grey: "Mr Grey.. What a man" -Berit
+        //            CommentsId = 7, //Fifty Shades of Grey: "Mr Grey.. What a man" -Berit, "
         //            UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f", //Mats
-        //            Comment = "Really...?"
+        //            Reply = "Really...?"
         //        });
         //}
 

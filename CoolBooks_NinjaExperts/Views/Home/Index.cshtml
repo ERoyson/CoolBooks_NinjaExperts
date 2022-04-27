@@ -62,13 +62,27 @@
                                 </span><br />
                                     <span>@rndmBook.ISBN</span>
                                 
-                                    <div class="d-flex small text-warning mb-2">
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-fill"></div>
-                                </div>
+                                     @if(rndmBook.Rating != null)
+                                   {
+                                    <div>
+                                        @for (int i = 0; i < 5; i++)
+                                        {
+                                            if (rndmBook.Rating > i)
+                                            {
+                                                <span class="fa fa-star checked"></span>
+                                            }
+                                            else
+                                            {
+                                                <span class="fa fa-star"></span>
+                                            }
+                                        }
+                                    </div>
+                                        }
+                                else
+                                {
+                                    <p>Unrated</p>
+                                }
+                                
                     </div>
                             <p class="lead">@rndmBook.Description</p>
                     </div> 
@@ -98,9 +112,10 @@
                         <div class="card-body p-4">
                             <div class="text-center">
                             <h5 class="fw-bolder">@book.Title</h5>
+                            @{
                             <h6>
-                                @{
-                                for(int i = 0;  i < book.Authors.Count(); i++)
+                                
+                                @for(int i = 0;  i < book.Authors.Count(); i++)
                                 {
                                     if (i == book.Authors.Count()-1)
                                     {
@@ -111,16 +126,31 @@
                                         <a class="text-dark" asp-controller="Authors" asp-action="Details" asp-route-id="@book.Authors[i].Id" style="text-decoration: none">@book.Authors[i].FullName & </a>
                                     }
                                 }
-                                }
+                                
                                 </h6>
-                                <div class="d-flex justify-content-center small text-warning mb-2">
-                                    <div class="bi-star-fill"></div>
-                                    @*<div class="bi-star-half"></div>*@
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-fill"></div>
-                                </div>
+                                @if(book.Rating != null)
+                                   {
+                                    <div>
+                                        @for (int i = 0; i < 5; i++)
+                                        {
+                                            if (book.Rating > i)
+                                            {
+                                                <span class="fa fa-star checked"></span>
+                                            }
+                                            else
+                                            {
+                                                <span class="fa fa-star"></span>
+                                            }
+                                        }
+                                            </div>
+                                        }
+                                else
+                                {
+                                    <p>Unrated</p>
+                                }
+                                        
+                                
+                                }
                             </div>
                         </div>
                         </a>
