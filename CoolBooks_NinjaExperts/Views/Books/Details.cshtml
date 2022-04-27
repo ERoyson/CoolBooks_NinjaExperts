@@ -299,7 +299,7 @@
                                     });
                                 </script>
 
-                                <p class="list-inline-item ml-auto">@comment.User.UserName | @comment.Comment
+                                <p class="list-inline-item ml-auto" style="margin-bottom: 0px;">@comment.User.UserName | @comment.Comment
                                   
                                                  <li class="list-inline-item g-mr-20">
                                             <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!"> @*list of users who liked?*@
@@ -370,25 +370,26 @@
                                 </i>
                                 </p>
                                
-                                <li>
+                                <li style="list-style-type: none;">
 
                                     <details>
                                     <summary>View Replies [@comment.Replies.Count()]</summary>
+                                      
                                         
-                                        
-                                        <ul><ul>
+                                        <ul class="list-inline-item g-mr-20" ><ul>
                                         
                                         @foreach (var reply in comment.Replies)
                                         {
                                         
-                                                <p class="list-inline-item ml-auto">@reply.User.UserName | @reply.Reply</p>
-                                                <p>----------------------------------------</p><br />
+                                                <p class="list-inline-item ml-auto" style="margin-bottom:0px">@reply.User.UserName | @reply.Reply</p>
+                                                <hr><br />
                                         
                                         
                                         }
                                         </ul></ul>
                                         
                                 </details>
+                                <hr>
                                 <div id="_ReplyForm_@f2@review.Id" style="display:none"></div>
                                 </li>    
                                 

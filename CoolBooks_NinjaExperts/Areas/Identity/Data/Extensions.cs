@@ -303,36 +303,36 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                 {
                     Id = 3,
                     ReviewsId = 7, //Fifty Shades of Grey: "Mr Grey.. What a man" -Berit
-                    UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f", //Mats
-                    Comment = "Really...?"
+                    UserId = "bd332a8c-b4e4-5cg1-b68d-g25g3cg8dgc5", //Berit
+                    Comment = "Yeah"
                 });
         }
 
-        //public static void SeedCommentReplies(this ModelBuilder builder)
-        //{
-        //    builder.Entity<Replies>().HasData(
-        //        new Replies
-        //        {
-        //            Id = 1,
-        //            CommentsId = 1, //Harry Potter & The Sorcerer's Stone: "The book was magical!" -Karl
-        //            UserId = "85e508e4-80ce-9d68-84c3-g1gd726e97g1", //Anna
-        //            Reply = "I couldn't agree more!"
-        //        },
-        //        new Replies
-        //        {
-        //            Id = 2,
-        //            CommentsId = 1, //Harry Potter & The Sorcerer's Stone: "The book was magical!" -Karl
-        //            UserId = "bd332a8c-b4e4-5cg1-b68d-g25g3cg8dgc5", //Berit
-        //            Reply = "I thought the book was boring..."
-        //        },
-        //        new Replies
-        //        {
-        //            Id = 3,
-        //            CommentsId = 7, //Fifty Shades of Grey: "Mr Grey.. What a man" -Berit, "
-        //            UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f", //Mats
-        //            Reply = "Really...?"
-        //        });
-        //}
+        public static void SeedCommentReplies(this ModelBuilder builder)
+        {
+            builder.Entity<Replies>().HasData(
+                new Replies
+                {
+                    Id = 1,
+                    CommentsId = 1, //Harry Potter & The Sorcerer's Stone: "The book was magical!" -Karl
+                    UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f", //Mats
+                    Reply = "Agree!"
+                },
+                new Replies
+                {
+                    Id = 2,
+                    CommentsId = 2, //Harry Potter & The Sorcerer's Stone: "The book was magical!" -Karl
+                    UserId = "be661gc4-d6b6-3b1d-23d4-2485c1bf5c0d", //Per
+                    Reply = "Yeah, didn´t like it "
+                },
+                new Replies
+                {
+                    Id = 3,
+                    CommentsId = 3, //Fifty Shades of Grey: "Mr Grey.. What a man" -Berit, "
+                    UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f", //Mats
+                    Reply = "Really...?"
+                });
+        }
 
         public static void SeedFlaggedTable(this ModelBuilder builder)
         {
