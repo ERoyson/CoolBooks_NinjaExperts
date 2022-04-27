@@ -4,7 +4,7 @@
 @{
     ViewData["Title"] = "Manage Comments";
 }
-@*
+
 <table class="table">
     <thead>
         <tr>
@@ -24,7 +24,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Comments.Comment) @*FlaggedCommentTITLE*@
             </th>
-
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -48,23 +48,23 @@
             </td>
 
 
-            @*<td>
+            <td>
                 <form>
                     <input type="hidden" name="CommentId" value="@item.CommentId">
                     <input type="hidden" name="userId" value="@item.User.Id">
-                    <button class="btn btn-success" type="submit" asp-controller="ManageContent" asp-action="UnFlagReview">UnFlag</button>
+                    <button class="btn btn-success" type="submit" asp-controller="ManageContent" asp-action="UnFlagComment">UnFlag</button>
                 </form>
                 <form>
                     <input type="hidden" name="CommentId" value="@item.CommentId">
                     <input type="hidden" name="userId" value="@item.User.Id">
-                    <button class="btn btn-warning" type="submit" asp-controller="ManageContent" asp-action="BlockReview">Block</button>
+                    <button class="btn btn-warning" type="submit" asp-controller="ManageContent" asp-action="BlockComment">Block</button>
                 </form>
                 <form>
                     <input type="hidden" name="CommentId" value="@item.CommentId">
                     <input type="hidden" name="userId" value="@item.User.Id">
-                    <button class="btn btn-danger" type="submit" asp-controller="ManageContent" asp-action="DeleteReview">Delete</button>
+                    <button class="btn btn-danger" type="submit" asp-controller="ManageContent" asp-action="DeleteComment">Delete</button>
                 </form>
-            </td>*@
+            </td>
         </tr>
 }
     </tbody>
