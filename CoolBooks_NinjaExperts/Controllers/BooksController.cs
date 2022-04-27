@@ -183,15 +183,27 @@ namespace CoolBooks_NinjaExperts.Models
                .Where(c => c.IsBlocked == null || false)
                .OrderByDescending(r => r.Created).ToList();
 
+            VM.Comments = _context.Comments
+               .Include(r => r.Replies)
+               .ThenInclude(c => c.User)
+               .Include(c => c.Reviews)
+               .ThenInclude(c => c.Book)
+               .Include(r => r.User)
+               .Include(r => r.CommentLikes)
+               .Include(r => r.CommentDislikes)
+               .Where(c => c.IsBlocked == null || false)
+               .OrderByDescending(r => r.Created).ToList();
 
             //Lägg till fler filtreringsalternativ på reviews, ex. högst poäng, flest gillade review etc.
             VM.Reviews = _context.Reviews
                     .Include(r => r.Comments.Where(c => c.IsBlocked == null || false))
-                    .ThenInclude(c => c.CommentLikes)
+                        .ThenInclude(c => c.CommentLikes)
                     .Include(r => r.Comments.Where(c => c.IsBlocked == null || false))
-                    .ThenInclude(c => c.CommentDislikes)
+                        .ThenInclude(c => c.CommentDislikes)
                     .Include(c => c.Comments.Where(c => c.IsBlocked == null || false))
-                    .ThenInclude(c => c.User)
+                        .ThenInclude(c => c.User)
+                    .Include(r => r.Comments.Where(c => c.IsBlocked == null || false))
+                        .ThenInclude(r => r.Replies)
                     .Include(r => r.User)
                     .Include(r => r.Book)
                     .Include(r => r.ReviewLikes)
