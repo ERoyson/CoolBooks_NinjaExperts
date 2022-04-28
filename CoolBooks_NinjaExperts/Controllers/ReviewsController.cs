@@ -71,8 +71,8 @@ namespace CoolBooks_NinjaExperts.Controllers
             review.Rating = bookRating;
             if (ModelState.IsValid)
             {
-                double getRating = _context.Reviews.Select(x => x.Rating).Sum();
-                getRating = getRating / (_context.Reviews.Count() + 1); // +1 review to be created.
+                double getRating = _context.Reviews.Where(r=>r.BookId == review.BookId).Select(x => x.Rating).Sum();
+                getRating = getRating / (_context.Reviews.Where(r=>r.BookId==review.BookId).Count()); // +1 review to be created.
                 int totalRating = (int)Math.Round(getRating);
 
                 Books books = _context.Books.Where(x=>x.Id == review.BookId).FirstOrDefault();

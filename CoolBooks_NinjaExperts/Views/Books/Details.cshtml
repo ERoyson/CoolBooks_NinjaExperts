@@ -188,7 +188,7 @@
                         }
                       </div>
                       <p style="margin-top:1rem;">@review.Text </p>
-                        <span class="g-color-gray-dark-v4 g-font-size-12">Created by: @review.User.UserName | @review.Created</span>
+                        <span class="g-color-gray-dark-v4 g-font-size-12">Created by: <b>@review.User.UserName</b> | @review.Created</span>
         
                         @*REVIEW LIKES AND DISLIKES*@
                         <ul class="list-inline d-sm-flex my-0">
@@ -299,7 +299,7 @@
                                     });
                                 </script>
 
-                                <p class="list-inline-item ml-auto" style="margin-bottom:0">@comment.User.UserName | @comment.Comment <br>
+                                <p class="list-inline-item ml-auto" style="margin-bottom:0"><b>@comment.User.UserName</b> | @comment.Comment <br>
                                 <span class="g-color-gray-dark-v4 g-font-size-12">@comment.Created</span>
                                   
                                                  <li class="list-inline-item g-mr-20">
@@ -382,7 +382,7 @@
                                         @foreach (var reply in comment.Replies)
                                         {
                                         
-                                                <p class="list-inline-item ml-auto" style="margin-bottom:0px">@reply.User.UserName | @reply.Reply</p>
+                                                <p class="list-inline-item ml-auto" style="margin-bottom:0px"><b>@reply.User.UserName</b> | @reply.Reply</p>
                                                 <hr><br />
                                         
                                         
