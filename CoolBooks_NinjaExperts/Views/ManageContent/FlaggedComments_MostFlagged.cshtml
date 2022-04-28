@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CoolBooks_NinjaExperts.Models.FlaggedComments>
+﻿@model CoolBooks_NinjaExperts.ViewModels.MostFlagged_Comments_ViewModel
 
 
 @{
@@ -22,66 +22,56 @@
 <table class="table">
     <thead>
         <tr>
-            @*<th>
-                @Html.DisplayNameFor(model => model.User.Id) 
-            </th> *@
-
-             <th>
-                Flagged By:
-            </th>
+            <th new class="bi bi-flag" style="color:Red;">
+                Total Flags:
+            </th> 
             <th>
                 Flagged Comment ID:
             </th>
               <th>
-                Flagged Review ID:
+                Review ID:
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Comments.Comment) @*FlaggedCommentTITLE*@
+                @Html.DisplayNameFor(model => model.Comments) @*FlaggedCommentTITLE*@
             </th>
              <th>
-                @Html.DisplayNameFor(model => model.Created)
+                Comment Created:
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) 
+@for (int i = 0; i<Model.MostFlagged.Count(); i++) 
 {
         <tr>
-            @*<td>
-                @Html.DisplayFor(modelItem => item.User.Id)
-            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => Model.TotalFlags[i])
+            </td>
              <td>
-                @Html.DisplayFor(modelItem => item.User.UserName)
+                @Html.DisplayFor(modelItem => Model.MostFlagged[i])
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.CommentId)
+                @Html.DisplayFor(modelItem => Model.Comments[i].ReviewsId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ReviewId)
+                @Html.DisplayFor(modelItem => @Model.Comments[i].Comment)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Comments.Comment)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Created)
+                @Html.DisplayFor(modelItem => @Model.Comments[i].Created)
             </td>
 
 
             <td>
                 <form>
-                    <input type="hidden" name="CommentId" value="@item.CommentId">
-                    <input type="hidden" name="userId" value="@item.User.Id">
+                    <input type="hidden" name="CommentId" value="@Model.Comments[i].Id">
                     <button class="btn btn-success" type="submit" asp-controller="ManageContent" asp-action="UnFlagComment">UnFlag</button>
                 </form>
                 <form>
-                    <input type="hidden" name="CommentId" value="@item.CommentId">
-                    <input type="hidden" name="userId" value="@item.User.Id">
+                    <input type="hidden" name="CommentId" value="@Model.Comments[i].Id">
                     <button class="btn btn-warning" type="submit" asp-controller="ManageContent" asp-action="BlockComment">Block</button>
                 </form>
                 <form>
-                    <input type="hidden" name="CommentId" value="@item.CommentId">
-                    <input type="hidden" name="userId" value="@item.User.Id">
+                    <input type="hidden" name="CommentId" value="@Model.Comments[i].Id">
                     <button class="btn btn-danger" type="submit" asp-controller="ManageContent" asp-action="DeleteComment">Delete</button>
                 </form>
             </td>

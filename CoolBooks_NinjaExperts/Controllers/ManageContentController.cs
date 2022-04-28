@@ -27,25 +27,86 @@ namespace CoolBooks_NinjaExperts.Controllers
         //REVIEWS
         //------------------------------------------
         [Authorize(Roles = "Admin, Moderator")]
-        public IActionResult FlaggedReviews()
+        public IActionResult FlaggedReviews(string orderby = "")
         {
-            var flaggedReviews = _context.FlaggedReviews
-                .Include(x => x.User)
-                .Include(x => x.Review)
-                .Include(x => x.Flagged)
-                .Where(x => x.FlaggedId == 2)
-                .ToList();
 
-            if (!flaggedReviews.Any())
+            IEnumerable<FlaggedReviews> FlaggedReviews = new List<FlaggedReviews>();
+            switch (orderby)
+            {
+                case "Newest":
+                    {
+                        FlaggedReviews = _context.FlaggedReviews
+                            .Include(x => x.User)
+                            .Include(x => x.Review)
+                            .Include(x => x.Flagged)
+                            .Where(x => x.FlaggedId == 2)
+                            .OrderByDescending(x => x.Created)
+                            .ToList();
+                        break;
+                    }
+
+                case "MostFlagged":
+                    {
+                        var VM = new MostFlagged_Reviews_ViewModel();
+
+                        IEnumerable<int?> Ie_mostFlagged = _context.FlaggedReviews
+                       .GroupBy(i => i.ReviewId)
+                       .OrderByDescending(g => g.Count())
+                       .Take(10)
+                       .Select(g => g.Key)
+                       .AsEnumerable();
+
+
+                        List<int?> mostFlagged = Ie_mostFlagged.ToList();
+
+                        VM.MostFlagged = mostFlagged;
+
+                        foreach (var flagged in mostFlagged)
+                        {
+                            var totalflags = _context.FlaggedReviews.Where(x => x.ReviewId == flagged.Value).Count(); // count total amount of flags on comment
+                            var review = _context.Reviews.Where(r => r.Id == flagged.Value).FirstOrDefault();
+                            VM.Reviews.Add(review);
+                            VM.TotalFlags.Add(totalflags);
+                        }
+                        return View("FlaggedReviews_MostFlagged", VM);
+
+                    }
+                case "":
+                    {
+                        FlaggedReviews = _context.FlaggedReviews
+                            .Include(x => x.User)
+                            .Include(x => x.Review)
+                            .Include(x => x.Flagged)
+                            .Where(x => x.FlaggedId == 2)
+                            .ToList();
+                        break;
+                    }
+                default:
+                    break;
+            }
+
+            if (!FlaggedReviews.Any())
             {
                 return View("NothingFlagged");
             }
 
-            return View(flaggedReviews);
+            return View(FlaggedReviews);
         }
         [Authorize(Roles = "Admin, Moderator")]
         public IActionResult UnFlagReview([Bind("UserId, ReviewId")] FlaggedReviews flagged)
         {
+            // HERE
+            if (flagged.UserId == null)
+            {
+                var unflagAll = _context.FlaggedReviews.Where(x => x.ReviewId == flagged.ReviewId).ToList(); // takes all flags on this comment and unflag it
+                foreach (var review in unflagAll)
+                {
+                    _context.FlaggedReviews.Remove(review);
+                }
+                _context.SaveChanges();
+                return RedirectToAction("FlaggedReviews");
+            }
+
             var flaggedReview = _context.FlaggedReviews.Where(x => x.UserId == flagged.UserId && x.ReviewId == flagged.ReviewId).FirstOrDefault();
             _context.FlaggedReviews.Remove(flaggedReview);
             _context.SaveChanges();
@@ -153,15 +214,65 @@ namespace CoolBooks_NinjaExperts.Controllers
         //COMMENTS
         // -------------------------------------------
         [Authorize(Roles = "Admin, Moderator")]
-        public IActionResult FlaggedComments()
+        public IActionResult FlaggedComments(string orderby = "")
         {
-            var FlaggedComments = _context.FlaggedComments
-                .Include(x => x.User)
-                .Include(x => x.Comments)
-                .Include(x => x.Flagged)
-                .Where(x => x.FlaggedId == 2)
-                .ToList();
+            IEnumerable<FlaggedComments> FlaggedComments = new List<FlaggedComments>();
 
+            
+            switch (orderby)
+            {
+                case "Newest":
+                    {
+                        FlaggedComments = _context.FlaggedComments
+                            .Include(x => x.User)
+                            .Include(x => x.Comments)
+                            .Include(x => x.Flagged)
+                            .Where(x => x.FlaggedId == 2)
+                            .OrderByDescending(x=>x.Created)
+                            .ToList();
+                        break;
+                    }
+                    
+                case "MostFlagged":
+                    {
+                        var VM = new MostFlagged_Comments_ViewModel();
+
+                        IEnumerable<int?> Ie_mostFlagged = _context.FlaggedComments
+                       .GroupBy(i => i.CommentId)
+                       .OrderByDescending(g => g.Count())
+                       .Take(10)
+                       .Select(g => g.Key)
+                       .AsEnumerable();
+
+                        
+                        List<int?> mostFlagged = Ie_mostFlagged.ToList();
+
+                        VM.MostFlagged = mostFlagged;
+
+                        foreach(var flagged in mostFlagged)
+                        {
+                            var totalflags = _context.FlaggedComments.Where(x => x.CommentId == flagged.Value).Count(); // count total amount of flags on comment
+                            var comment = _context.Comments.Where(c => c.Id == flagged.Value).FirstOrDefault();
+                            VM.Comments.Add(comment);
+                            VM.TotalFlags.Add(totalflags); 
+                        }
+                        return View("FlaggedComments_MostFlagged", VM);
+                        
+                    }
+                case "":
+                    {
+                        FlaggedComments = _context.FlaggedComments
+                            .Include(x => x.User)
+                            .Include(x => x.Comments)
+                            .Include(x => x.Flagged)
+                            .Where(x => x.FlaggedId == 2)
+                            .ToList();
+                        break;
+                    }
+                default:
+                    break;
+            }
+            
             if (!FlaggedComments.Any())
             {
                 return View("NothingFlagged");
@@ -173,7 +284,18 @@ namespace CoolBooks_NinjaExperts.Controllers
         [Authorize(Roles = "Admin, Moderator")]
         public IActionResult UnFlagComment([Bind("UserId, CommentId")] FlaggedComments flagged)
         {
-            var flaggedComment = _context.FlaggedComments.Where(x => x.UserId == flagged.UserId && x.CommentId == flagged.CommentId).FirstOrDefault();
+            if(flagged.UserId == null)
+            {
+                var unflagAll = _context.FlaggedComments.Where(x => x.CommentId == flagged.CommentId).ToList(); // takes all flags on this comment and unflag it
+                foreach (var comment in unflagAll)
+                {
+                    _context.FlaggedComments.Remove(comment);
+                }
+                _context.SaveChanges();
+                return RedirectToAction("FlaggedComments");
+            }
+
+            var flaggedComment = _context.FlaggedComments.Where(x => x.UserId == flagged.UserId && x.CommentId == flagged.CommentId).FirstOrDefault(); // unflags a single comment with a single user
             _context.FlaggedComments.Remove(flaggedComment);
             _context.SaveChanges();
 
@@ -196,9 +318,7 @@ namespace CoolBooks_NinjaExperts.Controllers
         public IActionResult DeleteComment([Bind("UserId, CommentId")] FlaggedComments flagged)
         {
             var selectedComment = _context.Comments.Where(x => x.Id == flagged.CommentId).FirstOrDefault();
-            var flaggedComment = _context.FlaggedComments.Where(x => x.UserId == flagged.UserId && x.CommentId == flagged.CommentId).FirstOrDefault();
-
-            _context.FlaggedComments.Remove(flaggedComment);
+            
             _context.Comments.Remove(selectedComment);
             _context.SaveChanges();
 

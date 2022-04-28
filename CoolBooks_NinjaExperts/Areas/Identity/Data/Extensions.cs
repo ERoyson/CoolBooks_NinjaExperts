@@ -25,7 +25,7 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
         public static void SeedGenres(this ModelBuilder builder)
         {
             builder.Entity<Genres>().HasData(
-                    new Genres { Id = 1, Name = "Detective & Mystery", Description = "One of the toughest genres to write, this one centers on a mystery and involves either a professional or amateur sleuth. Examples: Murder on the the Orient Express by Agatha Christie." },
+                    new Genres { Id = 1, Name = "Detective and Mystery", Description = "One of the toughest genres to write, this one centers on a mystery and involves either a professional or amateur sleuth. Examples: Murder on the the Orient Express by Agatha Christie." },
                     new Genres { Id = 2, Name = "Thriller", Description = "This genre also has scary elements, but its main objective is to keep your reader in a state of suspense until the story’s resolution. Example: The Girl with the Dragon Tattoo by Stieg Larsson" },
                     new Genres { Id = 3, Name = "Romance", Description = "Any novel where the main storyline centers on a romantic relationship falls into this category, which has several subgenres. Examples include The Overdue Life of Amy Byler by Kelly Harms" },
                     new Genres { Id = 4, Name = "Science fiction", Description = " Similar to fantasy, this genre explores futuristic or technological themes and ideas to address scientific “what if” questions. Examples: The Hitchhiker’s Guide to the Galaxy by Douglas Adams and The Atlantis Gene by A.G. Riddle" },
@@ -160,7 +160,8 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                     UserId = "0cgg7156-dee2-fe6g-4df6-147f5836e357", //Karl
                     Title = "The book was magical!",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
-                    Rating = 4
+                    Rating = 4,
+                    Created = DateTime.Parse("2022-04-01 15:00:00")
                 },
                 new Reviews
                 {
@@ -169,7 +170,8 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                     UserId = "0cgg7156-dee2-fe6g-4df6-147f5836e357", //Karl
                     Title = "I never stopped reading",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
-                    Rating = 5
+                    Rating = 5,
+                    Created = DateTime.Parse("2022-04-03 11:00:00")
                 },
                 new Reviews
                 {
@@ -178,7 +180,8 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                     UserId = "85e508e4-80ce-9d68-84c3-g1gd726e97g1", //Anna
                     Title = "Boring book",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
-                    Rating = 1
+                    Rating = 1,
+                    Created = DateTime.Parse("2022-04-04 12:00:00")
                 },
                 new Reviews
                 {
@@ -187,7 +190,8 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                     UserId = "be661gc4-d6b6-3b1d-23d4-2485c1bf5c0d", //Per
                     Title = "Read this book if you like to be mindblown",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
-                    Rating = 4
+                    Rating = 4,
+                    Created = DateTime.Parse("2022-04-20 17:00:00")
                 },
                 new Reviews
                 {
@@ -196,7 +200,8 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                     UserId = "be661gc4-d6b6-3b1d-23d4-2485c1bf5c0d", //Per
                     Title = "The shortstories are something else",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
-                    Rating = 4
+                    Rating = 4,
+                    Created = DateTime.Parse("2022-04-20 18:00:00")
                 },
                 new Reviews
                 {
@@ -205,7 +210,8 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                     UserId = "be661gc4-d6b6-3b1d-23d4-2485c1bf5c0d", //Per
                     Title = "Meh.. Was kind of disapoitend",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
-                    Rating = 2
+                    Rating = 2,
+                    Created = DateTime.Parse("2022-04-21 11:00:00")
                 },
                 new Reviews
                 {
@@ -214,7 +220,8 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                     UserId = "bd332a8c-b4e4-5cg1-b68d-g25g3cg8dgc5", //Berit
                     Title = "Mr Grey.. What a man",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
-                    Rating = 4
+                    Rating = 4,
+                    Created = DateTime.Parse("2022-04-24 09:00:00")
                 },
                 new Reviews
                 {
@@ -223,7 +230,8 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                     UserId = "be661gc4-d6b6-3b1d-23d4-2485c1bf5c0d", //Per
                     Title = "Loved it!",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
-                    Rating = 4
+                    Rating = 4,
+                    Created = DateTime.Parse("2022-04-15 10:00:00")
                 },
                 new Reviews
                 {
@@ -232,7 +240,8 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                     UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f", //Mats
                     Title = "The movie was better",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
-                    Rating = 3
+                    Rating = 3,
+                    Created = DateTime.Parse("2022-04-25 18:00:00")
                 },
                 new Reviews
                 {
@@ -241,7 +250,8 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                     UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f", //Mats
                     Title = "Amazing, just amazing...",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
-                    Rating = 5
+                    Rating = 5,
+                    Created = DateTime.Parse("2022-04-25 19:00:00")
                 },
                 new Reviews
                 {
@@ -250,7 +260,8 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                     UserId = "bd332a8c-b4e4-5cg1-b68d-g25g3cg8dgc5", //Berit
                     Title = "Don't bother reading, it sucks (my opinion)",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
-                    Rating = 1
+                    Rating = 1,
+                    Created = DateTime.Parse("2022-04-10 13:00:00")
                 },
                 new Reviews
                 {
@@ -259,7 +270,8 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                     UserId = "bd332a8c-b4e4-5cg1-b68d-g25g3cg8dgc5", //Berit
                     Title = "Well, this was a waste of time",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
-                    Rating = 2
+                    Rating = 2,
+                    Created = DateTime.Parse("2022-04-22 19:00:00")
                 },
                 new Reviews
                 {
@@ -268,7 +280,8 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                     UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f", //Mats
                     Title = "Wow.. just wow",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
-                    Rating = 4
+                    Rating = 4,
+                    Created = DateTime.Parse("2022-04-24 11:00:00")
                 },
                 new Reviews
                 {
@@ -277,7 +290,8 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                     UserId = "0cgg7156-dee2-fe6g-4df6-147f5836e357", //Karl
                     Title = "If you love the movies you will love this book",
                     Text = "Lorem ipsum dolor sit amet. Et cupiditate praesentium qui odit recusandae ut beatae quis et adipisci ipsa et maxime quia? Non voluptas libero est beatae velit et quam inventore quo eveniet quos. Et ratione consequatur quo culpa veritatis At corrupti omnis?Est quibusdam quos et illo doloribus ut quis veritatis At placeat esse aut eligendi omnis id consequatur recusandae ? Sit repellendus quae cum atque voluptatem eum odit error est assumenda necessitatibus est molestiae deserunt in illum repellat et facere beatae. Sed beatae omnis qui iure facilis id dicta dolorem ut dolore esse a perspiciatis totam.Ea expedita nesciunt aut vero aliquid sed voluptatem quisquam aut iusto molestias et enim Quis.",
-                    Rating = 5
+                    Rating = 5,
+                    Created = DateTime.Parse("2022-04-26 21:00:00")
                 }
             );
         }
@@ -305,34 +319,82 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                     ReviewsId = 7, //Fifty Shades of Grey: "Mr Grey.. What a man" -Berit
                     UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f", //Mats
                     Comment = "Really...?"
+                },
+                new Comments
+                {
+                    Id = 4,
+                    ReviewsId = 9, //American Psyco: "The movie was better" -Mats
+                    UserId = "bd332a8c-b4e4-5cg1-b68d-g25g3cg8dgc5", //Berit
+                    Comment = "In what way was the movie better?",
+                    Created = DateTime.Parse("2022-04-25 18:30:00")
+                },
+                new Comments
+                {
+                    Id = 5,
+                    ReviewsId = 9, //American Psyco: "The movie was better" -Mats
+                    UserId = "85e508e4-80ce-9d68-84c3-g1gd726e97g1", //Anna
+                    Comment = "I agree, the movie was better.",
+                    Created = DateTime.Parse("2022-04-25 19:30:00")
+                },
+                new Comments
+                {
+                    Id = 6,
+                    ReviewsId = 9, //American Psyco: "The movie was better" -Mats
+                    UserId = "be661gc4-d6b6-3b1d-23d4-2485c1bf5c0d", //Per
+                    Comment = "Skip the book and just watch the movie.",
+                    Created = DateTime.Parse("2022-04-25 20:00:00")
+                },
+                new Comments
+                {
+                    Id = 7,
+                    ReviewsId = 8, //The Outsider: "Loved it!" -Per
+                    UserId = "85e508e4-80ce-9d68-84c3-g1gd726e97g1", //Anna
+                    Comment = "So why didn't you give it 5 stars?",
+                    Created = DateTime.Parse("2022-04-15 11:00:00")
+                },
+                new Comments
+                {
+                    Id = 8,
+                    ReviewsId = 1, //Harry Potter & The Sorcerer's Stone: "The book was magical!" -Karl
+                    UserId = "be661gc4-d6b6-3b1d-23d4-2485c1bf5c0d", //Per
+                    Comment = "I wish I went to Hogwarts too...",
+                    Created = DateTime.Parse("2022-04-02 15:00:00")
+                },
+                new Comments
+                {
+                    Id = 9,
+                    ReviewsId = 12, //Jaws: "Well, this was a waste of time" -Berit
+                    UserId = "be661gc4-d6b6-3b1d-23d4-2485c1bf5c0d", //Per
+                    Comment = "Still you gave it 2 stars... Why?",
+                    Created = DateTime.Parse("2022-04-22 20:00:00")
                 });
         }
 
-        //public static void SeedCommentReplies(this ModelBuilder builder)
-        //{
-        //    builder.Entity<Replies>().HasData(
-        //        new Replies
-        //        {
-        //            Id = 1,
-        //            CommentsId = 1, //Harry Potter & The Sorcerer's Stone: "The book was magical!" -Karl
-        //            UserId = "85e508e4-80ce-9d68-84c3-g1gd726e97g1", //Anna
-        //            Reply = "I couldn't agree more!"
-        //        },
-        //        new Replies
-        //        {
-        //            Id = 2,
-        //            CommentsId = 1, //Harry Potter & The Sorcerer's Stone: "The book was magical!" -Karl
-        //            UserId = "bd332a8c-b4e4-5cg1-b68d-g25g3cg8dgc5", //Berit
-        //            Reply = "I thought the book was boring..."
-        //        },
-        //        new Replies
-        //        {
-        //            Id = 3,
-        //            CommentsId = 7, //Fifty Shades of Grey: "Mr Grey.. What a man" -Berit, "
-        //            UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f", //Mats
-        //            Reply = "Really...?"
-        //        });
-        //}
+        public static void SeedCommentReplies(this ModelBuilder builder)
+        {
+            builder.Entity<Replies>().HasData(
+                new Replies
+                {
+                    Id = 1,
+                    CommentsId = 1, //Harry Potter & The Sorcerer's Stone: "The book was magical!" -Karl
+                    UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f", //Mats
+                    Reply = "Agree!"
+                },
+                new Replies
+                {
+                    Id = 2,
+                    CommentsId = 2, //Harry Potter & The Sorcerer's Stone: "The book was magical!" -Karl
+                    UserId = "be661gc4-d6b6-3b1d-23d4-2485c1bf5c0d", //Per
+                    Reply = "Yeah, didn´t like it "
+                },
+                new Replies
+                {
+                    Id = 3,
+                    CommentsId = 3, //Fifty Shades of Grey: "Mr Grey.. What a man" -Berit, "
+                    UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f", //Mats
+                    Reply = "Really what?"
+                });
+        }
 
         public static void SeedFlaggedTable(this ModelBuilder builder)
         {
