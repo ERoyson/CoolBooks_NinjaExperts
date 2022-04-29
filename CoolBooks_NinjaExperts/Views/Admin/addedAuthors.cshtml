@@ -9,7 +9,7 @@
 
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Added Authors";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -30,9 +30,6 @@
             <th>
                 @Html.ActionLink("Name", "Index", new {sortOrder = ViewBag.NameSort}, new{  @class="text-dark", @style="text-decoration:none;"})
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Image)
-            </th>
              <th>
                 @Html.DisplayNameFor(model => model.Biography)
             </th>
@@ -47,18 +44,6 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => author.FullName)
-            </td>
-            
-            <td>
-                    @{
-                        string imgsrc2 = "";
-                        @if(author.Image != null)
-                        {
-                            var baseThumb = Convert.ToBase64String(author.Image.Thumbnail);
-                            imgsrc2 = string.Format("data:image/thumbnail;base64,{0}", baseThumb);
-                        }
-                }
-                <img src="@imgsrc2">
             </td>
             <td>
                 @Html.DisplayFor(model => author.Biography)
@@ -76,15 +61,11 @@
                 if (User.IsInRole("Admin"))
                 {
                 <td>
-                    <a asp-action="Edit" asp-route-id="@author.Id">Edit</a> |
-                    <a asp-action="Delete" asp-route-id="@author.Id">Delete</a>
+                    <a asp-action="Edit" asp-controller="Authors" asp-route-id="@author.Id">Edit</a>
                  </td>
-                 }
-             
+                }
            }
-           <td>
-                <a class="btn btn-primary" asp-action="Details" asp-route-id="@author.Id">Show</a>
-            </td>
+           
         </tr>
     }
     </tbody>

@@ -112,13 +112,7 @@
                     <a asp-action="Delete" asp-route-id="@book.Id">Delete</a>
                  </td>
                  }
-                else if (User.IsInRole("Moderator"))
-                {
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@book.Id">Edit</a> |
-                    </td>
-                }
-           }
+            }
             <td>
                     <a class="btn btn-primary" asp-action="Details" asp-route-id="@book.Id">Reviews</a>
             </td>
