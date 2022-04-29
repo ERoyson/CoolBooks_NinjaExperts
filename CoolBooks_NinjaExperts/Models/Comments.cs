@@ -12,7 +12,6 @@ namespace CoolBooks_NinjaExperts.Models
         public List<Replies>? Replies { get; set; } = new List<Replies>(); 
         public string Comment { get; set; }
         public DateTime Created { get; set; }
-        public DateTime? Deleted { get; set; }
         public ICollection<CommentLikes>? CommentLikes { get; set; }//many to many = list of likes on this Comment
         public ICollection<CommentDislikes>? CommentDislikes { get; set; }//many to many = list of likes on this Comment
         public ICollection<FlaggedComments>? FlaggedComments { get; set; } //many to many

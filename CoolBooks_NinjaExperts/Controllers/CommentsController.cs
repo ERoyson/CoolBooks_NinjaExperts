@@ -90,7 +90,7 @@ namespace CoolBooks_NinjaExperts.Controllers
             return View(comment);
         }
 
-        [Authorize(Roles = "Admin")] // And the user who created it
+        [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -107,41 +107,44 @@ namespace CoolBooks_NinjaExperts.Controllers
             return View(comments);
         }
 
-        [Authorize(Roles = "Admin")] // and the user who created it
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Comment")] Comments newComment)
+        [Authorize(Roles = "Admin, User")]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Comment")] Comments comments)
         {
-            var comments = await _context.Comments.FindAsync(newComment.Id);
-            comments.Comment = newComment.Comment;
+            var book = _context.Books.Where(x => x.Reviews.Any(r => r.Comments.Any(z => z.Id == id))).FirstOrDefault();
+            var updatedComment = _context.Comments.Where(r => r.Id == id).FirstOrDefault();
+            updatedComment.Comment = comments.Comment;
 
             if (id != comments.Id)
             {
                 return NotFound();
             }
-
-            try
+            if (ModelState.IsValid)
             {
-                _context.Update(comments);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CommentsExists(comments.Id))
+                try
                 {
-                    return NotFound();
+                    _context.Update(updatedComment);
+                    await _context.SaveChangesAsync();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (!CommentsExists(comments.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
+                return RedirectToAction("Details", "Books", book);
             }
-
-            var book = _context.Books.Where(Books => Books.Id == id).FirstOrDefault();
-            return Redirect("Home/Index"); // Om vi vill tillbaka till den book-details vi var på (viewbag) https://social.msdn.microsoft.com/Forums/en-US/2353d780-a2d8-4c7f-9c4b-9dc3fb4c3b5a/back-to-previous-page-aspnet-core?forum=aspdotnetcore
-
-            ViewData["UserId"] = new SelectList(_context.UserInfo, "Id", "Id", comments.UserId);
             return View(comments);
+
+            //var book = _context.Books.Where(Books => Books.Id == id).FirstOrDefault();
+            //return Redirect("Home/Index"); // Om vi vill tillbaka till den book-details vi var på (viewbag) https://social.msdn.microsoft.com/Forums/en-US/2353d780-a2d8-4c7f-9c4b-9dc3fb4c3b5a/back-to-previous-page-aspnet-core?forum=aspdotnetcore
+            //ViewData["UserId"] = new SelectList(_context.UserInfo, "Id", "Id", comments.UserId);
         }
 
         [Authorize(Roles = "Admin")]
@@ -163,7 +166,7 @@ namespace CoolBooks_NinjaExperts.Controllers
             return View(comments);
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -171,7 +174,7 @@ namespace CoolBooks_NinjaExperts.Controllers
             var comments = await _context.Comments.FindAsync(id);
             _context.Comments.Remove(comments);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return View("Deleted");
         }
 
         private bool CommentsExists(int id)
