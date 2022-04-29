@@ -19,15 +19,58 @@ namespace CoolBooks_NinjaExperts.Controllers
 
 
 
-        public IActionResult Index()
+        public IActionResult Index(string orderby = "")
         {
             int bookOnPages = 8;
             var VM = new DisplayBooksViewModel();
-            VM.Books = _context.Books
-                .Include(b => b.Authors)
-                .Include(b => b.Genres)
-                .Include(b => b.Image)
-                .ToList();
+            switch(orderby)
+            {
+                case "TopRated":
+                    {
+                        VM.Books = _context.Books
+                           .Include(b => b.Authors)
+                           .Include(b => b.Genres)
+                           .Include(b => b.Image)
+                           .OrderByDescending(b => b.Rating)
+                           .ToList();
+                        ViewBag.OrderBy = "TopRated";
+                        break;
+                    }
+                case "Newest":
+                    {
+                        VM.Books = _context.Books
+                           .Include(b => b.Authors)
+                           .Include(b => b.Genres)
+                           .Include(b => b.Image)
+                           .OrderBy(b => b.Created)
+                           .ToList();
+                        ViewBag.OrderBy = "Newest";
+                        break;
+                    }
+                case "Alphabetical":
+                    {
+                        VM.Books = _context.Books
+                           .Include(b => b.Authors)
+                           .Include(b => b.Genres)
+                           .Include(b => b.Image)
+                           .OrderBy(b => b.Title)
+                           .ToList();
+                        ViewBag.OrderBy = "Alphabetical";
+                        break;
+                    }
+                case "":
+                    {
+                        VM.Books = _context.Books
+                           .Include(b => b.Authors)
+                           .Include(b => b.Genres)
+                           .Include(b => b.Image)
+                           .ToList();
+                        break;
+                    }
+                    default:
+                    break;
+            }
+          
 
             // calc the number of pages to display all the books.
             double pagecount = VM.Books.Count();
@@ -43,21 +86,71 @@ namespace CoolBooks_NinjaExperts.Controllers
             VM.Books = VM.Books.Where(b => b.Id != rndmBook).Take(8);
             return View(VM);
         }
-        public IActionResult BookPages(int currentPage, int pageCount) // Copy of index - will have same search functionalities
+        public IActionResult BookPages(int currentPage, int pageCount, string sortOrder) // Copy of index - will have same search functionalities
         {
             if(currentPage == 0)
             {
                 return RedirectToAction(nameof(Index));
             }
-            
-            //2nd Page = 1
 
-            var query = _context.Books
-                .Include(b => b.Authors)
-                .Include(b => b.Genres)
-                .Include(b => b.Image)
-                .Skip(8 * currentPage)
-                .Take(8);
+            IQueryable<Books> query = _context.Books
+                           .Include(b => b.Authors)
+                           .Include(b => b.Genres)
+                           .Include(b => b.Image)
+                           .Skip(8 * currentPage)
+                           .Take(8);
+
+            //2nd Page = 1
+            switch (sortOrder)
+            {
+                case "TopRated":
+                    {
+                        query = _context.Books
+                            .Include(b => b.Authors)
+                            .Include(b => b.Genres)
+                            .Include(b => b.Image)
+                            .OrderByDescending(b => b.Rating)
+                            .Skip(8 * currentPage)
+                            .Take(8);
+                            
+                        break;
+                    }
+                case "Newest":
+                    {
+                        query = _context.Books
+                            .Include(b => b.Authors)
+                            .Include(b => b.Genres)
+                            .Include(b => b.Image)
+                            .OrderBy(b => b.Created)
+                            .Skip(8 * currentPage)
+                            .Take(8);
+                        break;
+                    }
+                case "Alphabetical":
+                    {
+                        query = _context.Books
+                           .Include(b => b.Authors)
+                           .Include(b => b.Genres)
+                           .Include(b => b.Image)
+                           .OrderBy(b => b.Title)
+                           .Skip(8 * currentPage)
+                           .Take(8);
+                        break;
+                    }
+                case "":
+                    {
+                        query = _context.Books
+                           .Include(b => b.Authors)
+                           .Include(b => b.Genres)
+                           .Include(b => b.Image)
+                           .Skip(8 * currentPage)
+                           .Take(8);
+                        break;
+                    }
+                default:
+                    break;
+            }
+
 
             var VM = new DisplayBooksViewModel();
             VM.Books = query.ToList();

@@ -6,7 +6,21 @@
 }
 
 
+<nav class="mt-5 d-flex justify-content-lg-center">
 
+    @Html.ActionLink("Newest", "Index","Home", 
+                                                    new{ orderby="Newest", sortOrder = ViewBag.OrderBy}, // values
+                                                    new{ @class="m-3 btn btn-outline-dark"})
+
+    @Html.ActionLink("Top Rated", "Index","Home", 
+                                                    new{ orderby="TopRated", sortOrder = ViewBag.OrderBy}, // values
+                                                    new{ @class="m-3 btn btn-outline-dark"})
+
+    @Html.ActionLink("A-Z", "Index","Home", 
+                                                    new{ orderby="Alphabetical", sortOrder = ViewBag.OrderBy}, // values
+                                                    new{ @class="m-3 btn btn-outline-dark"})
+
+</nav>
 <section class="py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="row gx-4 gx-lg-5 align-items-center">

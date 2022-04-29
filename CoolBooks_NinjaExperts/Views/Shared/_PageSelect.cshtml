@@ -4,6 +4,21 @@
 @inject SignInManager<UserInfo> SignInManager
 @inject UserManager<UserInfo> UserManager
 
+@{
+    var sortOrder = "";
+    if(ViewBag.Newest != null)
+    {
+        sortOrder = ViewBag.Newest;
+    }
+    if(ViewBag.TopRated != null)
+    {
+        sortOrder = ViewBag.TopRated;
+    }
+    if(ViewBag.A_Z != null)
+    {
+        sortOrder = ViewBag.A_Z;
+    }
+}
 <div>
     <form asp-controller="Home" asp-action="BookPages">
           <nav aria-label="Page navigation example">
@@ -17,6 +32,7 @@
                                 prevPage -= 1;
                             }
                     <input class="form-action" type="hidden" name="pagecount" value="@Model.PageCount"/>
+                    <input class="form-action" type="hidden" name="sortOrder" value="@sortOrder"/>
                     <input class="form-action" type="hidden" name=currentPage value="@prevPage"/>
                     <input class="page-link" type="submit" asp-controller="Home" asp-action="BookPages" value="Previous"/>
                     </li>
@@ -39,6 +55,7 @@
                     
                      
                     <input class="form-action" type="hidden" name="pageCount" value="@Model.PageCount"/>
+                    <input class="form-action" type="hidden" name="sortOrder" value="@ViewBag.OrderBy"/>
                          <input class="form-action" type="hidden" name="currentPage" value="@i"/>
                     if(@Model.CurrentPage == @i)
                     {
@@ -64,6 +81,7 @@
                                 nextPage += 1;
                     }
                     <input class="form-action" type="hidden" name="pageCount" value="@Model.PageCount"/>
+                    <input class="form-action" type="hidden" name="sortOrder" value="@ViewBag.OrderBy"/>
                     <input class="form-action" type="hidden" name=currentPage value="@nextPage"/>
                     <input class="page-link" type="submit" asp-controller="Home" asp-action="BookPages" value="Next"/>
                     </li>
