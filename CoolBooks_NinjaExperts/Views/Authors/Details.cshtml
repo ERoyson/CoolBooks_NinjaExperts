@@ -3,6 +3,11 @@
 @{
     ViewData["Title"] = "Details";
 }
+ @using Microsoft.AspNetCore.Identity
+@using CoolBooks_NinjaExperts.Areas.Identity.Data
+
+@inject SignInManager<UserInfo> SignInManager
+@inject UserManager<UserInfo> UserManager
 
 <section class="py-5">
     <div class="container px-4 px-lg-5 my-5 d-flex flex-row">
@@ -21,8 +26,16 @@
     </div>
 </section>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        if (User.IsInRole("Admin"))
+        {
+            <a asp-action="Edit" asp-route-id="@Model?.Id">Edit | </a>
+            
+            <a asp-action="Index">Back to List </a>
+        }
+    }
+    
 </div>
 
 <section class="py-5">
@@ -57,13 +70,18 @@
                                 }
                                 }
                                 </h6>
-                                <div class="d-flex justify-content-center small text-warning mb-2">
-                                    <div class="bi-star-fill"></div>
-                                    @*<div class="bi-star-half"></div>*@
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-fill"></div>
-                                    <div class="bi-star-fill"></div>
+                                <div class="d-flex justify-content-center small mb-2">
+                                   @for (int i = 0; i < 5; i++)
+                                        {
+                                            if (book.Rating > i)
+                                            {
+                                                <span class="fa fa-star checked"></span>
+                                            }
+                                            else
+                                            {
+                                                <span class="fa fa-star"></span>
+                                            }
+                                        }
                                 </div>
                             </div>
                         </div>

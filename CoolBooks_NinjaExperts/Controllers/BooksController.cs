@@ -246,15 +246,12 @@ namespace CoolBooks_NinjaExperts.Models
          return View(book);
       }
 
-      // POST: Books/Create
-      // To protect from overposting attacks, enable the specific properties you want to bind to.
-      // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+
       [HttpPost]
       [ValidateAntiForgeryToken]
       public async Task<IActionResult> Create(List<string> Authors, CreateBookViewModel FormBook)
       {
          var book = FormBook.Book;
-
 
          // Add-Genres to book
          foreach (var genre in FormBook.ListGenres)
@@ -266,7 +263,6 @@ namespace CoolBooks_NinjaExperts.Models
                     book.Genres.Add(bookGenre);
                 }
          }
-
 
          // Add-Authors to book
          foreach (var authors in Authors)
