@@ -10,6 +10,7 @@ using CoolBooks_NinjaExperts.Data;
 using CoolBooks_NinjaExperts.Models;
 using CoolBooks_NinjaExperts.ViewModels;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoolBooks_NinjaExperts.Controllers
 {
@@ -22,7 +23,7 @@ namespace CoolBooks_NinjaExperts.Controllers
             _context = context;
         }
 
-        // GET: Replies
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
             //return View(await _context.Replies.ToListAsync());
@@ -31,7 +32,7 @@ namespace CoolBooks_NinjaExperts.Controllers
             return View(await coolBooks_NinjaExpertsContext.ToListAsync());
         }
 
-        // GET: Replies/Details/5
+        [Authorize(Roles = "Admin")] 
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -95,7 +96,7 @@ namespace CoolBooks_NinjaExperts.Controllers
         }
 
 
-        // GET: RepliesController/Edit/5
+        [Authorize(Roles = "Admin")] // and the user who created it
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -113,43 +114,41 @@ namespace CoolBooks_NinjaExperts.Controllers
         }
 
 
-        // POST: Replies/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize(Roles = "Admin")] // and the user who created it
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Created,Deleted,IsFlagged,IsBlocked")] Replies replies)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Reply")] Replies newReply)
         {
-            if (id != replies.Id)
+            var reply = await _context.Replies.FindAsync(newReply.Id);
+            reply.Reply = newReply.Reply;
+
+            if (id != reply.Id)
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
+            try
             {
-                try
-                {
-                    _context.Update(replies);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!RepliesExists(replies.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                _context.Update(reply);
+                await _context.SaveChangesAsync();
             }
-            ViewData["UserId"] = new SelectList(_context.UserInfo, "Id", "Id", replies.UserId);
-            return View(replies);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!RepliesExists(reply.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Index));
+            
+            ViewData["UserId"] = new SelectList(_context.UserInfo, "Id", "Id", reply.UserId);
+            return View(reply);
         }
 
-        // GET: RepliesController/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -168,7 +167,7 @@ namespace CoolBooks_NinjaExperts.Controllers
             return View(replies);
         }
 
-        // POST: RepliesController/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
