@@ -23,13 +23,13 @@ namespace CoolBooks_NinjaExperts.Controllers
             _context = context;
         }
 
-        // GET: Reviews
+        
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Reviews.ToListAsync());
+            return Redirect("Home/Index");
         }
 
-        // GET: Reviews/Details/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Details(int? id)
         {
             var VM = new BookReviewsViewModel();
@@ -52,7 +52,7 @@ namespace CoolBooks_NinjaExperts.Controllers
             return View(VM);
         }
 
-        // GET: Reviews/Create
+        
         public IActionResult Create()
         {
             return View();
@@ -80,12 +80,16 @@ namespace CoolBooks_NinjaExperts.Controllers
                 _context.Books.Update(books);
                 _context.Add(review);
                 await _context.SaveChangesAsync();
+
+                //Response.Redirect("Details/Books/" + books.Id); 
                 return RedirectToAction("Details", "Books", books); //Skickar användaren till samma sida efter inskickad review
             }
+            
             return View(review); //Ändra till annan sida ifall reviewn misslyckas.
         }
 
         // GET: Reviews/Edit/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -106,6 +110,7 @@ namespace CoolBooks_NinjaExperts.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Text,Rating,Created,Deleted")] Reviews reviews)
         {
             if (id != reviews.Id)
@@ -136,7 +141,7 @@ namespace CoolBooks_NinjaExperts.Controllers
             return View(reviews);
         }
 
-        // GET: Reviews/Delete/5
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
