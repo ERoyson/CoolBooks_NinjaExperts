@@ -96,7 +96,7 @@ namespace CoolBooks_NinjaExperts.Controllers
         }
 
 
-        [Authorize(Roles = "Admin")] // and the user who created it
+        [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -114,38 +114,45 @@ namespace CoolBooks_NinjaExperts.Controllers
         }
 
 
-        [Authorize(Roles = "Admin")] // and the user who created it
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Reply")] Replies newReply)
         {
-            var reply = await _context.Replies.FindAsync(newReply.Id);
-            reply.Reply = newReply.Reply;
+            var book = _context.Books.Where(x => x.Reviews.Any(y => y.Comments.Any(z => z.Replies.Any(r => r.Id == id)))).FirstOrDefault();
+            var updatedReply = _context.Replies.Where(r => r.Id == id).FirstOrDefault();
+            updatedReply.Reply = newReply.Reply;
 
-            if (id != reply.Id)
+
+            //var reply = await _context.Replies.FindAsync(newReply.Id);
+            //reply.Reply = newReply.Reply;
+
+            if (id != newReply.Id)
             {
                 return NotFound();
             }
-            try
+            if (ModelState.IsValid)
             {
-                _context.Update(reply);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!RepliesExists(reply.Id))
+                try
                 {
-                    return NotFound();
+                    _context.Update(updatedReply);
+                    await _context.SaveChangesAsync();
                 }
-                else
+                catch (DbUpdateConcurrencyException)
                 {
-                    throw;
+                    if (!RepliesExists(newReply.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
                 }
+                return RedirectToAction("Details", "Books", book);
             }
-            return RedirectToAction(nameof(Index));
-            
-            ViewData["UserId"] = new SelectList(_context.UserInfo, "Id", "Id", reply.UserId);
-            return View(reply);
+            //ViewData["UserId"] = new SelectList(_context.UserInfo, "Id", "Id", reply.UserId);
+            return View(newReply);
         }
 
         [Authorize(Roles = "Admin")]
@@ -167,7 +174,7 @@ namespace CoolBooks_NinjaExperts.Controllers
             return View(replies);
         }
 
-        [Authorize(Roles = "Admin")]
+        //[Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -175,7 +182,7 @@ namespace CoolBooks_NinjaExperts.Controllers
             var replies = await _context.Replies.FindAsync(id);
             _context.Replies.Remove(replies);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return View("Deleted");
         }
 
         private bool RepliesExists(int id)

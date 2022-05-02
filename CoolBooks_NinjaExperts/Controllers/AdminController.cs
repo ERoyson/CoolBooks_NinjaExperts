@@ -114,5 +114,15 @@ namespace CoolBooks_NinjaExperts.Controllers
             return View(VM);
 
         }
+
+        public IActionResult AddedAuthors()
+        {
+            var authors = _context.Authors
+                .Include(a=>a.Books)
+                .Where(x=>x.ImageId == null && x.Biography == "Needs to be added...")
+                .ToList(); // if the author is incomplete...
+            return View("addedAuthors", authors);
+        }
     }
+
 }

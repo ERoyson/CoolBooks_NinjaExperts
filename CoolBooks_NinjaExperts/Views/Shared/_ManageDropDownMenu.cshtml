@@ -10,11 +10,13 @@
         <div class="dropdown m-xl-5">
           <button class="dropbtn">Manage</button>
           <div class="dropdown-content">
-            <a class="nav-link text-dark" asp-area="Identity" asp-action="FlaggedComments" asp-controller="ManageContent">Comments <span class="bi bi-flag"></span></a>
-            <a class="nav-link text-dark" asp-area="Identity" asp-action="FlaggedReviews" asp-controller="ManageContent">Reviews <span class="bi bi-flag"></span></a>
-            <a class="nav-link" id="personal-data" asp-area="Identity" asp-controller="Admin" asp-action="Index" >Users </a>
+            <a class="nav-link text-dark" asp-area="Identity" asp-action="AddedAuthors" asp-controller="Admin">Added Authors <i class="bi bi-pencil-square"></i></a>
+            <a class="nav-link text-dark" asp-area="Identity" asp-action="FlaggedComments" asp-controller="ManageContent">Comments <i class="bi bi-flag"></i></a>
+            <a class="nav-link text-dark" asp-area="Identity" asp-action="FlaggedReviews" asp-controller="ManageContent">Reviews <i class="bi bi-flag"></i></a>
+            <a class="nav-link" id="personal-data" asp-area="Identity" asp-controller="Admin" asp-action="Index" >Users <i class="bi bi-person"></i></a>
+            <a class="nav-link text-dark" asp-area="" asp-controller="Statistics" asp-action="Index">Statistics <i class="bi bi-bar-chart"></i></a>
             <hr>
-           <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Account</a>
+           <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Account <i class="bi bi-gear"></i></a>
           </div>
         </div>
     }
