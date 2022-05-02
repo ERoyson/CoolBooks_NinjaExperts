@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CoolBooks_NinjaExperts.Data;
 using CoolBooks_NinjaExperts.Models;
+using CoolBooks_NinjaExperts.ViewModels;
 
 namespace CoolBooks_NinjaExperts.Controllers
 {
@@ -21,13 +22,32 @@ namespace CoolBooks_NinjaExperts.Controllers
         }
 
         // GET: Quizs
-        public IActionResult Index()
+        public IActionResult Index(int Id = 1)
         {
-            var quiz =  _context.Quiz.Include(q => q.Questions).ThenInclude(q => q.QuizOptions).ToList();
-            
+            var VM = new PlayQuizViewModel();
+            // SELECT QUIZ BY ID
+            var options = _context.QuizOptions.Where(q => q.Question.QuizId == Id).ToList();
 
+            VM.Quiz = _context.Quiz.Include(q => q.Questions).ThenInclude(q => q.QuizOptions).FirstOrDefault();
+            VM.QuizOptions = new List<QuizOptions>();
 
-            return View(quiz);
+            foreach (var item in options)
+            {
+                var q = new QuizOptions();
+                q.Id = item.Id;
+                q.Option = item.Option;
+                q.IsSelected = false;
+
+                VM.QuizOptions.Add(q);
+            }
+
+            return View(VM);
+        }
+        [HttpPost]
+        public IActionResult Test (List<string> result)
+        {
+
+            return View();
         }
 
         // GET: Quizs/Details/5
