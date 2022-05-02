@@ -1,97 +1,40 @@
-﻿@model IEnumerable<CoolBooks_NinjaExperts.Models.Quiz>
+﻿@model CoolBooks_NinjaExperts.ViewModels.PlayQuizViewModel
 
 @{
     ViewData["Title"] = "Index";
 }
 
-@foreach (var item in Model)
-{
-    
-
-
-<form method="post">
+   
+<form asp-action="Test" asp-Controller="Quiz" method="post">
 <table class="table">
-    <input type="hidden" id="hfSelected" name="hfSelected" value="" /> 
-    @foreach (var opt in item.Questions)
-    {
-        
-        
-    <tr>
-        <td>@opt.Id</td>
-        <td>
-            <h5>@opt.Question</h5>
-            @foreach (var option in opt.QuizOptions)
-            {
-            <input id="optionA" type="radio" name="@opt.Id" class="radio" value="@option.Option"/> @option.Option<br/>
-        
-            <br/>
-            }
-            <label name="@opt.Id" class="radio" style="display:none; color:mediumseagreen; font:bold;">The answer is: @opt.Answer</label>
-        </td>
+        @{
+            var i = 0;
+        }
+        @foreach (var opt in @Model.Quiz.Questions)
+        {
+            <tr>
+                <td>@opt.Id</td>
+                <td>
+                    <h5>@opt.Question</h5>
+                    @for(int j = 0; j< @opt.QuizOptions.Count(); j++)
+                    {
+                        <input type="radio" name="result[@i]" value="@opt.QuizOptions[j].Id,@opt.QuizOptions[j].Option"> @opt.QuizOptions[j].Option<br/>
+              
+                    <br/>
+                    }
+                    <label name="@opt.Id" class="radio" style="display:none; color:mediumseagreen; font:bold;">The answer is: @opt.Answer</label>
+                </td>
      
-    </tr>
-}
-</table>
-</form>
-<button id="result" type="button" value="Submit" class="btn-primary" onclick="function()">Submit</button>
+            </tr>
+            i++; 
+        }
+        </table>
+            <input type="submit" value="Submit" class="btn btn-primary">
+        </form>
+
 <label id="useranswer"></label>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 }
 
-<script>
 
-    $(function () {
-    $('#result').on('click', function () {
-        var selectedAnswers = [];
-        $.each($('input[type=radio]:checked'), function () {
-            var questionAnswer = {};
-            questionAnswer.Question = $(this).val().split(',')[1].split('Name =')[1].trim();
-            questionAnswer.SelectedValue = $(this).val().split(',')[2].split(' Value = ')[1].replace('}', '').trim();
-            selectedAnswers.push(questionAnswer);
-        });
-        $('#hfSelected').val(JSON.stringify(selectedAnswers));
-    });
-});
-
-    $(document).ready(function ()
-    {
-        $("#result").click(function ()
-        {
-            $(".radio").show();
-            $(".radio").attr("disabled", true);
-
-        });
-    });
-   // function displayresult() {
-   // document.getElementById("useranswer").innerHTML="";
-   // var result = document.getElementsByTagName('input');
-   // for (i = 0; i <result.length; i++)
-   //     {
-   //         if (result[i].type =="radio")
-   //         {
-   //             if (result[i].checked)
-   //             {
-                   
-   //                // document.getElementById("useranswer").innerHTML += "Q "+ result[i].name + ")" + "Your selected answer is : " + result[i].value + "<br/>";
-   //             }
-   //         }
-   //     }
-   //things = JSON.stringify({ 'things': things });
-
-   //         $.ajax({
-   //             contentType: 'application/json; charset=utf-8',
-   //             dataType: 'json',
-   //             type: 'POST',
-   //             url: '/Home/PassThings',
-   //             data: things,
-   //             success: function () {
-   //                 $('#result').html('"PassThings()" successfully called.');
-   //             },
-   //             failure: function (response) {
-   //                 $('#result').html(response);
-   //             }
-   //         }); 
-   //     });
- }
-</script>
     
