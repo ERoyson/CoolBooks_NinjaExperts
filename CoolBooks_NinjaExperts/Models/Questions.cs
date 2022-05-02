@@ -4,11 +4,9 @@
     {
         public int Id { get; set; }
         public Quiz Quiz { get; set; } //FK QuizId
+        public int QuizId { get; set; }
         public string Question { get; set; }
-        public string OptionA { get; set; }
-        public string OptionB { get; set; }
-        public string OptionC { get; set; }
-        public string OptionD { get; set; }
+        public List<QuizOptions> QuizOptions { get; set; } = new List<QuizOptions>();
         public string Answer { get; set; }
 
     }

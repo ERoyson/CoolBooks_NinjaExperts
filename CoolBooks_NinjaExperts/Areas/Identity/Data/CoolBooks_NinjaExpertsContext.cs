@@ -132,6 +132,10 @@ public class CoolBooks_NinjaExpertsContext : IdentityDbContext<UserInfo>
         builder.SeedAuthorBooks();
         builder.SeedBooksGenres();
 
+        builder.SeedQuiz();
+        builder.SeedQuestions();
+        builder.SeedOptions();
+
     }
 
     public DbSet<Books> Books { get; set; }
