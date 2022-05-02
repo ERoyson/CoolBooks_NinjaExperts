@@ -7,7 +7,10 @@ namespace CoolBooks_NinjaExperts.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public Books Book { get; set; }
+        public int BookId { get; set; }
         public UserInfo User { get; set; } //Quiz Creator
+        public string UserId { get; set; }
+
         public DateTime Created { get; set; }
         public int? Rating { get; set; }
         public List<Questions>? Questions { get; set; } = new List<Questions>(); //one to many relationship

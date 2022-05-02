@@ -612,5 +612,73 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                 new IdentityUserRole<string>() { RoleId = "g4a251c5-6285-9362-def3-d722e74c5378", UserId = "bd332a8c-b4e4-5cg1-b68d-g25g3cg8dgc5" }                
                 );
         }
+        public static void SeedQuestions(this ModelBuilder builder)
+        {
+            builder.Entity<Questions>().HasData(
+                new Questions { Id = 1, Question = "What does Harry think he saw in the mirror shard?", Answer = "Dumbledore´s eye", QuizId=1 },
+                new Questions { Id = 2, Question = "What did Kreacher call Narcissa and Bellatrix?", Answer= "Miss Cissy and Miss Bella", QuizId = 1 },
+                new Questions { Id = 3, Question = "What was Rita Skeeter's biography of Dumbledore called?",  Answer = "The Life and Lies of Albus Dumbledore", QuizId = 1 },
+                new Questions { Id = 4, Question = "Where did Harry and Hermione go to see Harry's parent's graves?", Answer = "Godric's Hollow", QuizId = 1 },
+                new Questions { Id = 5, Question = "Who did Harry, Ron, and Hermione have to steal the locket from?", Answer = "Dolores Umbridge", QuizId = 1 },
+                new Questions { Id = 6, Question = "What were the three items of the Deathly Hallows?", Answer = "A wand, a stone and an invisibility cloak", QuizId = 1 },
+                new Questions { Id = 7, Question = "Who killed Dobby?", Answer = "Bellatrix", QuizId = 1 },
+                new Questions { Id = 8, Question = "What did Lupin name his son?", Answer = "Ted Remus", QuizId = 1 },
+                new Questions { Id = 9, Question = "What was the name of the chapter where Snape jumped out the window?", Answer = "The Sacking of Servus Snape", QuizId=1 },
+                new Questions { Id = 10, Question = "Where was the Lost Diadem hidden?", Answer = "In the Room of Requirement", QuizId = 1 }
+                );
+
+        }
+
+        public static void SeedOptions(this ModelBuilder builder) 
+        {
+            builder.Entity<QuizOptions>().HasData(
+                new QuizOptions { Id = 1, QuestionId = 1, Option = "Sirius" },
+                 new QuizOptions { Id = 2, QuestionId = 1, Option = "Voldemort" },
+                 new QuizOptions { Id = 3, QuestionId = 1, Option = "Dumbledore´s eye" },
+                 new QuizOptions { Id = 4, QuestionId = 1, Option = "A Message from Dumbledore" },
+                 new QuizOptions { Id = 5, QuestionId = 2, Option = "Miss Cissy and Miss Bella" },
+                 new QuizOptions { Id = 6, QuestionId = 2, Option = "Cissa and Bellie" },
+                 new QuizOptions { Id = 7, QuestionId = 2, Option = "Master Bellatrix and Cissy" },
+                 new QuizOptions { Id = 8, QuestionId = 2, Option = "none of the above" },
+                 new QuizOptions { Id = 9, QuestionId = 3, Option = "The Life of Our Hero" },
+                 new QuizOptions { Id = 10, QuestionId = 3, Option = "The Inside Story of Albus Dumbledore" },
+                 new QuizOptions { Id = 11, QuestionId = 3, Option = "The Life and Lies of Albus Dumbledore" },
+                 new QuizOptions { Id = 12, QuestionId = 3, Option = "The Dumbledore No One Knew About" },
+                 new QuizOptions { Id = 13, QuestionId = 4, Option = "Godric Griffindor" },
+                 new QuizOptions { Id = 14, QuestionId = 4, Option = "Deathly Hallows" },
+                 new QuizOptions { Id = 15, QuestionId = 4, Option = "Godric's Hollow" },
+                 new QuizOptions { Id = 16, QuestionId = 4, Option = "Diagon Alley" },
+                 new QuizOptions { Id = 17, QuestionId = 5, Option = "Peter Pettigrew" },
+                 new QuizOptions { Id = 18, QuestionId = 5, Option = "Kingsly Shacklebolt" },
+                 new QuizOptions { Id = 19, QuestionId = 5, Option = "Servus Snape" },
+                 new QuizOptions { Id = 20, QuestionId = 5, Option = "Dolores Umbridge" },
+                 new QuizOptions { Id = 21, QuestionId = 6, Option = "A wand, a stone and an invisibility cloak" },
+                 new QuizOptions { Id = 22, QuestionId = 6, Option = "A wand, a sword and an invisibility cloak" },
+                 new QuizOptions { Id = 23, QuestionId = 6, Option = "A stone, a sword and an invisibility cloak" },
+                 new QuizOptions { Id = 24, QuestionId = 6, Option = "A wand, a stone and an invisibility cloak" },
+                 new QuizOptions { Id = 25, QuestionId = 7, Option = "Bellatrix" },
+                 new QuizOptions { Id = 26, QuestionId = 7, Option = "Narcissa" },
+                 new QuizOptions { Id = 27, QuestionId = 7, Option = "Voldemort" },
+                 new QuizOptions { Id = 28, QuestionId = 7, Option = "Wormtail" },
+                 new QuizOptions { Id = 29, QuestionId = 8, Option = "Remus Junior" },
+                 new QuizOptions { Id = 30, QuestionId = 8, Option = "Ted Remus" },
+                 new QuizOptions { Id = 31, QuestionId = 8, Option = "Ted James" },
+                 new QuizOptions { Id = 32, QuestionId = 8, Option = "Remus Harry" },
+                 new QuizOptions { Id = 33, QuestionId = 9, Option = "The Lost Diadem" },
+                 new QuizOptions { Id = 34, QuestionId = 9, Option = "Snape's Escape" },
+                 new QuizOptions { Id = 35, QuestionId = 9, Option = "The battle of Hogwarts" },
+                 new QuizOptions { Id = 36, QuestionId = 9, Option = "The Sacking of Servus Snape" },
+                 new QuizOptions { Id = 37, QuestionId = 10, Option = "In the Chamber of Secrets" },
+                 new QuizOptions { Id = 38, QuestionId = 10, Option = "In the Headmaster's office" },
+                 new QuizOptions { Id = 39, QuestionId = 10, Option = "In the Room of Requirement" },
+                 new QuizOptions { Id = 40, QuestionId = 10, Option = "In the kitchen with Kreacher" }
+                );
+        }
+        public static void SeedQuiz(this ModelBuilder builder) 
+        {
+            builder.Entity<Quiz>().HasData(
+                new Quiz { Id = 1, Name= "The Harry Potter and the Deathly Hallows Quiz", BookId = 2, UserId= "b74ddd14-6340-4840-95c2-db12554843e5",  }
+                );
+        }
     }
 }
