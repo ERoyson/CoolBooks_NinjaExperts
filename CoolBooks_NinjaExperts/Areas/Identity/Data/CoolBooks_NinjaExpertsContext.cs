@@ -156,5 +156,6 @@ public class CoolBooks_NinjaExpertsContext : IdentityDbContext<UserInfo>
     public DbSet<Quiz> Quiz { get; set; }
     public DbSet<Questions> Questions { get; set; }
     public DbSet<QuizOptions> QuizOptions { get; set; }
+    public DbSet<QuizScoreboard> QuizScoreboards { get; set; }
 }
 
