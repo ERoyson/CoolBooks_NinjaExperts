@@ -10,6 +10,7 @@ using CoolBooks_NinjaExperts.Data;
 using CoolBooks_NinjaExperts.Models;
 using CoolBooks_NinjaExperts.ViewModels;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoolBooks_NinjaExperts.Controllers
 {
@@ -128,16 +129,32 @@ namespace CoolBooks_NinjaExperts.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Created,Rating")] Quiz quiz)
+        public async Task<IActionResult> Create([Bind("Id,Name,Book")] Quiz quiz)
         {
-            if (ModelState.IsValid)
-            {
+            var book = _context.Books.FirstOrDefault(x => x.Title == quiz.Book.Title);
+            quiz.Book = book;
+            quiz.User = _context.UserInfo.FirstOrDefault(x => x.Id == User.FindFirstValue(ClaimTypes.NameIdentifier));
+            quiz.UserId = quiz.User.Id;
+            quiz.BookId = quiz.Book.Id;
+         
+            
                 _context.Add(quiz);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(quiz);
+            var model = new List<Questions> {  new QuizOptions() };
+            return View("AddQuestions", new Questions());
+            
+            //return View(quiz);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddQuestion([Bind("Question,QuizOptions,Answer")] Questions questions, int id)
+        {
+            
+
+            return View() ;
+        }
+
         [HttpPost]
         public void PassThings(string[,] results)
         {

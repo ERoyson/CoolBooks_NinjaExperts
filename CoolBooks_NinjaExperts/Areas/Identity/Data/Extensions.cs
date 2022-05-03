@@ -639,7 +639,7 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                  new QuizOptions { Id = 5, QuestionId = 2, Option = "Miss Cissy and Miss Bella" },
                  new QuizOptions { Id = 6, QuestionId = 2, Option = "Cissa and Bellie" },
                  new QuizOptions { Id = 7, QuestionId = 2, Option = "Master Bellatrix and Cissy" },
-                 new QuizOptions { Id = 8, QuestionId = 2, Option = "none of the above" },
+                 new QuizOptions { Id = 8, QuestionId = 2, Option = "None of the above" },
                  new QuizOptions { Id = 9, QuestionId = 3, Option = "The Life of Our Hero" },
                  new QuizOptions { Id = 10, QuestionId = 3, Option = "The Inside Story of Albus Dumbledore" },
                  new QuizOptions { Id = 11, QuestionId = 3, Option = "The Life and Lies of Albus Dumbledore" },
