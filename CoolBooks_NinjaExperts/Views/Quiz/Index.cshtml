@@ -1,107 +1,69 @@
 ﻿@model IEnumerable<CoolBooks_NinjaExperts.Models.Quiz>
 
+@using Microsoft.AspNetCore.Identity
+@using CoolBooks_NinjaExperts.Areas.Identity.Data
+
 @{
     ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@foreach (var item in Model)
+@inject SignInManager<UserInfo> SignInManager
+@inject UserManager<UserInfo> UserManager
+
+<h1>Index</h1>
+
+@if (SignInManager.IsSignedIn(User))
 {
-    
-
-
-<form method="post">
-<table class="table">
-    <input type="hidden" id="hfSelected" name="hfSelected" value="" /> 
-    @foreach (var opt in item.Questions)
+    if(User.IsInRole("Admin"))
     {
-        
-        
-    <tr>
-        <td>@opt.Id</td>
-        <td>
-            <h5>@opt.Question</h5>
-            @foreach (var option in opt.QuizOptions)
-            {
-            <input id="@option.Id" type="radio" name="@opt.Id" class="radio" value="@option.Option"/> @option.Option<br/>
-        
-            <br/>
-            }
-            <label name="@opt.Id" class="radio" style="display:none; color:mediumseagreen; font:bold;">The answer is: @opt.Answer</label>
-        </td>
-     
-    </tr>
-}
-</table>
-</form>
-<button id="result" type="button" value="Submit" class="btn-primary" onclick="function()">Submit</button>
-<label id="useranswer"></label>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-}
 
-<script>
-
-    
-    
-
-    function checkAns(){
-        console.log(a1.checked, a2, a3, a4, a5);
-        if (a1.checked || a2.checked || a3.checked || a4.checked || a5.checked) {
-            document.getElementById("btn").disabled = false; 
-        }
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
     }
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Quiz Name
+            </th>
+            <th>
+                Book
+            </th>
+            <th>
+                Created
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Book.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Created)
+            </td>
+            <td>
+                  @if (SignInManager.IsSignedIn(User))
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                     </td>
+                 }
+            <td>
+                    <a class="btn btn-primary" asp-action="PlayQuiz" asp-route-id="@item.Id">Play</a>
+                     <a class="btn btn-warning" asp-action="Scoreboard" asp-route-id="@item.Id">Scoreboard</a>
+            </td>
+        </tr>
+}
 
-//    $(function () {
-//    $('#result').on('click', function () {
-//        var selectedAnswers = [];
-//        $.each($('input[type=radio]:checked'), function () {
-//            var questionAnswer = {};
-//            questionAnswer.Question = $(this).val().split(',')[1].split('Name =')[1].trim();
-//            questionAnswer.SelectedValue = $(this).val().split(',')[2].split(' Value = ')[1].replace('}', '').trim();
-//            selectedAnswers.push(questionAnswer);
-//        });
-//        $('#hfSelected').val(JSON.stringify(selectedAnswers));
-//    });
-//});
-
-    $(document).ready(function ()
-    {
-        $("#result").click(function ()
-        {
-            $(".radio").show();
-            $(".radio").attr("disabled", true);
-
-        });
-    });
-   // function displayresult() {
-   // document.getElementById("useranswer").innerHTML="";
-   // var result = document.getElementsByTagName('input');
-   // for (i = 0; i <result.length; i++)
-   //     {
-   //         if (result[i].type =="radio")
-   //         {
-   //             if (result[i].checked)
-   //             {
-                   
-   //                // document.getElementById("useranswer").innerHTML += "Q "+ result[i].name + ")" + "Your selected answer is : " + result[i].value + "<br/>";
-   //             }
-   //         }
-   //     }
-   //things = JSON.stringify({ 'things': things });
-
-   //         $.ajax({
-   //             contentType: 'application/json; charset=utf-8',
-   //             dataType: 'json',
-   //             type: 'POST',
-   //             url: '/Home/PassThings',
-   //             data: things,
-   //             success: function () {
-   //                 $('#result').html('"PassThings()" successfully called.');
-   //             },
-   //             failure: function (response) {
-   //                 $('#result').html(response);
-   //             }
-   //         }); 
-   //     });
- }
-</script>
-    
+    </tbody>
+</table>

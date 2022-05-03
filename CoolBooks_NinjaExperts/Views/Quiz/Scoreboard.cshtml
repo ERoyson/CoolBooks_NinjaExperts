@@ -1,0 +1,52 @@
+﻿@model IEnumerable<CoolBooks_NinjaExperts.Models.QuizScoreboard>
+
+@{
+    ViewData["Title"] = "Scoreboard";
+}
+
+<h3>SCOREBOARD (TOP 10)</h3>
+<hr />
+<table class="table justify-content-between">
+    <thead>
+        <tr>
+            <th>
+                Placement
+            </th>
+            <th>
+                User Name
+            </th>
+            <th>
+                Points
+            </th>
+             <th>
+                Time
+            </th>
+        </tr>
+    </thead>
+
+    @{int i = 0;}
+    @foreach(var item in Model)
+{
+    i++;
+        <tbody>
+            <tr>
+            <td>
+                @i
+            </td>
+            <td>
+                @item.User.UserName
+            </td>
+            <td>
+                @item.Score
+            </td> 
+            <td>
+                @item.Time
+            </td>
+        </tr>
+    </tbody>
+
+
+  
+}
+
+</table>

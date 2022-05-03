@@ -12,7 +12,6 @@ using CoolBooks_NinjaExperts.ViewModels;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 
-
 namespace CoolBooks_NinjaExperts.Controllers
 {
     public class QuizController : Controller
@@ -25,14 +24,81 @@ namespace CoolBooks_NinjaExperts.Controllers
         }
 
         // GET: Quizs
-        public IActionResult Index()
+        public IActionResult Index() 
         {
-            var quiz =  _context.Quiz.Include(q => q.Questions).ThenInclude(q => q.QuizOptions).ToList();
-            
-
-
+            var quiz = _context.Quiz.Include(x=>x.Book).ToList();
+             //orderby?
             return View(quiz);
         }
+        public IActionResult Scoreboard(int Id)
+        {
+            var scoreboard = _context.QuizScoreboards.Include(x => x.User).Where(x=>x.QuizId == Id).OrderByDescending(x=>x.Score).ThenBy(x=>x.Time).Take(10).ToList();
+            
+            return View(scoreboard);
+        }
+
+        public IActionResult PlayQuiz(int Id)
+        {
+            var VM = new PlayQuizViewModel();
+            // SELECT QUIZ BY ID
+            var options = _context.QuizOptions.Where(q => q.Question.QuizId == Id).ToList();
+
+            VM.Quiz = _context.Quiz.Include(q => q.Questions).ThenInclude(q => q.QuizOptions).FirstOrDefault();
+            VM.QuizOptions = new List<QuizOptions>();
+
+            foreach (var item in options)
+            {
+                var q = new QuizOptions();
+                q.Id = item.Id;
+                q.Option = item.Option;
+                q.IsSelected = false;
+
+                VM.QuizOptions.Add(q);
+            }
+            VM.StartTime = DateTime.Now;
+
+            return View(VM);
+        }
+        [HttpPost]
+        public IActionResult SubmitQuizAnswers (List<string> result, int quizId, DateTime startTime)
+        {
+            DateTime endTime = DateTime.Now;
+            var diffInSeconds = (endTime - startTime).TotalSeconds;
+            diffInSeconds = Math.Round(diffInSeconds, 2);
+
+            var VM = new PlayQuizViewModel();
+
+            var answers = _context.Questions.Where(q=>q.QuizId == quizId).Select(q => q.Answer).ToList();
+            int quizPoints = 0;
+            for(int i = 0; i < answers.Count; i++) // compare quizresult with answers, count points per correct answer
+            {
+                if(result[i] == answers[i])
+                {
+                    quizPoints++;
+                }
+            }
+
+            VM.QuizPoints = quizPoints;
+            VM.result = result;
+            VM.QuizId = quizId;
+            VM.Answers = answers;
+            VM.TotalTime = diffInSeconds;
+
+
+            // adds user to scoreboard on this quiz.
+            var userScore = new QuizScoreboard();
+            userScore.Score = quizPoints;
+            userScore.QuizId = quizId;
+            userScore.Time = diffInSeconds;
+            userScore.User = _context.UserInfo.FirstOrDefault(x => x.Id == User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            _context.QuizScoreboards.Add(userScore);
+            _context.SaveChanges();
+
+
+            return View("ShowResult", VM); // change to the correct page
+        }
+    
 
         // GET: Quizs/Details/5
         public async Task<IActionResult> Details(int? id)

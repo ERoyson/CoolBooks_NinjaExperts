@@ -1,0 +1,51 @@
+﻿@model CoolBooks_NinjaExperts.ViewModels.PlayQuizViewModel
+
+@{
+    ViewData["Title"] = "Quiz Results";
+}
+
+<h3>Total Points: @Model.QuizPoints / @Model.Answers.Count()</h3>
+<h4 ><i class="bi-clock"> </i> Time: @Model.TotalTime sec</h4>
+<hr />
+<table class="table justify-content-between">
+    <thead>
+        <tr>
+            <th>
+                Your Answer
+            </th>
+            <th style="color:green;">
+                Correct Answer
+            </th>
+        </tr>
+    </thead>
+
+@for (var i = 0; i < @Model.Answers.Count(); i++)
+{
+        <tbody>
+        <tr>
+            @{
+                if(@Model.result[i] == @Model.Answers[i])
+                {
+                    <td>
+                        <p style="color:green;">@Model.result[i]</p>
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <p style="color:red;">@Model.result[i]</p>
+                    </td>    
+                }
+            }
+            
+            <td>
+                <p style="color:green;">@Model.Answers[i]</p>
+            </td>
+        </tr>
+    </tbody>
+
+
+  
+}
+
+</table>
