@@ -230,7 +230,7 @@ namespace CoolBooks_NinjaExperts.Models
 
 
         // GET: Books/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, User")]
       public IActionResult Create()
       {
          var book = new CreateBookViewModel();
@@ -253,6 +253,7 @@ namespace CoolBooks_NinjaExperts.Models
       public async Task<IActionResult> Create(List<string> Authors, CreateBookViewModel FormBook)
       {
          var book = FormBook.Book;
+         book.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
          // Add-Genres to book
          foreach (var genre in FormBook.ListGenres)
@@ -284,19 +285,29 @@ namespace CoolBooks_NinjaExperts.Models
 
          }
 
-         // Image handeling
-         foreach (var file in Request.Form.Files)
+        // Image handeling
+         if (Request.Form.Files.Count() == 0) //If no image is provided by the user
          {
             Images img = new Images();
             MemoryStream ms = new MemoryStream();
-            file.CopyTo(ms);
-            img.Image = ms.ToArray();
-            ms.Close();
-            ms.Dispose();
-
-            img.Thumbnail = CreateThumbnail(img.Image);
-
+            img = _context.Images.Where(a => a.Id == 26).FirstOrDefault(); //Id = 26 är defaultbilden
             book.Image = img;
+         }
+         else
+         {
+             foreach (var file in Request.Form.Files)
+             {
+                Images img = new Images();
+                MemoryStream ms = new MemoryStream();
+                file.CopyTo(ms);
+                img.Image = ms.ToArray();
+                ms.Close();
+                ms.Dispose();
+
+                img.Thumbnail = CreateThumbnail(img.Image);
+
+                book.Image = img;
+             }
          }
 
 
@@ -329,22 +340,30 @@ namespace CoolBooks_NinjaExperts.Models
          }
       }
 
-      // GET: Books/Edit/5
-      [Authorize(Roles = "Admin, Moderator")]
-      public async Task<IActionResult> Edit(int? id)
-      {
-         if (id == null)
-         {
-            return NotFound();
-         }
+        // GET: Books/Edit/5
+        [Authorize(Roles = "Admin, Moderator, User")]
+        public async Task<IActionResult> Edit(int? id)
+        {
+            var VM = new ContributionPostsViewModel();
+            VM.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var book = _context.Books.Where(r => r.Id == id).FirstOrDefault();
 
-         var books = await _context.Books.FindAsync(id);
-         if (books == null)
-         {
+            if (VM.UserId == book.UserId)
+            {
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var books = await _context.Books.FindAsync(id);
+                if (books == null)
+                {
+                    return NotFound();
+                }
+                return View(books);
+            }
             return NotFound();
-         }
-         return View(books);
-      }
+        }
 
       // POST: Books/Edit/5
       // To protect from overposting attacks, enable the specific properties you want to bind to.
@@ -381,24 +400,32 @@ namespace CoolBooks_NinjaExperts.Models
          return View(books);
       }
 
-      // GET: Books/Delete/5
-      [Authorize(Roles = "Admin")]
-      public async Task<IActionResult> Delete(int? id)
-      {
-         if (id == null)
-         {
-            return NotFound();
-         }
+        // GET: Books/Delete/5
+        [Authorize(Roles = "Admin, User")]
+        public async Task<IActionResult> Delete(int? id)
+        {
+            var VM = new ContributionPostsViewModel();
+            VM.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var book = _context.Books.Where(r => r.Id == id).FirstOrDefault();
 
-         var books = await _context.Books
-             .FirstOrDefaultAsync(m => m.Id == id);
-         if (books == null)
-         {
-            return NotFound();
-         }
+            if (VM.UserId == book.UserId)
+            {
+                if (id == null)
+                {
+                    return NotFound();
+                }
 
-         return View(books);
-      }
+                var books = await _context.Books
+                    .FirstOrDefaultAsync(m => m.Id == id);
+                if (books == null)
+                {
+                    return NotFound();
+                }
+
+                return View(books);
+            }
+            return NotFound();
+        }
 
       // POST: Books/Delete/5
       [HttpPost, ActionName("Delete")]
