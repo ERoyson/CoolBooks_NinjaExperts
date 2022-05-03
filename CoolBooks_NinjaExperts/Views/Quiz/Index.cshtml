@@ -22,7 +22,7 @@
             <h5>@opt.Question</h5>
             @foreach (var option in opt.QuizOptions)
             {
-            <input id="optionA" type="radio" name="@opt.Id" class="radio" value="@option.Option"/> @option.Option<br/>
+            <input id="@option.Id" type="radio" name="@opt.Id" class="radio" value="@option.Option"/> @option.Option<br/>
         
             <br/>
             }
@@ -40,18 +40,28 @@
 
 <script>
 
-    $(function () {
-    $('#result').on('click', function () {
-        var selectedAnswers = [];
-        $.each($('input[type=radio]:checked'), function () {
-            var questionAnswer = {};
-            questionAnswer.Question = $(this).val().split(',')[1].split('Name =')[1].trim();
-            questionAnswer.SelectedValue = $(this).val().split(',')[2].split(' Value = ')[1].replace('}', '').trim();
-            selectedAnswers.push(questionAnswer);
-        });
-        $('#hfSelected').val(JSON.stringify(selectedAnswers));
-    });
-});
+    
+    
+
+    function checkAns(){
+        console.log(a1.checked, a2, a3, a4, a5);
+        if (a1.checked || a2.checked || a3.checked || a4.checked || a5.checked) {
+            document.getElementById("btn").disabled = false; 
+        }
+    }
+
+//    $(function () {
+//    $('#result').on('click', function () {
+//        var selectedAnswers = [];
+//        $.each($('input[type=radio]:checked'), function () {
+//            var questionAnswer = {};
+//            questionAnswer.Question = $(this).val().split(',')[1].split('Name =')[1].trim();
+//            questionAnswer.SelectedValue = $(this).val().split(',')[2].split(' Value = ')[1].replace('}', '').trim();
+//            selectedAnswers.push(questionAnswer);
+//        });
+//        $('#hfSelected').val(JSON.stringify(selectedAnswers));
+//    });
+//});
 
     $(document).ready(function ()
     {
