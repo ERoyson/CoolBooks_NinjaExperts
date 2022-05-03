@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using CoolBooks_NinjaExperts.Data;
 using CoolBooks_NinjaExperts.Models;
 using CoolBooks_NinjaExperts.ViewModels;
+using System.Security.Claims;
 
 namespace CoolBooks_NinjaExperts.Controllers
 {
@@ -22,7 +23,20 @@ namespace CoolBooks_NinjaExperts.Controllers
         }
 
         // GET: Quizs
-        public IActionResult Index(int Id = 1)
+        public IActionResult Index() 
+        {
+            var quiz = _context.Quiz.Include(x=>x.Book).ToList();
+             //orderby?
+            return View(quiz);
+        }
+        public IActionResult Scoreboard(int Id)
+        {
+            var scoreboard = _context.QuizScoreboards.Include(x => x.User).Where(x=>x.QuizId == Id).OrderByDescending(x=>x.Score).ThenBy(x=>x.Time).Take(10).ToList();
+            
+            return View(scoreboard);
+        }
+
+        public IActionResult PlayQuiz(int Id)
         {
             var VM = new PlayQuizViewModel();
             // SELECT QUIZ BY ID
@@ -40,15 +54,50 @@ namespace CoolBooks_NinjaExperts.Controllers
 
                 VM.QuizOptions.Add(q);
             }
+            VM.StartTime = DateTime.Now;
 
             return View(VM);
         }
         [HttpPost]
-        public IActionResult Test (List<string> result)
+        public IActionResult SubmitQuizAnswers (List<string> result, int quizId, DateTime startTime)
         {
+            DateTime endTime = DateTime.Now;
+            var diffInSeconds = (endTime - startTime).TotalSeconds;
+            diffInSeconds = Math.Round(diffInSeconds, 2);
 
-            return View();
+            var VM = new PlayQuizViewModel();
+
+            var answers = _context.Questions.Where(q=>q.QuizId == quizId).Select(q => q.Answer).ToList();
+            int quizPoints = 0;
+            for(int i = 0; i < answers.Count; i++) // compare quizresult with answers, count points per correct answer
+            {
+                if(result[i] == answers[i])
+                {
+                    quizPoints++;
+                }
+            }
+
+            VM.QuizPoints = quizPoints;
+            VM.result = result;
+            VM.QuizId = quizId;
+            VM.Answers = answers;
+            VM.TotalTime = diffInSeconds;
+
+
+            // adds user to scoreboard on this quiz.
+            var userScore = new QuizScoreboard();
+            userScore.Score = quizPoints;
+            userScore.QuizId = quizId;
+            userScore.Time = diffInSeconds;
+            userScore.User = _context.UserInfo.FirstOrDefault(x => x.Id == User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+            _context.QuizScoreboards.Add(userScore);
+            _context.SaveChanges();
+
+
+            return View("ShowResult", VM); // change to the correct page
         }
+    
 
         // GET: Quizs/Details/5
         public async Task<IActionResult> Details(int? id)

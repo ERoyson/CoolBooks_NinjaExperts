@@ -1,0 +1,56 @@
+﻿@model CoolBooks_NinjaExperts.ViewModels.PlayQuizViewModel
+
+@{
+    ViewData["Title"] = "Play Quiz";
+}
+
+<form asp-action="SubmitQuizAnswers" asp-Controller="Quiz" method="post">
+    <fieldset>
+<table class="table">
+        @{
+            var i = 0;
+        }
+        @foreach (var opt in @Model.Quiz.Questions)
+        {
+            <div class="radio-group">
+            <tr>
+                <td>@opt.Id</td>
+                <td>
+                    <h5>@opt.Question</h5>
+                    @for(int j = 0; j< @opt.QuizOptions.Count(); j++)
+                    {
+                        <input type="radio" class="showSubmit" name="result[@i]" value="@opt.QuizOptions[j].Option"> @opt.QuizOptions[j].Option<br/>
+              
+                    <br/>
+                    }
+                     @{i++;} 
+                    <label name="@opt.Id" class="radio" style="display:none; color:mediumseagreen; font:bold;">The answer is: @opt.Answer</label>
+                </td>
+               
+            </tr>
+            </div>
+        }
+        </table>
+            <input type="hidden" name="quizId" value="@Model.Quiz.Id" />
+            <input type="hidden" name="startTime" value="@Model.StartTime"/>
+            <button disabled type="submit" value="Submit" class="Submit btn btn-primary">Submit</button>
+            </fieldset>
+        </form>
+
+<label id="useranswer"></label>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+@*Lock submitbutton if not all questions are answered.*@
+<script>
+$('fieldset input').click(function () {
+    var radioLength = $('.radio-group').length; 
+    if ($('input:checked').length == radioLength) { 
+        $('fieldset button').prop("disabled", false);
+    }
+    else {
+        $('button').prop("disabled", true);
+    } 
+});
+
+</script>
+    
