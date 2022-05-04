@@ -159,5 +159,18 @@ namespace CoolBooks_NinjaExperts.Controllers
         {
             return _context.Lists.Any(e => e.Id == id);
         }
+
+        public ActionResult AddToList(int listId, int BookId) 
+        {
+            var book = _context.Books.FirstOrDefault(b => b.Id == BookId);
+            if (!_context.Lists.Where(l => l.Id == listId).Any(l => l.Books.Any(b => b.Id == BookId)))
+            {
+                
+                var list = _context.Lists.FirstOrDefault(l => l.Id == listId);
+                list.Books.Add(book);
+                _context.SaveChanges();
+            }                                                 
+            return RedirectToAction("Details", "Books", book);                                               
+        }
     }
 }

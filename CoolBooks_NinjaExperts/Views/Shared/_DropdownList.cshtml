@@ -1,0 +1,24 @@
+﻿@model CoolBooks_NinjaExperts.ViewModels.BookReviewsViewModel
+
+@using Microsoft.AspNetCore.Identity
+@using CoolBooks_NinjaExperts.Areas.Identity.Data
+
+@inject SignInManager<UserInfo> SignInManager
+@inject UserManager<UserInfo> UserManager
+
+@{
+    if (SignInManager.IsSignedIn(User) && User.IsInRole("User"))
+    {
+        <div class="dropdown m-xl-5">
+          <button class="dropbtn" style="border-radius:8px;">Add to List</button>
+          <div class="dropdown-content">
+          @foreach (var item in Model.Lists)
+          {   @Html.ActionLink(item.ListName, "AddToList", "Lists", new {listId = item.Id, BookId= @Model.Book.Id})
+              //<a class="nav-link text-dark" asp-controller="Lists" asp-action="Create">@item.ListName</a>
+          }
+          
+                    
+          </div>
+        </div>
+    }
+}

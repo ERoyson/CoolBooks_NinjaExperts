@@ -144,7 +144,9 @@ namespace CoolBooks_NinjaExperts.Models
             var userName = User.FindFirstValue(ClaimTypes.Name); // will give the user's userName
 
             var VM = new BookReviewsViewModel();
-            VM.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the logged in user's userId
+            VM.UserId = userId;
+
+            VM.Lists = _context.Lists.Where(l => l.UserId == userId).ToList();
 
             VM.FlaggedReviews = _context.FlaggedReviews
                 .Include(x => x.Review)
