@@ -12,89 +12,117 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CoolBooks_NinjaExperts.Models
 {
-    
-    public class AuthorsController : Controller
-    {
-        private readonly CoolBooks_NinjaExpertsContext _context;
 
-        public AuthorsController(CoolBooks_NinjaExpertsContext context)
-        {
-            _context = context;
-        }
+   public class AuthorsController : Controller
+   {
+      private readonly CoolBooks_NinjaExpertsContext _context;
 
-
-
-       
-        public IActionResult Index(string sortOrder)
-        {
-            ViewBag.CurrentSort = sortOrder;
-            ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-
-            var authors = _context.Authors
-                .Include(a => a.Image)
-                .Include(a => a.Books)
-                .ToList();
-
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    authors = authors.OrderByDescending(a => a.FullName).ToList();
-                    break;
-                default:
-                    authors = authors.OrderBy(a => a.FullName).ToList();
-                    break;
+      public AuthorsController(CoolBooks_NinjaExpertsContext context)
+      {
+         _context = context;
+      }
 
 
-            }
-                    return View(authors);
-        }
 
-        
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var authors = await _context.Authors
-                .Include(a => a.Image)
-                .Include(a => a.Books)
-                .ThenInclude(b => b.Image)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (authors == null)
-            {
-                return NotFound();
-            }
+      public IActionResult Index(string sortOrder)
+      {
+         ViewBag.CurrentSort = sortOrder;
+         ViewBag.NameSort = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
 
-            return View(authors);
-        }
+         var authors = _context.Authors
+             .Include(a => a.Image)
+             .Include(a => a.Books)
+             .ToList();
 
-       
-        [Authorize(Roles = "Admin")]
-        public IActionResult Create()
-        {
-            ViewData["ImageId"] = new SelectList(_context.Images, "Id", "Id");
-            return View();
-        }
+         switch (sortOrder)
+         {
+            case "name_desc":
+               authors = authors.OrderByDescending(a => a.FullName).ToList();
+               break;
+            default:
+               authors = authors.OrderBy(a => a.FullName).ToList();
+               break;
 
-        [Authorize(Roles = "Admin")]
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FullName,Biography,Created,ImageId")] Authors authors)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(authors);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["ImageId"] = new SelectList(_context.Images, "Id", "Id", authors.ImageId);
-            return View(authors);
-        }
 
-        
-        [Authorize(Roles = "Admin")]
+         }
+         return View(authors);
+      }
+
+
+      public async Task<IActionResult> Details(int? id)
+      {
+         if (id == null)
+         {
+            return NotFound();
+         }
+
+         var authors = await _context.Authors
+             .Include(a => a.Image)
+             .Include(a => a.Books)
+             .ThenInclude(b => b.Image)
+             .FirstOrDefaultAsync(m => m.Id == id);
+         if (authors == null)
+         {
+            return NotFound();
+         }
+
+         return View(authors);
+      }
+
+
+      [Authorize(Roles = "Admin")]
+      public IActionResult Create()
+      {
+         return View();
+      }
+      [Authorize(Roles = "Admin")]
+      [HttpPost]
+      [ValidateAntiForgeryToken]
+      public async Task<IActionResult> Create([Bind("Id,FullName,Biography,ImageId")] Authors author)
+      {
+         var newAuthor = new Authors();
+         newAuthor = author;
+
+         foreach (var file in Request.Form.Files)
+         {
+            Images img = new Images();
+            MemoryStream ms = new MemoryStream();
+            file.CopyTo(ms);
+            img.Image = ms.ToArray();
+            ms.Close();
+            ms.Dispose();
+            img.Thumbnail = CreateThumbnail(img.Image);
+            newAuthor.Image = img;
+         }
+         _context.Add(newAuthor);
+         await _context.SaveChangesAsync();
+         return RedirectToAction(nameof(Index));
+      }
+   
+
+
+      [Authorize(Roles = "Admin")]
+      public byte[] CreateThumbnail(byte[] imgFile)
+      {
+
+         MemoryStream ms = new MemoryStream(imgFile);
+         System.Drawing.Image image = System.Drawing.Image.FromStream(ms);
+
+         // convert img to thumbnail
+         var thumbimg = image.GetThumbnailImage(64, 64, new System.Drawing.Image.GetThumbnailImageAbort(() => false), IntPtr.Zero);
+
+
+         // convert to byte[]
+         using (var ms2 = new MemoryStream())
+         {
+            thumbimg.Save(ms2, image.RawFormat);
+            return ms2.ToArray();
+         }
+      }
+
+
+      [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
