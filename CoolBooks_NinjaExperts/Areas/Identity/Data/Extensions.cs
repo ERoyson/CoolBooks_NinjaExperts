@@ -411,7 +411,7 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                 new FlaggedReviews { UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f", FlaggedId = 2, ReviewId = 1 },
                 new FlaggedReviews { UserId = "0cgg7156-dee2-fe6g-4df6-147f5836e357", FlaggedId = 2, ReviewId = 2 },
                 new FlaggedReviews { UserId = "0cgg7156-dee2-fe6g-4df6-147f5836e357", FlaggedId = 2, ReviewId = 3 }
-              
+
                 );
         }
 
@@ -595,9 +595,9 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
         public static void SeedRoles(this ModelBuilder builder)
         {
             builder.Entity<IdentityRole>().HasData(
-                new IdentityRole() { Id = "fab4fac1-c546-41de-aebc-a14da6895711", Name = "Admin", NormalizedName = "ADMIN"},
-                new IdentityRole() { Id = "c7b013f0-5201-4317-abd8-c211f91b7330", Name = "Moderator", NormalizedName="MODERATOR" },
-                new IdentityRole() { Id = "g4a251c5-6285-9362-def3-d722e74c5378", Name = "User", NormalizedName="USER" }
+                new IdentityRole() { Id = "fab4fac1-c546-41de-aebc-a14da6895711", Name = "Admin", NormalizedName = "ADMIN" },
+                new IdentityRole() { Id = "c7b013f0-5201-4317-abd8-c211f91b7330", Name = "Moderator", NormalizedName = "MODERATOR" },
+                new IdentityRole() { Id = "g4a251c5-6285-9362-def3-d722e74c5378", Name = "User", NormalizedName = "USER" }
                 );
         }
 
@@ -611,27 +611,27 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                 new IdentityUserRole<string>() { RoleId = "g4a251c5-6285-9362-def3-d722e74c5378", UserId = "be661gc4-d6b6-3b1d-23d4-2485c1bf5c0d" },
                 new IdentityUserRole<string>() { RoleId = "g4a251c5-6285-9362-def3-d722e74c5378", UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f" },
                 new IdentityUserRole<string>() { RoleId = "g4a251c5-6285-9362-def3-d722e74c5378", UserId = "85e508e4-80ce-9d68-84c3-g1gd726e97g1" },
-                new IdentityUserRole<string>() { RoleId = "g4a251c5-6285-9362-def3-d722e74c5378", UserId = "bd332a8c-b4e4-5cg1-b68d-g25g3cg8dgc5" }                
+                new IdentityUserRole<string>() { RoleId = "g4a251c5-6285-9362-def3-d722e74c5378", UserId = "bd332a8c-b4e4-5cg1-b68d-g25g3cg8dgc5" }
                 );
         }
         public static void SeedQuestions(this ModelBuilder builder)
         {
             builder.Entity<Questions>().HasData(
-                new Questions { Id = 1, Question = "What does Harry think he saw in the mirror shard?", Answer = "Dumbledore´s eye", QuizId=1 },
-                new Questions { Id = 2, Question = "What did Kreacher call Narcissa and Bellatrix?", Answer= "Miss Cissy and Miss Bella", QuizId = 1 },
-                new Questions { Id = 3, Question = "What was Rita Skeeter's biography of Dumbledore called?",  Answer = "The Life and Lies of Albus Dumbledore", QuizId = 1 },
+                new Questions { Id = 1, Question = "What does Harry think he saw in the mirror shard?", Answer = "Dumbledore´s eye", QuizId = 1 },
+                new Questions { Id = 2, Question = "What did Kreacher call Narcissa and Bellatrix?", Answer = "Miss Cissy and Miss Bella", QuizId = 1 },
+                new Questions { Id = 3, Question = "What was Rita Skeeter's biography of Dumbledore called?", Answer = "The Life and Lies of Albus Dumbledore", QuizId = 1 },
                 new Questions { Id = 4, Question = "Where did Harry and Hermione go to see Harry's parent's graves?", Answer = "Godric's Hollow", QuizId = 1 },
                 new Questions { Id = 5, Question = "Who did Harry, Ron, and Hermione have to steal the locket from?", Answer = "Dolores Umbridge", QuizId = 1 },
                 new Questions { Id = 6, Question = "What were the three items of the Deathly Hallows?", Answer = "A wand, a stone and an invisibility cloak", QuizId = 1 },
                 new Questions { Id = 7, Question = "Who killed Dobby?", Answer = "Bellatrix", QuizId = 1 },
                 new Questions { Id = 8, Question = "What did Lupin name his son?", Answer = "Ted Remus", QuizId = 1 },
-                new Questions { Id = 9, Question = "What was the name of the chapter where Snape jumped out the window?", Answer = "The Sacking of Servus Snape", QuizId=1 },
+                new Questions { Id = 9, Question = "What was the name of the chapter where Snape jumped out the window?", Answer = "The Sacking of Servus Snape", QuizId = 1 },
                 new Questions { Id = 10, Question = "Where was the Lost Diadem hidden?", Answer = "In the Room of Requirement", QuizId = 1 }
                 );
 
         }
 
-        public static void SeedOptions(this ModelBuilder builder) 
+        public static void SeedOptions(this ModelBuilder builder)
         {
             builder.Entity<QuizOptions>().HasData(
                 new QuizOptions { Id = 1, QuestionId = 1, Option = "Sirius" },
@@ -676,10 +676,60 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                  new QuizOptions { Id = 40, QuestionId = 10, Option = "In the kitchen with Kreacher" }
                 );
         }
-        public static void SeedQuiz(this ModelBuilder builder) 
+        public static void SeedQuiz(this ModelBuilder builder)
         {
             builder.Entity<Quiz>().HasData(
-                new Quiz { Id = 1, Name= "The Harry Potter and the Deathly Hallows Quiz", BookId = 2, UserId= "b74ddd14-6340-4840-95c2-db12554843e5",  }
+                new Quiz { Id = 1, Name = "The Harry Potter and the Deathly Hallows Quiz", BookId = 2, UserId = "b74ddd14-6340-4840-95c2-db12554843e5", }
+                );
+        }
+
+        public static void SeedLists(this ModelBuilder builder)
+        {
+            builder.Entity<Lists>().HasData(
+                new Lists { Id = 1, ListName = "Have read", UserId= "0cgg7156-dee2-fe6g-4df6-147f5836e357" }, //Karl
+                new Lists { Id = 2, ListName = "Want to read", UserId= "0cgg7156-dee2-fe6g-4df6-147f5836e357" },
+
+                new Lists { Id = 3, ListName = "Have read", UserId = "be661gc4-d6b6-3b1d-23d4-2485c1bf5c0d" }, //Per
+                new Lists { Id = 4, ListName = "Want to read", UserId = "be661gc4-d6b6-3b1d-23d4-2485c1bf5c0d" },
+
+                new Lists { Id = 5, ListName = "Have read", UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f" }, //Mats
+                new Lists { Id = 6, ListName = "Want to read", UserId = "b1ae3gdb-2bba-8ea7-0eb6-12e3g1gba51f" },
+
+                new Lists { Id = 7, ListName = "Have read", UserId = "85e508e4-80ce-9d68-84c3-g1gd726e97g1" }, //Anna
+                new Lists { Id = 8, ListName = "Want to read", UserId = "85e508e4-80ce-9d68-84c3-g1gd726e97g1" },
+
+                new Lists { Id = 9, ListName = "Have read", UserId = "bd332a8c-b4e4-5cg1-b68d-g25g3cg8dgc5" }, //Berit
+                new Lists { Id = 10, ListName = "Want to read", UserId = "bd332a8c-b4e4-5cg1-b68d-g25g3cg8dgc5" }
+                );
+        }
+
+        public static void SeedUserLists(this ModelBuilder builder)
+        {
+            builder.Entity<BooksLists>().HasData(
+                //Karl
+                new BooksLists { ListsId = 1, BooksId = 1 },
+                new BooksLists { ListsId = 1, BooksId = 2 },
+                new BooksLists { ListsId = 2, BooksId = 3 },
+                new BooksLists { ListsId = 2, BooksId = 4 },
+                new BooksLists { ListsId = 2, BooksId = 5 },
+
+                //Per
+                new BooksLists { ListsId = 3, BooksId = 1 },
+                new BooksLists { ListsId = 3, BooksId = 4 },
+                new BooksLists { ListsId = 3, BooksId = 8 },
+                new BooksLists { ListsId = 4, BooksId = 6 },
+
+                //Mats
+                new BooksLists { ListsId = 6, BooksId = 9 },
+                new BooksLists { ListsId = 6, BooksId = 10 },
+
+                //Anna
+                new BooksLists { ListsId = 7, BooksId = 1 },
+                new BooksLists { ListsId = 7, BooksId = 2 },
+
+                //Berit
+                new BooksLists { ListsId = 9, BooksId = 11 },
+                new BooksLists { ListsId = 10, BooksId = 9 }
                 );
         }
     }

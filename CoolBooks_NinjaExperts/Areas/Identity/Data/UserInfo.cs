@@ -18,6 +18,10 @@ public class UserInfo : IdentityUser
     public UserInfo()
     {
         this.Created = DateTime.Now;
+        //this.Lists = new List<Lists>() { 
+        //    new Lists() { ListName = "Have read"}, 
+        //    new Lists() { ListName = "Want to read"}
+        //};
     }
 
     
@@ -29,5 +33,6 @@ public class UserInfo : IdentityUser
     public virtual ICollection<ReplyDislikes> ReplyDislikes { get; set; }
     public virtual ICollection<FlaggedReviews> FlaggedReviews { get; set; }
     public virtual ICollection<FlaggedComments> FlaggedComments { get; set; }
+    //public List<Lists> Lists { get; set; } = new List<Lists>();
 }
 
