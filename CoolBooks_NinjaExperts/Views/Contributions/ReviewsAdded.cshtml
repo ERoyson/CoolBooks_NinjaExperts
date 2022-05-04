@@ -1,0 +1,55 @@
+﻿@model CoolBooks_NinjaExperts.ViewModels.ContributionPostsViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Written Reviews</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Book
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Review.Title)
+            </th>
+            <th>
+                Review
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Review.Rating)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Review.Created)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Reviews) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Book.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Text)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rating)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Created)
+            </td>
+            <td>
+                <a asp-controller="Reviews" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-controller="Reviews" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

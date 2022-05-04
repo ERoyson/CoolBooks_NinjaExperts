@@ -9,12 +9,14 @@
 <table class="table">
         @{
             var i = 0;
+            var k = 0;
         }
         @foreach (var opt in @Model.Quiz.Questions)
         {
-            <div class="radio-group">
+                k++;
+                <div class="radio-group">
             <tr>
-                <td>@opt.Id</td>
+                <td>@k</td>
                 <td>
                     <h5>@opt.Question</h5>
                     @for(int j = 0; j< @opt.QuizOptions.Count(); j++)

@@ -71,7 +71,9 @@ namespace CoolBooks_NinjaExperts.Areas.Identity.Data
                 new Images { Id = 22, Image = ReadFile("jrrTolkien.jpg"), Thumbnail = SetThumbnail(ReadFile("jrrTolkien.jpg")) },
                 new Images { Id = 23, Image = ReadFile("MarioPuzo.jpg"), Thumbnail = SetThumbnail(ReadFile("MarioPuzo.jpg")) },
                 new Images { Id = 24, Image = ReadFile("PeterBenchley.jpg"), Thumbnail = SetThumbnail(ReadFile("PeterBenchley.jpg")) },
-                new Images { Id = 25, Image = ReadFile("stephenking.jpg"), Thumbnail = SetThumbnail(ReadFile("stephenking.jpg")) }
+                new Images { Id = 25, Image = ReadFile("stephenking.jpg"), Thumbnail = SetThumbnail(ReadFile("stephenking.jpg")) },
+
+                new Images { Id = 26, Image = ReadFile("No-Image-Placeholder.jpg"), Thumbnail = SetThumbnail(ReadFile("No-Image-Placeholder.jpg")) } //Image Placeholder
 
 
                 );

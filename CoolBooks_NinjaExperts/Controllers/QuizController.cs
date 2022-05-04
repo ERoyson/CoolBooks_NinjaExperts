@@ -43,7 +43,7 @@ namespace CoolBooks_NinjaExperts.Controllers
             // SELECT QUIZ BY ID
             var options = _context.QuizOptions.Where(q => q.Question.QuizId == Id).ToList();
 
-            VM.Quiz = _context.Quiz.Include(q => q.Questions).ThenInclude(q => q.QuizOptions).FirstOrDefault();
+            VM.Quiz = _context.Quiz.Include(q => q.Questions).ThenInclude(q => q.QuizOptions).Where(x=>x.Id == Id).FirstOrDefault();
             VM.QuizOptions = new List<QuizOptions>();
 
             foreach (var item in options)
@@ -140,27 +140,38 @@ namespace CoolBooks_NinjaExperts.Controllers
             
                 _context.Add(quiz);
                 await _context.SaveChangesAsync();
-            var model = new List<Questions> {  new QuizOptions() };
-            return View("AddQuestions", new Questions());
+            // var model = new List<Questions> {  new QuizOptions() };
+            var model = new Questions { QuizId = quiz.Id };
+            return View("AddQuestions", model);
             
-            //return View(quiz);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AddQuestion([Bind("Question,QuizOptions,Answer")] Questions questions, int id)
+        public IActionResult AddQuestions([Bind("Question,Answer")] Questions questions, int QuizId, List<string> options)
         {
-            
+            foreach(var opt in options)
+            {
+                var option = new QuizOptions();
+                option.Option = opt;
+                option.IsSelected = false;
+                option.QuestionId = questions.Id;
 
-            return View() ;
+                questions.QuizOptions.Add(option);
+            }
+
+            questions.Quiz = _context.Quiz.FirstOrDefault(Quiz => Quiz.Id == QuizId);
+            int answer = int.Parse(questions.Answer);
+            questions.Answer = options[answer];
+            questions.QuizId = QuizId;
+
+            _context.Questions.Add(questions);
+            _context.SaveChanges();
+
+            var model = new Questions { QuizId = QuizId };
+            return View("AddQuestions", model);
         }
 
-        [HttpPost]
-        public void PassThings(string[,] results)
-        {
-           // List<questionAnswer> questionAnswer = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<List<questionAnswer>>(Request.Form["hfSelected"]);
-
-        }
 
         // GET: Quizs/Edit/5
         public async Task<IActionResult> Edit(int? id)

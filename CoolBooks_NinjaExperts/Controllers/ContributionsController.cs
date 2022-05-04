@@ -14,21 +14,42 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CoolBooks_NinjaExperts.Controllers
 {
-    public class ReviewsController : Controller
+    public class ContributionsController : Controller
     {
         private readonly CoolBooks_NinjaExpertsContext _context;
 
-        public ReviewsController(CoolBooks_NinjaExpertsContext context)
+        public ContributionsController(CoolBooks_NinjaExpertsContext context)
         {
             _context = context;
         }
 
         
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> BooksAdded()
         {
-            return Redirect("Home/Index");
-            //return View(await _context.Reviews.ToListAsync());
+            var VM = new ContributionPostsViewModel();
+            VM.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the user's userId
+            var books = _context.Books.Where(r => r.UserId == VM.UserId).ToList(); //books added by user
+            VM.Books = books;
+
+            //VM.Books = _context.Books
+            //    .Include(b => b.Authors).Where(b=>b.Id == VM.BookId).ToList();
+            //    .Include(b => b.Genres).Where(r => r.Reviews.Any(r => r.UserId == VM.UserId)).ToList();
+
+            return View(VM);
         }
+
+        public async Task<IActionResult> ReviewsAdded()
+        {
+            var VM = new ContributionPostsViewModel();
+            VM.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the user's userId
+            var reviews = _context.Reviews.Where(r => r.UserId == VM.UserId).ToList(); //all reviews posted by the user
+            var books = _context.Books.Where(r => r.Reviews.Any(r => r.UserId == VM.UserId)).ToList(); //all books user posted a review on
+
+            VM.Reviews = reviews;
+
+            return View(VM);
+        }
+
 
         public async Task<IActionResult> Details(int? id)
         {
@@ -52,57 +73,27 @@ namespace CoolBooks_NinjaExperts.Controllers
             return View(VM);
         }
 
-        
-        public IActionResult Create()
-        {
-            return View();
-        }
 
-        // POST: Reviews/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "User, Moderator, Admin")]
-        public async Task<IActionResult> Create(int bookRating, [Bind("Id,UserId,BookId,Title,Text,Rating,Created")] Reviews review)
-        {
-            // Books totala rating skall ändras varje gång en review skapas...
-            // calc total count of bookreviews and add it to Book.Rating...
 
-            review.Rating = bookRating;
-            if (ModelState.IsValid)
-            {
-                double getRating = _context.Reviews.Where(r=>r.BookId == review.BookId).Select(x => x.Rating).Sum();
-                getRating = getRating / (_context.Reviews.Where(r=>r.BookId==review.BookId).Count()); // +1 review to be created.
-                int totalRating = (int)Math.Round(getRating);
 
-                Books books = _context.Books.Where(x=>x.Id == review.BookId).FirstOrDefault();
-                books.Rating = totalRating;
-                _context.Books.Update(books);
-                _context.Add(review);
-                await _context.SaveChangesAsync();
 
-                //Response.Redirect("Details/Books/" + books.Id); 
-                return RedirectToAction("Details", "Books", books); //Skickar användaren till samma sida efter inskickad review
-            }
-            
-            return View(review); //Ändra till annan sida ifall reviewn misslyckas.
-        }
 
         // GET: Reviews/Edit/5
         [Authorize(Roles = "Admin, User")]
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> EditBooks(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var reviews = await _context.Reviews.FindAsync(id);
-            if (reviews == null)
+            var books = await _context.Books.FindAsync(id);
+            if (books == null)
             {
                 return NotFound();
             }
-            return View(reviews);
+            return RedirectToAction("Edit", "Books", books);
+            //return View(books);
         }
 
         // POST: Reviews/Edit/5
@@ -147,7 +138,7 @@ namespace CoolBooks_NinjaExperts.Controllers
             return View(reviews);
         }
 
-        [Authorize(Roles ="Admin, User")]
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
