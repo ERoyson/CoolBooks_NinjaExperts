@@ -1,4 +1,5 @@
 ﻿using CoolBooks_NinjaExperts.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CoolBooks_NinjaExperts.ViewModels
 {
@@ -12,5 +13,6 @@ namespace CoolBooks_NinjaExperts.ViewModels
         public List<string>? Answers { get; set; }
         public DateTime? StartTime { get; set; }
         public double? TotalTime { get; set; }
+        public SelectList? Books { get; set; } // for a select in create function
     }
 }

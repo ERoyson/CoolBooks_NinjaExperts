@@ -107,7 +107,6 @@ namespace CoolBooks_NinjaExperts.Models
             {
                 return NotFound();
             }
-            ViewData["ImageId"] = new SelectList(_context.Images, "Id", "Id", authors.ImageId);
             return View(authors);
         }
 
