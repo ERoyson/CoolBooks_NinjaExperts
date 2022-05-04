@@ -23,17 +23,12 @@ namespace CoolBooks_NinjaExperts.Controllers
             _context = context;
         }
 
-        
         public async Task<IActionResult> BooksAdded()
         {
             var VM = new ContributionPostsViewModel();
             VM.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the user's userId
             var books = _context.Books.Where(r => r.UserId == VM.UserId).ToList(); //books added by user
             VM.Books = books;
-
-            //VM.Books = _context.Books
-            //    .Include(b => b.Authors).Where(b=>b.Id == VM.BookId).ToList();
-            //    .Include(b => b.Genres).Where(r => r.Reviews.Any(r => r.UserId == VM.UserId)).ToList();
 
             return View(VM);
         }
@@ -46,6 +41,16 @@ namespace CoolBooks_NinjaExperts.Controllers
             var books = _context.Books.Where(r => r.Reviews.Any(r => r.UserId == VM.UserId)).ToList(); //all books user posted a review on
 
             VM.Reviews = reviews;
+
+            return View(VM);
+        }
+
+        public async Task<IActionResult> MyLists() //Displays index on Contributions/MyLists
+        {
+            var VM = new ContributionPostsViewModel();
+            VM.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the user's userId
+            var lists = _context.Lists.Where(r => r.UserId == VM.UserId).ToList();
+            VM.Lists = lists;
 
             return View(VM);
         }
@@ -74,10 +79,6 @@ namespace CoolBooks_NinjaExperts.Controllers
         }
 
 
-
-
-
-
         // GET: Reviews/Edit/5
         [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> EditBooks(int? id)
@@ -97,8 +98,6 @@ namespace CoolBooks_NinjaExperts.Controllers
         }
 
         // POST: Reviews/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin, User")]
