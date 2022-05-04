@@ -26,7 +26,7 @@ namespace CoolBooks_NinjaExperts.Controllers
         // GET: Quizs
         public IActionResult Index() 
         {
-            var quiz = _context.Quiz.Include(x=>x.Book).ToList();
+            var quiz = _context.Quiz.Include(x=>x.Book).Where(x=>x.Questions.Count()>0).ToList();
              //orderby?
             return View(quiz);
         }
@@ -121,7 +121,12 @@ namespace CoolBooks_NinjaExperts.Controllers
         // GET: Quizs/Create
         public IActionResult Create()
         {
-            return View();
+            var VM = new PlayQuizViewModel();
+            //VM.Books = _context.Books.Select(b=>b.Title).ToList();
+
+            VM.Books = new SelectList(_context.Books.ToList(), "Id","Title");
+
+            return View(VM);
         }
 
         // POST: Quizs/Create
@@ -129,9 +134,9 @@ namespace CoolBooks_NinjaExperts.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Book")] Quiz quiz)
+        public async Task<IActionResult> Create([Bind("Id,Name,Book")] Quiz quiz, int BookId)
         {
-            var book = _context.Books.FirstOrDefault(x => x.Title == quiz.Book.Title);
+            var book = _context.Books.FirstOrDefault(x => x.Id == BookId);
             quiz.Book = book;
             quiz.User = _context.UserInfo.FirstOrDefault(x => x.Id == User.FindFirstValue(ClaimTypes.NameIdentifier));
             quiz.UserId = quiz.User.Id;
@@ -148,7 +153,7 @@ namespace CoolBooks_NinjaExperts.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AddQuestions([Bind("Question,Answer")] Questions questions, int QuizId, List<string> options)
+        public IActionResult AddQuestions([Bind("Question,Answer")] Questions questions, int QuizId, List<string> options, string buttonSelect)
         {
             foreach(var opt in options)
             {
@@ -168,8 +173,21 @@ namespace CoolBooks_NinjaExperts.Controllers
             _context.Questions.Add(questions);
             _context.SaveChanges();
 
-            var model = new Questions { QuizId = QuizId };
-            return View("AddQuestions", model);
+            switch(buttonSelect)
+            {
+                case "Add Questions":
+                    {
+                        var model = new Questions { QuizId = QuizId };
+                        return View("AddQuestions", model);
+                    }
+                case "Finish":
+                    {
+                        return RedirectToAction("Index");
+                    }
+                default:
+                    return RedirectToAction("Index");
+            }
+            
         }
 
 

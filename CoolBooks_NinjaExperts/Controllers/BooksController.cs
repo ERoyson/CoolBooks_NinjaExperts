@@ -259,11 +259,11 @@ namespace CoolBooks_NinjaExperts.Models
          foreach (var genre in FormBook.ListGenres)
          {
             if(genre.IsSelected == true)
-                {
-                    var bookGenre = new Genres { Id = genre.Genres.Id };
-                    _context.Genres.Attach(bookGenre);
-                    book.Genres.Add(bookGenre);
-                }
+            {
+                var bookGenre = new Genres { Id = genre.Genres.Id };
+                _context.Genres.Attach(bookGenre);
+                book.Genres.Add(bookGenre);
+            }
          }
 
          // Add-Authors to book
@@ -329,7 +329,7 @@ namespace CoolBooks_NinjaExperts.Models
          System.Drawing.Image image = System.Drawing.Image.FromStream(ms);
 
          // convert img to thumbnail
-         var thumbimg = image.GetThumbnailImage(64, 64, new System.Drawing.Image.GetThumbnailImageAbort(() => false), IntPtr.Zero);
+         var thumbimg = image.GetThumbnailImage(128, 200, new System.Drawing.Image.GetThumbnailImageAbort(() => false), IntPtr.Zero);
 
 
          // convert to byte[]
@@ -346,22 +346,22 @@ namespace CoolBooks_NinjaExperts.Models
         {
             var VM = new ContributionPostsViewModel();
             VM.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            var book = _context.Books.Where(r => r.Id == id).FirstOrDefault();
+            var book = _context.Books.Include(b=>b.Authors).Include(b=>b.Genres).Include(b=>b.Image).Where(b => b.Id == id).FirstOrDefault();
 
-            if (VM.UserId == book.UserId)
+            if (VM.UserId == book.UserId || User.IsInRole("Admin"))
             {
                 if (id == null)
                 {
                     return NotFound();
                 }
 
-                var books = await _context.Books.FindAsync(id);
-                if (books == null)
+                if (book == null)
                 {
                     return NotFound();
                 }
-                return View(books);
+                return View(book);
             }
+           
             return NotFound();
         }
 
@@ -370,23 +370,148 @@ namespace CoolBooks_NinjaExperts.Models
       // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
       [HttpPost]
       [ValidateAntiForgeryToken]
-      public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,ISBN,Created,Deleted")] Books books)
+      public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Description,ISBN,Published,Created,BookSeries,UserId")] Books book, List<string> Authors, List<string> Genres)
       {
-         if (id != books.Id)
-         {
-            return NotFound();
-         }
+            var oldBook = _context.Books
+                .Include(b=>b.Authors)
+                .Include(b=>b.Genres)
+                .Include(b=>b.Image)
+                .Include(b=>b.Reviews)
+                .FirstOrDefault(b=>b.Id == book.Id);
+            // --------------------------------------------------------------------------------- Authors
+            var removeAuthor = new List<Authors>();
+            var Authorsbooks = new List<AuthorsBooks>();
+            for(int i = 0; i<oldBook.Authors.Count(); i++)
+            {
+                removeAuthor.Add(oldBook.Authors.FirstOrDefault(a => a.FullName != Authors[i]));
+            }
+            if(removeAuthor.Count > 0)
+            {
+                if (removeAuthor[0] != null)
+                {
+                    foreach (var author in removeAuthor)
+                    {
+                        var authorbook = _context.AuthorsBooks.FirstOrDefault(a => a.AuthorsId == author.Id && a.BooksId == oldBook.Id);
+                        Authorsbooks.Add(authorbook);
+                    }
+                    foreach (var author in Authorsbooks)
+                    {
+                        _context.AuthorsBooks.Remove(author);
+                    }
+                    _context.SaveChanges();
+                }
+            }
+          
+            foreach (var authors in Authors)
+            {
+                var author = _context.Authors.FirstOrDefault(a => a.FullName == authors);
 
+                if (oldBook.Authors.Any(a => a.FullName == author.FullName))
+                {
+                    book.Authors.Add(oldBook.Authors.Where(a => a.FullName == authors).FirstOrDefault());
+                    continue;
+                }
+                else if (author == null) // Add New Author
+                {
+                    var newAuthor = new Authors();
+                    newAuthor.FullName = authors;
+                    newAuthor.Biography = "Needs to be added...";
+                    book.Authors.Add(newAuthor);
+                }
+                else // Add Existing Author.
+                {
+                    _context.Authors.Attach(author);
+                    book.Authors.Add(author);
+                }
+            }
+
+            // --------------------------------------------------------------------------------- Genres
+            var removeGenres = new List<Genres>();
+            var genresBooks = new List<BooksGenres>();
+            for (int i = 0; i < oldBook.Genres.Count(); i++)
+            {
+                removeGenres.Add(oldBook.Genres.FirstOrDefault(a => a.Name != Genres[i]));
+            }
+            if(removeGenres.Count > 0)
+            {
+                if (removeGenres[0] != null)
+                {
+                    foreach (var genres in removeGenres)
+                    {
+                        var bookgenre = _context.BooksGenres.FirstOrDefault(a => a.GenresId == genres.Id && a.BooksId == oldBook.Id);
+                        genresBooks.Add(bookgenre);
+                    }
+                    foreach (var genre in genresBooks)
+                    {
+                        _context.BooksGenres.Remove(genre);
+                    }
+                    _context.SaveChanges();
+                }
+            }
+            foreach (var genres in Genres)
+            {
+                var genre = _context.Genres.FirstOrDefault(g => g.Name == genres);
+
+                if (oldBook.Genres.Any(g => g.Name == genre.Name))
+                {
+                    book.Genres.Add(oldBook.Genres.Where(a => a.Name == genres).FirstOrDefault());
+                    continue;
+                }
+                else if (genre == null) // Ignore new Genres
+                {
+                    continue;
+                }
+                else // Add Existing Genre.
+                {
+                    _context.Genres.Attach(genre);
+                    book.Genres.Add(genre);
+                }
+            }
+
+            oldBook.Title= book.Title;
+            oldBook.ISBN = book.ISBN;
+            if(book.Published!=null) {oldBook.Published = book.Published;}
+            oldBook.BookSeries = book.BookSeries;
+            oldBook.Description= book.Description;
+            oldBook.Authors = book.Authors;
+            oldBook.Genres = book.Genres;
+
+            // Image handeling
+            
+            if (Request.Form.Files.Count() != 0) //If no image is provided by the user
+            {
+                foreach (var file in Request.Form.Files)
+                {
+                    Images img = new Images();
+                    MemoryStream ms = new MemoryStream();
+                    file.CopyTo(ms);
+                    img.Image = ms.ToArray();
+                    ms.Close();
+                    ms.Dispose();
+
+                    img.Thumbnail = CreateThumbnail(img.Image);
+
+                    oldBook.Image = img;
+                }
+            }
+
+
+            if (id != book.Id)
+            {
+            return NotFound();
+            }
+            
+            
          if (ModelState.IsValid)
          {
             try
             {
-               _context.Update(books);
+               _context.Update(oldBook);
                await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
-               if (!BooksExists(books.Id))
+               if (!BooksExists(book.Id))
                {
                   return NotFound();
                }
@@ -397,7 +522,7 @@ namespace CoolBooks_NinjaExperts.Models
             }
             return RedirectToAction(nameof(Index));
          }
-         return View(books);
+         return View(book);
       }
 
         // GET: Books/Delete/5

@@ -10,19 +10,46 @@
 <h4>Books</h4>
 <hr />
 <div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
+    <div>
+         <form asp-action="Edit" enctype="multipart/form-data" class="d-flex justify-content-between">
+         <div class="col-md-5">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="UserId" />
             <div class="form-group">
                 <label asp-for="Title" class="control-label"></label>
                 <input asp-for="Title" class="form-control" />
                 <span asp-validation-for="Title" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+                <div class="form-group">
+                    <label asp-for="Authors" class="control-label"></label>
+                    <div class="input-group mb-3">
+                         @foreach (var author in Model.Authors)
+                        {
+                            <input asp-for="Authors" value="@author.FullName" class="form-control" />
+                            <span asp-validation-for="Authors" class="text-danger"></span>
+                        }
+                        <button id="addRow" type="button" class="btn btn-info">+</button>
+                    </div>
+                <div id="newRow"></div>
+             </div>
+
+             <div class="form-group">
+                    <label asp-for="Genres" class="control-label"></label>
+                    <div class="input-group mb-3">
+                         @foreach (var genre in Model.Genres)
+                        {
+                            <input asp-for="Genres" value="@genre.Name" class="form-control" />
+                            <span asp-validation-for="Genres" class="text-danger"></span>
+                        }
+                        <button id="addGenre" type="button" class="btn btn-info">+</button>
+                    </div>
+                <div id="newGenre"></div>
+             </div>
+
+                <div class="form-group">
+                <label asp-for="BookSeries" class="control-label"></label>
+                <input asp-for="BookSeries" class="form-control" />
+                <span asp-validation-for="BookSeries" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ISBN" class="control-label"></label>
@@ -30,26 +57,162 @@
                 <span asp-validation-for="ISBN" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Created" class="control-label"></label>
-                <input asp-for="Created" class="form-control" />
-                <span asp-validation-for="Created" class="text-danger"></span>
+                <label asp-for="Published" class="control-label"></label>
+                <input asp-for="Published" value="Published" class="form-control" type="date" min="1000" max="@DateTime.Now" tabindex="1"/>
+                <span asp-validation-for="Published" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Deleted" class="control-label"></label>
-                <input asp-for="Deleted" class="form-control" />
-                <span asp-validation-for="Deleted" class="text-danger"></span>
+                <label asp-for="Image" class="control-label"></label>
+                <input type="file" id="file1" name="file1" multiple="multiple" class="form-control"/>
+                <span asp-validation-for="Image" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+            <div class="form-group mt-1">
+                <input type="submit" value="  Save  " class="btn btn-success btn-lg"/>
             </div>
-        </form>
-    </div>
-</div>
+        </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+        <div style="width:25px;"></div>
+
+        <div class="col-lg">
+            <div class="form-group ">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea id="desc-area" asp-for="Description" class="form-control row-cols-6" rows="15" cols="75" maxlength="500"></textarea> @*style="resize:none;"*@
+                <span id="count_message" asp-validation-for="Description" class="text-danger"></span>
+                <div id="chars-remaining" style="text-align:right; font-weight:bold;">500 characters remaining</div>
+            </div>
+       </div>
+            </form>
+    </div>
+                
+    </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
+
+ <script type="text/javascript">
+        // add row
+            var count = 1;
+        $("#addRow").click(function () {
+            var html = '';
+            html += '<div id="inputFormRow">';
+            html += '<div class="input-group mb-3">';
+            html += '<input type="text" name="Authors" class="form-control m-input" placeholder="Author ' + (count+1) +  '" autocomplete="off">';
+            html += '<span asp-validation-for="Authors" class="text-danger"></span>';
+            html += '<div class="input-group-append">';
+            html += '<button id="removeRow" type="button" class="btn btn-danger">X</button>';
+            html += '</div>';
+            html += '</div>';
+            count++;
+
+
+            $('#newRow').append(html);
+        });
+
+        // remove row
+        $(document).on('click', '#removeRow', function () {
+            $(this).closest('#inputFormRow').remove();
+            count--;
+        });
+
+
+        // -----------------------
+
+        var count = 1;
+        $("#addGenre").click(function () {
+            var html = '';
+            html += '<div id="inputFormGenre">';
+            html += '<div class="input-group mb-3">';
+            html += '<input type="text" name="Genres" class="form-control m-input" placeholder="Genre ' + (count+1) +  '" autocomplete="off">';
+            html += '<span asp-validation-for="Genres" class="text-danger"></span>';
+            html += '<div class="input-group-append">';
+            html += '<button id="removeGenre" type="button" class="btn btn-danger">X</button>';
+            html += '</div>';
+            html += '</div>';
+            count++;
+
+
+            $('#newGenre').append(html);
+        });
+
+        // remove row
+        $(document).on('click', '#removeGenre', function () {
+            $(this).closest('#inputFormGenre').remove();
+            count--;
+        });
+
+// ------------------------------------------------------------------------------------- GENRES
+
+  window.onload = (event) => {
+  initMultiselect();
+};
+
+function initMultiselect() {
+  checkboxStatusChange();
+
+  document.addEventListener("click", function(evt) {
+    var flyoutElement = document.getElementById('myMultiselect'),
+      targetElement = evt.target; // clicked element
+
+    do {
+      if (targetElement == flyoutElement) {
+        return;
+      }
+
+
+      targetElement = targetElement.parentNode;
+    } while (targetElement);
+
+    toggleCheckboxArea(true);
+
+  });
+}
+function checkboxStatusChange() {
+  var multiselect = document.getElementById("mySelectLabel");
+  var multiselectOption = multiselect.getElementsByTagName('option')[0];
+
+  var values = [];
+  var checkboxes = document.getElementById("mySelectOptions");
+  var checkedCheckboxes = checkboxes.querySelectorAll('input[type=checkbox]:checked');
+
+  for (const item of checkedCheckboxes) {
+    var checkboxValue = item.getAttribute('Id');
+    values.push(checkboxValue);
+  }
+
+  var dropdownValue = "Select Genre(s)";
+  if (values.length > 0) {
+    dropdownValue = values.join(', ');
+  }
+
+  multiselectOption.innerText = dropdownValue;
+}
+
+function toggleCheckboxArea(onlyHide = false) {
+  var checkboxes = document.getElementById("mySelectOptions");
+  var displayValue = checkboxes.style.display;
+
+  if (displayValue != "block") {
+    if (onlyHide == false) {
+      checkboxes.style.display = "block";
+    }
+  } else {
+    checkboxes.style.display = "none";
+  }
+}
+
+//Books/Create - Description character counter
+const descArea = document.getElementById('desc-area');
+const charsRemaining = document.getElementById('chars-remaining');
+const MAX_CHARS = 500;
+descArea.addEventListener('input', () =>
+{
+    const remaining = MAX_CHARS - descArea.value.length;
+    const color = remaining < MAX_CHARS * 0.1 ? 'red' : null;
+    charsRemaining.textContent = remaining + ' characters remaining';
+    charsRemaining.style.color = color;
+})
+      
+
+
+</script>
