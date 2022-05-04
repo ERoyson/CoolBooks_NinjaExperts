@@ -48,7 +48,9 @@
                         }
                     }
                 }
+            
             </div>
+            
             <h1 class="display-5 fw-bolder">@Html.DisplayFor(model => model.Book.Title)</h1>
             <div class="fs-5 mb-5">
 
@@ -84,7 +86,8 @@
                 </div>
             </div>
             <p class="lead">@Html.DisplayFor(model => Model.Book.Description)</p>
-        </div>   
+        <partial name="_DropdownList"/>
+        </div>
     </div>
 </section>
 

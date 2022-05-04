@@ -16,7 +16,7 @@ namespace CoolBooks_NinjaExperts.ViewModels
         public List<Reviews>? Reviews { get; set; } = new List<Reviews>();
         public List<Comments>? Comments { get; set; } = new List<Comments>();
         public List<Replies>? Replies { get; set; } = new List<Replies>();
-
+        public List<Lists>? Lists { get; set; } = new List<Lists>();
         public int CurrentPage { get; set; } // for our partial view (pageselector)
         public int PageCount { get; set; } // for our partial view (pageselector)
 
