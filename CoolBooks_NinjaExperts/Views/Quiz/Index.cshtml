@@ -15,13 +15,12 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    if(User.IsInRole("Admin"))
-    {
+    
 
         <p>
-            <a asp-action="Create">Create New</a>
+            <a class="btn btn-success" asp-action="Create">Create Quiz</a>
         </p>
-    }
+    
 }
 <table class="table">
     <thead>
