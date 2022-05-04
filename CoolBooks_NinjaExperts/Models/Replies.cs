@@ -11,7 +11,6 @@ namespace CoolBooks_NinjaExperts.Models
         public int CommentsId { get; set; } // FK CommentId
         public string Reply { get; set; }
         public DateTime Created { get; set; }
-        public DateTime? Deleted { get; set; }
         public ICollection<ReplyLikes>? ReplyLikes { get; set; }//many to many = list of likes on this Reply
         public ICollection<ReplyDislikes>? ReplyDislikes { get; set; }//many to many = list of likes on this Reply
 

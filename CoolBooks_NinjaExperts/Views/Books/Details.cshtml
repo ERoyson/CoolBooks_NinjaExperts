@@ -188,7 +188,22 @@
                         }
                       </div>
                       <p style="margin-top:1rem;">@review.Text </p>
-                        <span class="g-color-gray-dark-v4 g-font-size-12">Created by: @review.User.UserName | @review.Created</span>
+                        <span class="g-color-gray-dark-v4 g-font-size-12">Created by: <b>@review.User.UserName</b> | @review.Created</span>
+                        @if (User.Identity.IsAuthenticated && (review.UserId == Model.UserId || User.IsInRole("Admin")))
+                        {
+                            <form asp-action="Delete" asp-controller="Reviews" onsubmit="return confirm('Do you really want to delete the post?');">
+                                @Html.ActionLink("", "Edit", "Reviews", new { id = review.Id }, new {@class="btn btn-info btn-sm bi bi-pencil"})
+                                <input type="hidden" name="id" value="@review.Id">
+                                <button type="submit" class="btn btn-danger btn-sm bi bi-trash"></button>
+                            </form>
+                        }
+                        else if (User.Identity.IsAuthenticated && User.IsInRole("Moderator"))
+                        {
+                            <form>
+                                @Html.ActionLink("", "Edit", "Comments", new { id = review.Id }, new {@class="btn btn-info btn-sm bi bi-pencil"})
+                                <input type="hidden" name="id" value="@review.Id">
+                            </form>
+                        }
         
                         @*REVIEW LIKES AND DISLIKES*@
                         <ul class="list-inline d-sm-flex my-0">
@@ -263,6 +278,7 @@
                                     });
                                 });
                             </script>
+                            @*------------------------------Comments------------------------------*@
                             <li class="list-inline-item ml-auto">
                                 <i class="fa fa-reply g-pos-rel g-top-1 g-mr-3">
                                  <a id="changeCursor" class="comments_@f text-dark" style="text-decoration:none;" data="@review.Id">Comment</a>
@@ -299,8 +315,23 @@
                                     });
                                 </script>
 
-                                <p class="list-inline-item ml-auto" style="margin-bottom:0">@comment.User.UserName | @comment.Comment <br>
+                                <p class="list-inline-item ml-auto" style="margin-bottom:0"><b>@comment.User.UserName</b> | @comment.Comment <br>
                                 <span class="g-color-gray-dark-v4 g-font-size-12">@comment.Created</span>
+                                @if (User.Identity.IsAuthenticated && (comment.UserId == Model.UserId || User.IsInRole("Admin")))
+                                {
+                                    <form asp-action="Delete" asp-controller="Comments" onsubmit="return confirm('Do you really want to delete the post?');">
+                                        @Html.ActionLink("", "Edit", "Comments", new { id = comment.Id }, new {@class="btn btn-info btn-sm bi bi-pencil"})
+                                        <input type="hidden" name="id" value="@comment.Id">
+                                        <button type="submit" class="btn btn-danger btn-sm bi bi-trash"></button>
+                                    </form>
+                                }
+                                else if (User.Identity.IsAuthenticated && User.IsInRole("Moderator"))
+                                {
+                                    <form>
+                                        @Html.ActionLink("", "Edit", "Comments", new { id = comment.Id }, new {@class="btn btn-info btn-sm bi bi-pencil"})
+                                        <input type="hidden" name="id" value="@comment.Id">
+                                    </form>
+                                }
                                   
                                                  <li class="list-inline-item g-mr-20">
                                             <a class="u-link-v5 g-color-gray-dark-v4 g-color-primary--hover" href="#!"> @*list of users who liked?*@
@@ -366,6 +397,7 @@
                                          </div>
                                       </li>
 
+                                      @*------------------------------Replies------------------------------*@
                                 <i class="fa fa-reply g-pos-rel g-top-1 g-mr-3">
                                     <a id="changeCursor" class="replies_@f2@review.Id text-dark" style="text-decoration:none;" data="@comment.Id">Reply</a> 
                                 </i>
@@ -382,7 +414,22 @@
                                         @foreach (var reply in comment.Replies)
                                         {
                                         
-                                                <p class="list-inline-item ml-auto" style="margin-bottom:0px">@reply.User.UserName | @reply.Reply</p>
+                                                <p class="list-inline-item ml-auto" style="margin-bottom:0px"><b>@reply.User.UserName</b> | @reply.Reply</p>
+                                                @if (User.Identity.IsAuthenticated && (reply.UserId == Model.UserId || User.IsInRole("Admin")))
+                                                {
+                                                    <form asp-action="Delete" asp-controller="Replies" onsubmit="return confirm('Do you really want to delete the post?');">
+                                                        @Html.ActionLink("", "Edit", "Replies", new { id = reply.Id }, new {@class="btn btn-info btn-sm bi bi-pencil"})
+                                                        <input type="hidden" name="id" value="@reply.Id">
+                                                        <button type="submit" class="btn btn-danger btn-sm bi bi-trash"></button>
+                                                    </form>
+                                                }
+                                                else if (User.Identity.IsAuthenticated && User.IsInRole("Moderator"))
+                                                {
+                                                    <form>
+                                                        @Html.ActionLink("", "Edit", "Comments", new { id = reply.Id }, new {@class="btn btn-info btn-sm bi bi-pencil"})
+                                                        <input type="hidden" name="id" value="@reply.Id">
+                                                    </form>
+                                                }
                                                 <hr><br />
                                         
                                         

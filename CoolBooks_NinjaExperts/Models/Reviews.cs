@@ -14,7 +14,6 @@ namespace CoolBooks_NinjaExperts.Models
         public string Text { get; set; }
         public int Rating { get; set; } // Give the book a rating
         public DateTime Created { get; set; }
-        public DateTime? Deleted { get; set; }
 
         public ICollection<ReviewLikes>? ReviewLikes { get; set; }//many to many = list of likes on this review
         public ICollection<ReviewDislikes>? ReviewDislikes { get; set; }//many to many = list of likes on this review

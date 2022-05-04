@@ -10,6 +10,7 @@ using CoolBooks_NinjaExperts.Data;
 using CoolBooks_NinjaExperts.Models;
 using CoolBooks_NinjaExperts.ViewModels;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CoolBooks_NinjaExperts.Controllers
 {
@@ -22,7 +23,7 @@ namespace CoolBooks_NinjaExperts.Controllers
             _context = context;
         }
 
-        // GET: Replies
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Index()
         {
             //return View(await _context.Replies.ToListAsync());
@@ -31,7 +32,7 @@ namespace CoolBooks_NinjaExperts.Controllers
             return View(await coolBooks_NinjaExpertsContext.ToListAsync());
         }
 
-        // GET: Replies/Details/5
+        [Authorize(Roles = "Admin")] 
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -95,7 +96,7 @@ namespace CoolBooks_NinjaExperts.Controllers
         }
 
 
-        // GET: RepliesController/Edit/5
+        [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -113,28 +114,33 @@ namespace CoolBooks_NinjaExperts.Controllers
         }
 
 
-        // POST: Replies/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Created,Deleted,IsFlagged,IsBlocked")] Replies replies)
+        [Authorize(Roles = "Admin, User")]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Reply")] Replies newReply)
         {
-            if (id != replies.Id)
+            var book = _context.Books.Where(x => x.Reviews.Any(y => y.Comments.Any(z => z.Replies.Any(r => r.Id == id)))).FirstOrDefault();
+            var updatedReply = _context.Replies.Where(r => r.Id == id).FirstOrDefault();
+            updatedReply.Reply = newReply.Reply;
+
+
+            //var reply = await _context.Replies.FindAsync(newReply.Id);
+            //reply.Reply = newReply.Reply;
+
+            if (id != newReply.Id)
             {
                 return NotFound();
             }
-
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Update(replies);
+                    _context.Update(updatedReply);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!RepliesExists(replies.Id))
+                    if (!RepliesExists(newReply.Id))
                     {
                         return NotFound();
                     }
@@ -143,13 +149,13 @@ namespace CoolBooks_NinjaExperts.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Books", book);
             }
-            ViewData["UserId"] = new SelectList(_context.UserInfo, "Id", "Id", replies.UserId);
-            return View(replies);
+            //ViewData["UserId"] = new SelectList(_context.UserInfo, "Id", "Id", reply.UserId);
+            return View(newReply);
         }
 
-        // GET: RepliesController/Delete/5
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -168,7 +174,7 @@ namespace CoolBooks_NinjaExperts.Controllers
             return View(replies);
         }
 
-        // POST: RepliesController/Delete/5
+        //[Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -176,7 +182,7 @@ namespace CoolBooks_NinjaExperts.Controllers
             var replies = await _context.Replies.FindAsync(id);
             _context.Replies.Remove(replies);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return View("Deleted");
         }
 
         private bool RepliesExists(int id)

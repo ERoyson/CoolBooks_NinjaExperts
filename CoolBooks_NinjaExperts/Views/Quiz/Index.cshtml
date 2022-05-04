@@ -1,0 +1,69 @@
+﻿@model IEnumerable<CoolBooks_NinjaExperts.Models.Quiz>
+
+@using Microsoft.AspNetCore.Identity
+@using CoolBooks_NinjaExperts.Areas.Identity.Data
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@inject SignInManager<UserInfo> SignInManager
+@inject UserManager<UserInfo> UserManager
+
+<h1>Index</h1>
+
+@if (SignInManager.IsSignedIn(User))
+{
+    if(User.IsInRole("Admin"))
+    {
+
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
+    }
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Quiz Name
+            </th>
+            <th>
+                Book
+            </th>
+            <th>
+                Created
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Book.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Created)
+            </td>
+            <td>
+                  @if (SignInManager.IsSignedIn(User))
+                {
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                     </td>
+                 }
+            <td>
+                    <a class="btn btn-primary" asp-action="PlayQuiz" asp-route-id="@item.Id">Play</a>
+                     <a class="btn btn-warning" asp-action="Scoreboard" asp-route-id="@item.Id">Scoreboard</a>
+            </td>
+        </tr>
+}
+
+    </tbody>
+</table>

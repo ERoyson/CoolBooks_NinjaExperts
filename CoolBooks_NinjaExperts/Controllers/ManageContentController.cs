@@ -128,9 +128,7 @@ namespace CoolBooks_NinjaExperts.Controllers
         public IActionResult DeleteReview([Bind("UserId, ReviewId")] FlaggedReviews flagged)
         {
             var selectedReview = _context.Reviews.Where(x => x.Id == flagged.ReviewId).FirstOrDefault();
-            var flaggedReview = _context.FlaggedReviews.Where(x => x.UserId == flagged.UserId && x.ReviewId == flagged.ReviewId).FirstOrDefault();
 
-            _context.FlaggedReviews.Remove(flaggedReview);
             _context.Reviews.Remove(selectedReview);
             _context.SaveChanges();
 

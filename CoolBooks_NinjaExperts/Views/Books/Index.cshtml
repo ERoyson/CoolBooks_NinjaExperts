@@ -23,9 +23,6 @@
             <a asp-action="Create">Create New</a>
         </p>
 	}
-	else
-	{
-	}
 }
 
 <table class="table">
@@ -112,24 +109,13 @@
                 {
                 <td>
                     <a asp-action="Edit" asp-route-id="@book.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@book.Id">Details</a> |
                     <a asp-action="Delete" asp-route-id="@book.Id">Delete</a>
                  </td>
                  }
-                else if (User.IsInRole("Moderator"))
-                {
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@book.Id">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@book.Id">Details</a> |
-                    </td>
-                }
-                else if(User.IsInRole("User"))
-                {
-                    <td>
-                        <a class="btn btn-primary" asp-action="Details" asp-route-id="@book.Id">More</a>
-                    </td>
-                }
-           }
+            }
+            <td>
+                    <a class="btn btn-primary" asp-action="Details" asp-route-id="@book.Id">Reviews</a>
+            </td>
         </tr>
     }
     </tbody>

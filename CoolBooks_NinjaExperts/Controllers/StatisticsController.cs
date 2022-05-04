@@ -16,7 +16,7 @@ using CoolBooks_NinjaExperts.Models;
 
 namespace CoolBooks_NinjaExperts.Models
 {
-    [Authorize(Roles = "Admin, Moderator")]
+    [Authorize(Roles = "Admin")]
     public class StatisticsController : Controller
     {
 		private readonly CoolBooks_NinjaExpertsContext _context;

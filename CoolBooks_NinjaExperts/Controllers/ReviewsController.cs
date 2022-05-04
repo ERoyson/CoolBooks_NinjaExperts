@@ -23,13 +23,13 @@ namespace CoolBooks_NinjaExperts.Controllers
             _context = context;
         }
 
-        // GET: Reviews
+        
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Reviews.ToListAsync());
+            return Redirect("Home/Index");
+            //return View(await _context.Reviews.ToListAsync());
         }
 
-        // GET: Reviews/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             var VM = new BookReviewsViewModel();
@@ -52,7 +52,7 @@ namespace CoolBooks_NinjaExperts.Controllers
             return View(VM);
         }
 
-        // GET: Reviews/Create
+        
         public IActionResult Create()
         {
             return View();
@@ -71,8 +71,8 @@ namespace CoolBooks_NinjaExperts.Controllers
             review.Rating = bookRating;
             if (ModelState.IsValid)
             {
-                double getRating = _context.Reviews.Select(x => x.Rating).Sum();
-                getRating = getRating / (_context.Reviews.Count() + 1); // +1 review to be created.
+                double getRating = _context.Reviews.Where(r=>r.BookId == review.BookId).Select(x => x.Rating).Sum();
+                getRating = getRating / (_context.Reviews.Where(r=>r.BookId==review.BookId).Count()); // +1 review to be created.
                 int totalRating = (int)Math.Round(getRating);
 
                 Books books = _context.Books.Where(x=>x.Id == review.BookId).FirstOrDefault();
@@ -80,12 +80,16 @@ namespace CoolBooks_NinjaExperts.Controllers
                 _context.Books.Update(books);
                 _context.Add(review);
                 await _context.SaveChangesAsync();
+
+                //Response.Redirect("Details/Books/" + books.Id); 
                 return RedirectToAction("Details", "Books", books); //Skickar användaren till samma sida efter inskickad review
             }
+            
             return View(review); //Ändra till annan sida ifall reviewn misslyckas.
         }
 
         // GET: Reviews/Edit/5
+        [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -106,8 +110,15 @@ namespace CoolBooks_NinjaExperts.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Text,Rating,Created,Deleted")] Reviews reviews)
+        [Authorize(Roles = "Admin, User")]
+        public async Task<IActionResult> Edit(int id, int bookRating, [Bind("Id,Title,Text")] Reviews reviews)
         {
+            var book = _context.Books.Where(x => x.Reviews.Any(r => r.Id == id)).FirstOrDefault();
+            var updatedReview = _context.Reviews.Where(r => r.Id == id).FirstOrDefault();
+            updatedReview.Rating = bookRating;
+            updatedReview.Title = reviews.Title;
+            updatedReview.Text = reviews.Text;
+
             if (id != reviews.Id)
             {
                 return NotFound();
@@ -117,7 +128,7 @@ namespace CoolBooks_NinjaExperts.Controllers
             {
                 try
                 {
-                    _context.Update(reviews);
+                    _context.Update(updatedReview);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -131,12 +142,12 @@ namespace CoolBooks_NinjaExperts.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "Books", book);
             }
             return View(reviews);
         }
 
-        // GET: Reviews/Delete/5
+        [Authorize(Roles ="Admin, User")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -155,6 +166,7 @@ namespace CoolBooks_NinjaExperts.Controllers
         }
 
         // POST: Reviews/Delete/5
+        //[Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -162,12 +174,13 @@ namespace CoolBooks_NinjaExperts.Controllers
             var reviews = await _context.Reviews.FindAsync(id);
             _context.Reviews.Remove(reviews);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return View("Deleted");
         }
 
         private bool ReviewsExists(int id)
         {
             return _context.Reviews.Any(e => e.Id == id);
         }
+
     }
 }

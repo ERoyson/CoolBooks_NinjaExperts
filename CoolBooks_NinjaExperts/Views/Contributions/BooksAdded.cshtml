@@ -1,0 +1,64 @@
+﻿@model CoolBooks_NinjaExperts.ViewModels.ContributionPostsViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Books added</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Book.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Book.Authors)
+            </th>
+             <th>
+                 @Html.DisplayNameFor(model => model.Book.Genres)
+             </th>
+             <th>
+                @Html.DisplayNameFor(model => model.Book.Description)
+            </th>
+             <th>
+                @Html.DisplayNameFor(model => model.Book.Created)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var book in Model.Books) 
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => book.Title)
+            </td>
+             <td>
+            @foreach(var author in book.Authors)
+                { 
+                  @Html.DisplayFor(book => author.FullName) 
+                  <p></p>
+                }
+                </td>
+                <td>
+            @foreach(var genres in book.Genres)
+                {
+                   @Html.DisplayFor(book => genres.Name) 
+                   <p></p>
+                }
+                </td>
+            <td>
+                @Html.DisplayFor(model => book.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(model => book.Created)
+            </td>
+            <td>
+                <a asp-controller="Books" asp-action="Edit" asp-route-id="@book.Id">Edit</a> |
+                <a asp-controller="Books" asp-action="Delete" asp-route-id="@book.Id">Delete</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

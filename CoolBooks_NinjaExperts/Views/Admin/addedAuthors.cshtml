@@ -1,0 +1,72 @@
+﻿@model IEnumerable<CoolBooks_NinjaExperts.Models.Authors>
+
+
+ @using Microsoft.AspNetCore.Identity
+@using CoolBooks_NinjaExperts.Areas.Identity.Data
+
+@inject SignInManager<UserInfo> SignInManager
+@inject UserManager<UserInfo> UserManager
+
+
+@{
+    ViewData["Title"] = "Added Authors";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Authors</h1>
+@if (SignInManager.IsSignedIn(User))
+{
+    if(User.IsInRole("Admin"))
+    {
+        <p>
+            <a asp-action="Create">Create New</a>
+        </p>
+    }
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.ActionLink("Name", "Index", new {sortOrder = ViewBag.NameSort}, new{  @class="text-dark", @style="text-decoration:none;"})
+            </th>
+             <th>
+                @Html.DisplayNameFor(model => model.Biography)
+            </th>
+              <th>
+                @Html.DisplayNameFor(model => model.Books)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var author in Model) 
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => author.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(model => author.Biography)
+            </td>
+            <td>
+               @foreach(var books in author.Books)
+                { 
+                  @Html.DisplayFor(author => books.Title) 
+                  <p></p>
+                }
+            </td>
+    
+            @if (SignInManager.IsSignedIn(User))
+            {
+                if (User.IsInRole("Admin"))
+                {
+                <td>
+                    <a asp-action="Edit" asp-controller="Authors" asp-route-id="@author.Id">Edit</a>
+                 </td>
+                }
+           }
+           
+        </tr>
+    }
+    </tbody>
+</table>

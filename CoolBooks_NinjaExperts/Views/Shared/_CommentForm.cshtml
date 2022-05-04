@@ -18,9 +18,9 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="Comment" class="control-label"></label>
-                    <textarea id="desc-area"  asp-for="Comment.Comment" class="form-control row-cols-6" rows="5" cols="75" maxlength="500"></textarea>
-                    <span id="count_message" asp-validation-for="Comment" class="text-danger"></span>
-                    <div id="chars-remaining" style="text-align:right; font-weight:bold;">500 characters remaining</div>
+                    <textarea asp-for="Comment.Comment" class="form-control row-cols-6" rows="5" cols="75" maxlength="500"></textarea>
+                    <span asp-validation-for="Comment" class="text-danger"></span>
+                    <div style="text-align:right; font-weight:bold; font-size:14px">Max 500 characters</div>
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Send" class="btn btn-primary" />
@@ -41,16 +41,3 @@ else
    </p>
 }
 
-@*Books/Details - Comment character counter*@
-<script>
-    const descArea = document.getElementById('desc-area');
-    const charsRemaining = document.getElementById('chars-remaining');
-    const MAX_CHARS = 500;
-    descArea.addEventListener('input', () =>
-    {
-        const remaining = MAX_CHARS - descArea.value.length;
-        const color = remaining < MAX_CHARS * 0.1 ? 'red' : null;
-        charsRemaining.textContent = remaining + ' characters remaining';
-        charsRemaining.style.color = color;
-    })
-</script>
