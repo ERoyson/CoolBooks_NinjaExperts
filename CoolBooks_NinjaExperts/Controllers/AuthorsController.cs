@@ -110,7 +110,7 @@ namespace CoolBooks_NinjaExperts.Models
          System.Drawing.Image image = System.Drawing.Image.FromStream(ms);
 
          // convert img to thumbnail
-         var thumbimg = image.GetThumbnailImage(64, 64, new System.Drawing.Image.GetThumbnailImageAbort(() => false), IntPtr.Zero);
+         var thumbimg = image.GetThumbnailImage(128, 200, new System.Drawing.Image.GetThumbnailImageAbort(() => false), IntPtr.Zero);
 
 
          // convert to byte[]
@@ -142,35 +142,58 @@ namespace CoolBooks_NinjaExperts.Models
         [Authorize(Roles = "Admin")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FullName,Biography,Created,ImageId")] Authors authors)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FullName,Biography")] Authors tempAuthors)
         {
-            if (id != authors.Id)
+            var author = _context.Authors
+                .Include(a=>a.Image)
+                .FirstOrDefault(a => a.Id == id);
+
+            if (Request.Form.Files.Count() != 0) //If no image is provided by the user
+            {
+                foreach (var file in Request.Form.Files)
+                {
+                    Images img = new Images();
+                    MemoryStream ms = new MemoryStream();
+                    file.CopyTo(ms);
+                    img.Image = ms.ToArray();
+                    ms.Close();
+                    ms.Dispose();
+
+                    img.Thumbnail = CreateThumbnail(img.Image);
+
+                    author.Image = img;
+                    author.ImageId = null;
+                }
+            }
+
+            author.FullName = tempAuthors.FullName;
+            author.Biography = tempAuthors?.Biography;
+
+
+            if (id != author.Id)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            
+            try
             {
-                try
-                {
-                    _context.Update(authors);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!AuthorsExists(authors.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+                _context.Update(author);
+                await _context.SaveChangesAsync();
             }
-            ViewData["ImageId"] = new SelectList(_context.Images, "Id", "Id", authors.ImageId);
-            return View(authors);
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!AuthorsExists(author.Id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return RedirectToAction(nameof(Index));
+            
         }
 
         [Authorize(Roles = "Admin")]

@@ -329,7 +329,7 @@ namespace CoolBooks_NinjaExperts.Models
          System.Drawing.Image image = System.Drawing.Image.FromStream(ms);
 
          // convert img to thumbnail
-         var thumbimg = image.GetThumbnailImage(64, 64, new System.Drawing.Image.GetThumbnailImageAbort(() => false), IntPtr.Zero);
+         var thumbimg = image.GetThumbnailImage(128, 200, new System.Drawing.Image.GetThumbnailImageAbort(() => false), IntPtr.Zero);
 
 
          // convert to byte[]
