@@ -391,6 +391,18 @@ namespace CoolBooks_NinjaExperts.Controllers
         // -------------------------------------------
 
 
+        //---------------Lists-----------------
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> ListIndex()
+        {
+            var user = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var list = _context.Lists
+                .Include(l => l.User);
+
+            return View(list);
+        }
+
+
     }
 
 }
