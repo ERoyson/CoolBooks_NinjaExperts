@@ -31,6 +31,12 @@ public class CoolBooks_NinjaExpertsContext : IdentityDbContext<UserInfo>
                     .UsingEntity<BooksGenres>(bg => bg.HasOne<Genres>().WithMany(),
                     bg => bg.HasOne<Books>().WithMany());
 
+        builder.Entity<Lists>()
+                    .HasMany(b => b.Books)
+                    .WithMany(a => a.Lists)
+                    .UsingEntity<BooksLists>(bl => bl.HasOne<Books>().WithMany(),
+                    bl => bl.HasOne<Lists>().WithMany());
+
         // LIKES AND DISLIKES TABLES
         builder.Entity<ReviewLikes>().HasKey(x => new { x.UserId, x.ReviewId });
         builder.Entity<ReviewDislikes>().HasKey(x => new { x.UserId, x.ReviewId });
@@ -136,6 +142,9 @@ public class CoolBooks_NinjaExpertsContext : IdentityDbContext<UserInfo>
         builder.SeedQuestions();
         builder.SeedOptions();
 
+        builder.SeedLists();
+        builder.SeedUserLists();
+
     }
 
     public DbSet<Books> Books { get; set; }
@@ -157,5 +166,6 @@ public class CoolBooks_NinjaExpertsContext : IdentityDbContext<UserInfo>
     public DbSet<Questions> Questions { get; set; }
     public DbSet<QuizOptions> QuizOptions { get; set; }
     public DbSet<QuizScoreboard> QuizScoreboards { get; set; }
+    public DbSet<Lists> Lists { get; set; }
 }
 
