@@ -49,9 +49,11 @@ namespace CoolBooks_NinjaExperts.Models
 
         [Required]
         public List<Genres>? Genres { get; set; } = new List<Genres>(); // many to many relationship
+
         [Required]
         public List<Authors>? Authors { get; set; } = new List<Authors>(); // many to many relationship
-        public List<Reviews>? Reviews { get; set; } = new List<Reviews>();
+        public List<Reviews>? Reviews { get; set; } = new List<Reviews>(); // many to many relationship
+        public List<Lists>? Lists { get; set; } = new List<Lists>(); // many to many relationship
 
 
         public Books()
