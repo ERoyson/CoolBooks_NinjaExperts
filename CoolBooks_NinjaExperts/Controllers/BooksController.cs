@@ -33,6 +33,7 @@ namespace CoolBooks_NinjaExperts.Models
             var VM = new DisplayBooksViewModel();
 
             VM.Books = _context.Books
+                .Where(b=>b.Deleted == null)
                 .Include(b => b.Authors)
                 .Include(b => b.Genres)
                 .ThenInclude(g => g.Books)
@@ -116,7 +117,8 @@ namespace CoolBooks_NinjaExperts.Models
             return RedirectToAction(nameof(Index));
          }
 
-         var query = _context.Books       
+         var query = _context.Books
+             .Where(b => b.Deleted == null)
              .Include(b => b.Authors)     
              .Include(b => b.Genres)
              .Include(b => b.Image)
@@ -217,6 +219,7 @@ namespace CoolBooks_NinjaExperts.Models
 
 
             VM.Book = _context.Books
+                .Where(b => b.Deleted == null)
                 .Include(x => x.Image)
                 .Include(x => x.Authors)
                 .Include(x => x.Genres)
@@ -274,15 +277,16 @@ namespace CoolBooks_NinjaExperts.Models
             var author = _context.Authors.FirstOrDefault(a => a.FullName == authors);
             if (author == null) // Add New Author
             {
-               var newAuthor = new Authors();
-               newAuthor.FullName = authors;
-               newAuthor.Biography = "Needs to be added...";
-               book.Authors.Add(newAuthor);
+                var newAuthor = new Authors();
+                newAuthor.FullName = authors;
+                newAuthor.Biography = "Needs to be added...";
+                newAuthor.Image = _context.Images.FirstOrDefault(i => i.Id == 26); // Dummy image for authors -> needs to be added by admin
+                book.Authors.Add(newAuthor);
             }
             else // Add Existing Author.
             {
-               _context.Authors.Attach(author);
-               book.Authors.Add(author);
+                _context.Authors.Attach(author);
+                book.Authors.Add(author);
             }
 
          }
@@ -385,7 +389,7 @@ namespace CoolBooks_NinjaExperts.Models
             var Authorsbooks = new List<AuthorsBooks>();
             for(int i = 0; i<oldBook.Authors.Count(); i++)
             {
-                removeAuthor.Add(oldBook.Authors.FirstOrDefault(a => a.FullName != Authors[i]));
+                removeAuthor.Add(oldBook.Authors.FirstOrDefault(a => a.FullName != Authors[i] || Authors[i] == null));
             }
             if(removeAuthor.Count > 0)
             {
@@ -415,10 +419,15 @@ namespace CoolBooks_NinjaExperts.Models
                 }
                 else if (author == null) // Add New Author
                 {
-                    var newAuthor = new Authors();
-                    newAuthor.FullName = authors;
-                    newAuthor.Biography = "Needs to be added...";
-                    book.Authors.Add(newAuthor);
+                    if (authors != null) // if we want to delete an author from book (in edit books)
+                    {
+                        var newAuthor = new Authors();
+
+                        newAuthor.FullName = authors;
+                        newAuthor.Biography = "Needs to be added...";
+                        book.Authors.Add(newAuthor);
+                    }
+                    
                 }
                 else // Add Existing Author.
                 {
@@ -432,7 +441,7 @@ namespace CoolBooks_NinjaExperts.Models
             var genresBooks = new List<BooksGenres>();
             for (int i = 0; i < oldBook.Genres.Count(); i++)
             {
-                removeGenres.Add(oldBook.Genres.FirstOrDefault(a => a.Name != Genres[i]));
+                removeGenres.Add(oldBook.Genres.FirstOrDefault(a => a.Name != Genres[i] || Genres[i] == null));
             }
             if(removeGenres.Count > 0)
             {
@@ -535,7 +544,7 @@ namespace CoolBooks_NinjaExperts.Models
             VM.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var book = _context.Books.Where(r => r.Id == id).FirstOrDefault();
 
-            if (VM.UserId == book.UserId)
+            if (VM.UserId == book.UserId || User.IsInRole("Admin"))
             {
                 if (id == null)
                 {
@@ -559,10 +568,11 @@ namespace CoolBooks_NinjaExperts.Models
       [ValidateAntiForgeryToken]
       public async Task<IActionResult> DeleteConfirmed(int id)
       {
-         var books = await _context.Books.FindAsync(id);
-         _context.Books.Remove(books);
-         await _context.SaveChangesAsync();
-         return RedirectToAction(nameof(Index));
+             var books = await _context.Books.FindAsync(id);
+            books.Deleted = DateTime.Now;
+             _context.Books.Update(books);
+            await _context.SaveChangesAsync();
+             return RedirectToAction(nameof(Index));
       }
 
       private bool BooksExists(int id)

@@ -3,8 +3,8 @@
 @{
     ViewData["Title"] = "Quiz Results";
 }
-
-<h3>Total Points: @Model.QuizPoints / @Model.Answers.Count()</h3>
+<div class="d-flex justify-content-end">@Html.ActionLink("Back to Quiz","Index", "Quiz",new{}, new{@class="btn btn-success"})</div>
+<h3>Total Points: @Model.QuizPoints / @Model.Answers.Count() </h3>
 <h4 ><i class="bi-clock"> </i> Time: @Model.TotalTime sec</h4>
 <hr />
 <table class="table justify-content-between">
@@ -49,3 +49,4 @@
 }
 
 </table>
+@Html.ActionLink("Back to Quiz","Index", "Quiz",new{}, new{@class="btn btn-success"})
