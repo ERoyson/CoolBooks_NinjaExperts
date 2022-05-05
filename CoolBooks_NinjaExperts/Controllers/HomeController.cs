@@ -83,7 +83,7 @@ namespace CoolBooks_NinjaExperts.Controllers
 
             VM.RandomBooks = VM.Books.Where(b => b.Id == rndmBook).ToList();
             VM.CurrentPage = 0;
-            VM.Books = VM.Books.Where(b => b.Id != rndmBook).Take(8);
+            VM.Books = VM.Books.Where(b => b.Id != rndmBook).Take(bookOnPages);
             return View(VM);
         }
         public IActionResult BookPages(int currentPage, int pageCount, string sortOrder) // Copy of index - will have same search functionalities
