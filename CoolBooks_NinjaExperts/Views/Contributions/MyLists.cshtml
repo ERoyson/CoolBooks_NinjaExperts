@@ -31,7 +31,14 @@
                 @Html.DisplayFor(modelItem => item.ListName)
             </td>
             <th>
-                @*# of books*@
+                @{int booksInList = 0;
+                  foreach (var book in item.Books)
+                  {
+                      booksInList++;
+                  }
+                 }
+                  @Html.DisplayFor(modelItem => booksInList)
+                
             </th>
             <td>
                 @Html.DisplayFor(modelItem => item.Created)

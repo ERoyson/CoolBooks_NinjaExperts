@@ -66,19 +66,27 @@
                 @Html.DisplayFor(model => book.Title)
             </td>
              <td>
-            @foreach(var author in book.Authors)
+            @if (book.Authors.Count()>0)
+            {
+                @foreach(var author in book.Authors)
                 { 
-                  @Html.DisplayFor(book => author.FullName) 
-                  <p></p>
+                    @Html.DisplayFor(book => author.FullName) 
+                    <p></p>
                 }
-                </td>
-                <td>
+            }
+            else
+            {
+                <p>Unknown Author(s)</p>      
+            }
+
+            </td>
+            <td>
             @foreach(var genres in book.Genres)
                 {
                    @Html.DisplayFor(book => genres.Name) 
                    <p></p>
                 }
-                </td>
+            </td>
             <td>
                 @{
                     var baseThumb = Convert.ToBase64String(book.Image.Thumbnail);

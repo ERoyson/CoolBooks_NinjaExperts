@@ -165,12 +165,26 @@ namespace CoolBooks_NinjaExperts.Controllers
             var book = _context.Books.FirstOrDefault(b => b.Id == BookId);
             if (!_context.Lists.Where(l => l.Id == listId).Any(l => l.Books.Any(b => b.Id == BookId)))
             {
-                
                 var list = _context.Lists.FirstOrDefault(l => l.Id == listId);
                 list.Books.Add(book);
                 _context.SaveChanges();
             }                                                 
             return RedirectToAction("Details", "Books", book);                                               
+        }
+
+        public ActionResult RemoveBookFromList(int listId, int bookId)
+        {
+            var book = _context.Books.FirstOrDefault(b => b.Id == bookId);
+            var list = _context.Lists
+              .Include(b => b.Books)
+              .FirstOrDefault(l => l.Id == listId);
+
+            if (_context.Lists.Where(l => l.Id == listId).Any(l => l.Books.Any(b => b.Id == bookId)))
+            {
+                list.Books.Remove(book);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Details", "Lists", new { id = listId });
         }
     }
 }
