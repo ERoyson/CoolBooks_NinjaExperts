@@ -128,7 +128,8 @@
                             <h5 class="fw-bolder">@book.Title</h5>
                             @{
                             <h6>
-                                
+                            @if (book.Authors.Count()>0)
+                            {
                                 @for(int i = 0;  i < book.Authors.Count(); i++)
                                 {
                                     if (i == book.Authors.Count()-1)
@@ -140,31 +141,35 @@
                                         <a class="text-dark" asp-controller="Authors" asp-action="Details" asp-route-id="@book.Authors[i].Id" style="text-decoration: none">@book.Authors[i].FullName & </a>
                                     }
                                 }
-                                
-                                </h6>
-                                @if(book.Rating != null)
-                                   {
-                                    <div>
-                                        @for (int i = 0; i < 5; i++)
-                                        {
-                                            if (book.Rating > i)
-                                            {
-                                                <span class="fa fa-star checked"></span>
-                                            }
-                                            else
-                                            {
-                                                <span class="fa fa-star"></span>
-                                            }
-                                        }
-                                            </div>
-                                        }
-                                else
+                            }
+                            else{
+                                <p>Unknown Author(s)</p>
+                            }
+                            </h6>
+
+                            @if(book.Rating != null)
                                 {
-                                    <p>Unrated</p>
-                                }
+                                <div>
+                                    @for (int i = 0; i < 5; i++)
+                                    {
+                                        if (book.Rating > i)
+                                        {
+                                            <span class="fa fa-star checked"></span>
+                                        }
+                                        else
+                                        {
+                                            <span class="fa fa-star"></span>
+                                        }
+                                    }
+                                        </div>
+                                    }
+                            else
+                            {
+                                <p>Unrated</p>
+                            }
                                         
                                 
-                                }
+                            }
                             </div>
                         </div>
                         </a>

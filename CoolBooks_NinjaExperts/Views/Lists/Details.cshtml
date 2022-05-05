@@ -4,6 +4,7 @@
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<h2>@Model.ListName</h2>
 
 <table class="table">
     <thead>
@@ -59,12 +60,15 @@
                 @Html.DisplayFor(model => book.Description)
             </td>
             <td>
-                <a asp-controller="Lists" asp-action="Delete" asp-route-id="@book.Id">Delete [Not done!]</a>
+                @Html.ActionLink("Remove", "RemoveBookFromList", "Lists", new{listId=Model.Id, bookId=book.Id})
             </td>
             <td>
-                    <a class="btn btn-primary" asp-controller="Books" asp-action="Details" asp-route-id="@book.Id">Reviews</a>
+                <a class="btn btn-primary" asp-controller="Books" asp-action="Details" asp-route-id="@book.Id">Reviews</a>
             </td>
         </tr>
     }
     </tbody>
 </table>
+<div>
+    <a asp-controller="Contributions" asp-action="MyLists">Back to List</a>
+</div>
