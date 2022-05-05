@@ -20,7 +20,7 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="text" asp-for="UserId" value="@ViewBag.UserId"/>
+            <input type="hidden" asp-for="UserId" value="@ViewBag.UserId"/>
             <div class="form-group">
                 <label asp-for="ListName" class="control-label"></label>
                 <input asp-for="ListName" class="form-control" />
