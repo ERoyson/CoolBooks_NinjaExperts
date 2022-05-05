@@ -59,45 +59,52 @@
                                     @rndmBook.Title
                                 </a>
                             </h1>
-                                <div class="fs-5 mb-5">
-                        <span>@{
-                               for(int i = 0;  i < rndmBook.Authors.Count(); i++)
+                        <div class="fs-5 mb-5">
+                        <span>
+                        @{
+                        if (rndmBook.Authors.Count()>0)
+                        {
+                            for(int i = 0;  i < rndmBook.Authors.Count(); i++)
+                            {
+                                if (i == rndmBook.Authors.Count()-1)
                                 {
-                                    if (i == rndmBook.Authors.Count()-1)
-                                    {
-                                        <a class="text-dark" asp-controller="Authors" asp-action="Details" asp-route-id="@rndmBook.Authors[i].Id" style="text-decoration: none">@rndmBook.Authors[i].FullName</a>
-                                    }
-                                    else
-                                    {
-                                        <a class="text-dark" asp-controller="Authors" asp-action="Details" asp-route-id="@rndmBook.Authors[i].Id" style="text-decoration: none">@rndmBook.Authors[i].FullName & </a>
-                                    }
+                                    <a class="text-dark" asp-controller="Authors" asp-action="Details" asp-route-id="@rndmBook.Authors[i].Id" style="text-decoration: none">@rndmBook.Authors[i].FullName</a>
                                 }
-                                }
-                                </span><br />
-                                    <span>@rndmBook.ISBN</span>
-                                
-                                     @if(rndmBook.Rating != null)
-                                   {
-                                    <div>
-                                        @for (int i = 0; i < 5; i++)
-                                        {
-                                            if (rndmBook.Rating > i)
-                                            {
-                                                <span class="fa fa-star checked"></span>
-                                            }
-                                            else
-                                            {
-                                                <span class="fa fa-star"></span>
-                                            }
-                                        }
-                                    </div>
-                                        }
                                 else
                                 {
-                                    <p>Unrated</p>
+                                    <a class="text-dark" asp-controller="Authors" asp-action="Details" asp-route-id="@rndmBook.Authors[i].Id" style="text-decoration: none">@rndmBook.Authors[i].FullName & </a>
                                 }
+                            }
+                        }
+                        else{
+                          <p>Unknown Author(s)</p>
+                        }
+                        }
+                        </span><br />
+                        <span>@rndmBook.ISBN</span>
                                 
-                    </div>
+                        @if(rndmBook.Rating != null)
+                        {
+                        <div>
+                            @for (int i = 0; i < 5; i++)
+                            {
+                                if (rndmBook.Rating > i)
+                                {
+                                    <span class="fa fa-star checked"></span>
+                                }
+                                else
+                                {
+                                    <span class="fa fa-star"></span>
+                                }
+                            }
+                        </div>
+                        }
+                        else
+                        {
+                            <p>Unrated</p>
+                        }
+                                
+                        </div>
                             <p class="lead">@rndmBook.Description</p>
                     </div> 
            }
@@ -177,10 +184,6 @@
             </div>
 
             }
-
-
-
-
 
         </div>
     </div>
