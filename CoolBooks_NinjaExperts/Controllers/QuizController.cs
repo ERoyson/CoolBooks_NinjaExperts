@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace CoolBooks_NinjaExperts.Controllers
 {
+    [Authorize(Roles ="User, Admin, Moderator")]
     public class QuizController : Controller
     {
         private readonly CoolBooks_NinjaExpertsContext _context;
@@ -155,6 +156,14 @@ namespace CoolBooks_NinjaExperts.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddQuestions([Bind("Question,Answer")] Questions questions, int QuizId, List<string> options, string buttonSelect)
         {
+            if(questions.Question == null || questions.Answer == null)
+            {
+                return View(questions);
+            }
+            if(options.Contains(null))
+            {
+                return View(questions);
+            }
             foreach(var opt in options)
             {
                 var option = new QuizOptions();
