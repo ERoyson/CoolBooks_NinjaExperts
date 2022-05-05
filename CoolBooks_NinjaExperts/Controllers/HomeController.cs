@@ -23,11 +23,12 @@ namespace CoolBooks_NinjaExperts.Controllers
         {
             int bookOnPages = 8;
             var VM = new DisplayBooksViewModel();
-            switch(orderby)
+            switch(orderby)         // Bygg IQueryable istället
             {
                 case "TopRated":
                     {
                         VM.Books = _context.Books
+                           .Where(b => b.Deleted == null)
                            .Include(b => b.Authors)
                            .Include(b => b.Genres)
                            .Include(b => b.Image)
@@ -39,6 +40,7 @@ namespace CoolBooks_NinjaExperts.Controllers
                 case "Newest":
                     {
                         VM.Books = _context.Books
+                           .Where(b => b.Deleted == null)
                            .Include(b => b.Authors)
                            .Include(b => b.Genres)
                            .Include(b => b.Image)
@@ -50,6 +52,7 @@ namespace CoolBooks_NinjaExperts.Controllers
                 case "Alphabetical":
                     {
                         VM.Books = _context.Books
+                           .Where(b => b.Deleted == null)
                            .Include(b => b.Authors)
                            .Include(b => b.Genres)
                            .Include(b => b.Image)
@@ -93,7 +96,9 @@ namespace CoolBooks_NinjaExperts.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
+
             IQueryable<Books> query = _context.Books
+                            .Where(b => b.Deleted == null)
                            .Include(b => b.Authors)
                            .Include(b => b.Genres)
                            .Include(b => b.Image)

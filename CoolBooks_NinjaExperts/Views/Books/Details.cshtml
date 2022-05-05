@@ -30,7 +30,7 @@
                 var baseThumb = Convert.ToBase64String(Model.Book.Image.Image);
                 var imgsrc2 = string.Format("data:image/thumbnail;base64,{0}", baseThumb);
             }
-            <img src="@imgsrc2" style="width:400px; height:550px;">
+            <img src="@imgsrc2" style="width:100%; height:auto;">
         </div>
         <div class="col-md-6" style="padding-left: 15px;">
             <div class="small mb-1">
