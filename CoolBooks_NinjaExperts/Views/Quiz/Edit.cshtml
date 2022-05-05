@@ -18,18 +18,39 @@
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Created" class="control-label"></label>
-                <input asp-for="Created" class="form-control" />
-                <span asp-validation-for="Created" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Rating" class="control-label"></label>
-                <input asp-for="Rating" class="form-control" />
-                <span asp-validation-for="Rating" class="text-danger"></span>
-            </div>
+            @for (int i = 0; i < Model.Questions.Count; i++)
+            {
+                <hr />
+                <div class="form-group">
+                <label asp-for="@Model.Questions[i].Question" class="control-label"></label>
+                <input type="hidden" asp-for="@Model.Questions[i].Id" />
+                <input asp-for="@Model.Questions[i].Question" class="form-control" />
+                <span asp-validation-for="@Model.Questions[i].Question" class="text-danger"></span>
+                 </div>
+                
+                
+                    @for (int j = 0; j < Model.Questions[i].QuizOptions.Count; j++)
+                    {
+                        <div class="form-group">
+                        <label asp-for="@Model.Questions[i].QuizOptions[j].Option" class="control-label"></label>
+                        <input type="hidden" asp-for="@Model.Questions[i].QuizOptions[j].Id" />
+                        <input asp-for="@Model.Questions[i].QuizOptions[j].Option" class="form-control" />
+                        <span asp-validation-for="@Model.Questions[i].QuizOptions[j].Option" class="text-danger"></span>
+                        </div>
+                    }
+                    
+                
+                 <div class="form-group">
+                <label asp-for="@Model.Questions[i].Answer" class="control-label"></label>
+                <input asp-for="@Model.Questions[i].Answer" class="form-control" style="color:green"/>
+                <span asp-validation-for="@Model.Questions[i].Answer" class="text-danger"></span>
+                 </div>
+
+            }
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
+                @Html.ActionLink("Add Questions", "EditAddQuestions","Quiz", new { quizId = @Model.Id }, new{@class = "btn btn-warning"})
             </div>
         </form>
     </div>

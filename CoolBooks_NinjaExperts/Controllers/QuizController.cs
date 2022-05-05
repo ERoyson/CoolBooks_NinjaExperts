@@ -28,7 +28,8 @@ namespace CoolBooks_NinjaExperts.Controllers
         public IActionResult Index() 
         {
             var quiz = _context.Quiz.Include(x=>x.Book).Where(x=>x.Questions.Count()>0).ToList();
-             //orderby?
+            ViewBag.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            //orderby?
             return View(quiz);
         }
         public IActionResult Scoreboard(int Id)
@@ -100,8 +101,6 @@ namespace CoolBooks_NinjaExperts.Controllers
             return View("ShowResult", VM); // change to the correct page
         }
     
-
-        // GET: Quizs/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -123,16 +122,13 @@ namespace CoolBooks_NinjaExperts.Controllers
         public IActionResult Create()
         {
             var VM = new PlayQuizViewModel();
-            //VM.Books = _context.Books.Select(b=>b.Title).ToList();
 
             VM.Books = new SelectList(_context.Books.ToList(), "Id","Title");
 
             return View(VM);
         }
 
-        // POST: Quizs/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Book")] Quiz quiz, int BookId)
@@ -146,12 +142,17 @@ namespace CoolBooks_NinjaExperts.Controllers
             
                 _context.Add(quiz);
                 await _context.SaveChangesAsync();
-            // var model = new List<Questions> {  new QuizOptions() };
+
             var model = new Questions { QuizId = quiz.Id };
             return View("AddQuestions", model);
             
         }
-
+        [Authorize]
+        public IActionResult EditAddQuestions (int quizId)
+        {
+            var model = new Questions { QuizId = quizId };
+            return View("AddQuestions", model);
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult AddQuestions([Bind("Question,Answer")] Questions questions, int QuizId, List<string> options, string buttonSelect)
@@ -199,36 +200,47 @@ namespace CoolBooks_NinjaExperts.Controllers
             
         }
 
-
-        // GET: Quizs/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        [Authorize]
+        public  IActionResult Edit(int? id)
         {
-            if (id == null)
+           
+            
+                if (id == null)
+                {
+                    return NotFound();
+                }
+
+                var quiz = _context.Quiz.Where(q => q.Id == id)
+                    .Include(q => q.Questions)
+                    .ThenInclude(q => q.QuizOptions)
+                    .FirstOrDefault();
+            var user = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (user == quiz.UserId || User.IsInRole("Admin, Moderator"))
             {
-                return NotFound();
+                if (quiz == null)
+                {
+                    return NotFound();
+                }
+                return View(quiz);
             }
 
-            var quiz = await _context.Quiz.FindAsync(id);
-            if (quiz == null)
-            {
-                return NotFound();
-            }
-            return View(quiz);
+
+            return NotFound();
         }
 
-        // POST: Quizs/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Created,Rating")] Quiz quiz)
+        [Authorize]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Questions")] Quiz quiz)
         {
+
             if (id != quiz.Id)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 try
                 {
@@ -251,7 +263,7 @@ namespace CoolBooks_NinjaExperts.Controllers
             return View(quiz);
         }
 
-        // GET: Quizs/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -269,7 +281,7 @@ namespace CoolBooks_NinjaExperts.Controllers
             return View(quiz);
         }
 
-        // POST: Quizs/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
