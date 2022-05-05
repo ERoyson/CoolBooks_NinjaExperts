@@ -99,12 +99,19 @@ namespace CoolBooks_NinjaExperts.Controllers
             }
 
             var comments = await _context.Comments.FindAsync(id);
-            if (comments == null)
+            var user = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (user == comments.UserId || User.IsInRole("Admin"))
             {
-                return NotFound();
+                if (comments == null)
+                {
+                    return NotFound();
+                }
+                ViewData["UserId"] = new SelectList(_context.UserInfo, "Id", "Id", comments.UserId);
+                return View(comments);
             }
-            ViewData["UserId"] = new SelectList(_context.UserInfo, "Id", "Id", comments.UserId);
-            return View(comments);
+             
+            return NotFound();
         }
 
         [HttpPost]

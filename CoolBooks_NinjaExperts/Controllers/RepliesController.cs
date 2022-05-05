@@ -105,12 +105,20 @@ namespace CoolBooks_NinjaExperts.Controllers
             }
 
             var replies = await _context.Replies.FindAsync(id);
-            if (replies == null)
+            var user = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (user == replies.UserId || User.IsInRole("Admin"))
             {
-                return NotFound();
+                if (replies == null)
+                {
+                    return NotFound();
+                }
+                ViewData["UserId"] = new SelectList(_context.UserInfo, "Id", "Id", replies.UserId);
+                return View(replies);
             }
-            ViewData["UserId"] = new SelectList(_context.UserInfo, "Id", "Id", replies.UserId);
-            return View(replies);
+
+            return NotFound();
+            
         }
 
 

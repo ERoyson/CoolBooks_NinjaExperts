@@ -98,11 +98,19 @@ namespace CoolBooks_NinjaExperts.Controllers
             }
 
             var reviews = await _context.Reviews.FindAsync(id);
-            if (reviews == null)
+            var user = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (user == reviews.UserId || User.IsInRole("Admin, Moderator"))
             {
-                return NotFound();
+                if (reviews == null)
+                {
+                    return NotFound();
+                }
+                return View(reviews);
             }
-            return View(reviews);
+
+            return NotFound();
+
         }
 
         // POST: Reviews/Edit/5

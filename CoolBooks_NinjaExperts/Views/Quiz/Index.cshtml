@@ -50,12 +50,16 @@
                 @Html.DisplayFor(modelItem => item.Created)
             </td>
             <td>
-                  @if (SignInManager.IsSignedIn(User))
+                @if (User.Identity.IsAuthenticated && (item.UserId == ViewBag.UserId || User.IsInRole("Admin")))
                 {
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                         <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                      </td>
+                 }
+                 @if(User.IsInRole("Moderator"))
+                 {
+                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                  }
             <td>
                     <a class="btn btn-primary" asp-action="PlayQuiz" asp-route-id="@item.Id">Play</a>
@@ -66,3 +70,5 @@
 
     </tbody>
 </table>
+
+           
