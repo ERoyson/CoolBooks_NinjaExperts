@@ -25,7 +25,7 @@ namespace CoolBooks_NinjaExperts.Controllers
 
         public async Task<IActionResult> BooksAdded()
         {
-            var VM = new ContributionPostsViewModel();
+            var VM = new ContributionsViewModel();
             VM.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the user's userId
             var books = _context.Books.Where(r => r.UserId == VM.UserId).ToList(); //books added by user
             VM.Books = books;
@@ -35,7 +35,7 @@ namespace CoolBooks_NinjaExperts.Controllers
 
         public async Task<IActionResult> ReviewsAdded()
         {
-            var VM = new ContributionPostsViewModel();
+            var VM = new ContributionsViewModel();
             VM.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the user's userId
             var reviews = _context.Reviews.Where(r => r.UserId == VM.UserId).ToList(); //all reviews posted by the user
             var books = _context.Books.Where(r => r.Reviews.Any(r => r.UserId == VM.UserId)).ToList(); //all books user posted a review on
@@ -47,13 +47,21 @@ namespace CoolBooks_NinjaExperts.Controllers
 
         public async Task<IActionResult> MyLists() //Displays index on Contributions/MyLists
         {
-            var VM = new ContributionPostsViewModel();
+            var VM = new ContributionsViewModel();
             VM.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the user's userId
             var books = _context.Lists.Include(b => b.Books).ToList();
             var lists = _context.Lists.Where(r => r.UserId == VM.UserId).ToList();
             VM.Lists = lists;
 
             return View(VM);
+        }
+
+        public async Task<IActionResult> QuizAdded()
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var quiz = _context.Quiz.Include(x => x.Book).Include(y => y.User).Where(r => r.UserId == userId).ToList();
+            ViewBag.UserId = userId;
+            return View(quiz);
         }
 
     }

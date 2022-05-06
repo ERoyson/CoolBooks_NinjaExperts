@@ -27,7 +27,7 @@ namespace CoolBooks_NinjaExperts.Controllers
         // GET: Quizs
         public IActionResult Index() 
         {
-            var quiz = _context.Quiz.Include(x=>x.Book).Where(x=>x.Questions.Count()>0).ToList();
+            var quiz = _context.Quiz.Include(x=>x.Book).Include(y=>y.User).Where(x=>x.Questions.Count()>0).ToList();
             ViewBag.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             //orderby?
             return View(quiz);
@@ -124,7 +124,7 @@ namespace CoolBooks_NinjaExperts.Controllers
             var VM = new PlayQuizViewModel();
 
             VM.Books = new SelectList(_context.Books.ToList(), "Id","Title");
-
+            ViewBag.Message = "";
             return View(VM);
         }
 
@@ -133,11 +133,22 @@ namespace CoolBooks_NinjaExperts.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Book")] Quiz quiz, int BookId)
         {
+            var VM = new PlayQuizViewModel();
+            VM.Books = new SelectList(_context.Books.ToList(), "Id", "Title");
             var book = _context.Books.FirstOrDefault(x => x.Id == BookId);
             quiz.Book = book;
             quiz.User = _context.UserInfo.FirstOrDefault(x => x.Id == User.FindFirstValue(ClaimTypes.NameIdentifier));
             quiz.UserId = quiz.User.Id;
-            quiz.BookId = quiz.Book.Id;
+            VM.Quiz = quiz;
+            if (BookId == 0)
+            {
+                ViewBag.Message = "Please select a book";
+                return View(VM);
+            }
+            else
+            {
+                quiz.BookId = quiz.Book.Id;
+            }
          
             
                 _context.Add(quiz);
@@ -157,14 +168,30 @@ namespace CoolBooks_NinjaExperts.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult AddQuestions([Bind("Question,Answer")] Questions questions, int QuizId, List<string> options, string buttonSelect)
         {
-            if(questions.Question == null || questions.Answer == null)
+            if(questions.Question == null)
             {
+                questions.QuizId = QuizId;
                 return View(questions);
             }
             if(options.Contains(null))
             {
+                questions.QuizId = QuizId;
                 return View(questions);
             }
+            if (questions.Answer == null)
+            {
+                questions.Quiz = _context.Quiz.FirstOrDefault(Quiz => Quiz.Id == QuizId);
+                questions.Answer = options[0]; //Om en fråga inte har ett svar får den automatiskt ett svar
+                //questions.QuizId = QuizId;
+            }
+            else
+            {
+                questions.Quiz = _context.Quiz.FirstOrDefault(Quiz => Quiz.Id == QuizId);
+                int answer = int.Parse(questions.Answer);
+                questions.Answer = options[answer];
+                //questions.QuizId = QuizId;
+            }
+
             foreach(var opt in options)
             {
                 var option = new QuizOptions();
@@ -175,11 +202,7 @@ namespace CoolBooks_NinjaExperts.Controllers
                 questions.QuizOptions.Add(option);
             }
 
-            questions.Quiz = _context.Quiz.FirstOrDefault(Quiz => Quiz.Id == QuizId);
-            int answer = int.Parse(questions.Answer);
-            questions.Answer = options[answer];
-            questions.QuizId = QuizId;
-
+            //questions.QuizId = QuizId;
             _context.Questions.Add(questions);
             _context.SaveChanges();
 

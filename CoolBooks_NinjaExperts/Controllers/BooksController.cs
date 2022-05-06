@@ -252,9 +252,9 @@ namespace CoolBooks_NinjaExperts.Models
          return View(book);
       }
 
-
       [HttpPost]
       [ValidateAntiForgeryToken]
+      [Authorize(Roles = "Admin, User")]
       public async Task<IActionResult> Create(List<string> Authors, CreateBookViewModel FormBook)
       {
          var book = FormBook.Book;
@@ -350,7 +350,7 @@ namespace CoolBooks_NinjaExperts.Models
         [Authorize(Roles = "Admin, Moderator, User")]
         public async Task<IActionResult> Edit(int? id)
         {
-            var VM = new ContributionPostsViewModel();
+            var VM = new ContributionsViewModel();
             VM.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var book = _context.Books.Include(b=>b.Authors).Include(b=>b.Genres).Include(b=>b.Image).Where(b => b.Id == id).FirstOrDefault();
 
@@ -540,7 +540,7 @@ namespace CoolBooks_NinjaExperts.Models
         [Authorize(Roles = "Admin, User")]
         public async Task<IActionResult> Delete(int? id)
         {
-            var VM = new ContributionPostsViewModel();
+            var VM = new ContributionsViewModel();
             VM.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var book = _context.Books.Where(r => r.Id == id).FirstOrDefault();
 

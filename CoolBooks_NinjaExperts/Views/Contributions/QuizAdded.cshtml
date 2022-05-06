@@ -1,0 +1,52 @@
+﻿@model IEnumerable<CoolBooks_NinjaExperts.Models.Quiz>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>My Quizzes</h1>
+<p>
+    <a class="btn btn-success" asp-controller="Quiz" asp-action="Create">Create Quiz</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Quiz Name
+            </th>
+            <th>
+                Book
+            </th>
+            <th>
+                Created
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) 
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Book.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Created)
+        </td>
+        <td>
+            <a asp-controller="Quiz" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+            <a asp-controller="Quiz" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+        </td>
+        <td>
+           <a class="btn btn-primary" asp-controller="Quiz" asp-action="PlayQuiz" asp-route-id="@item.Id">Play</a>
+           <a class="btn btn-warning" asp-controller="Quiz" asp-action="Scoreboard" asp-route-id="@item.Id">Scoreboard</a>
+        </td>
+    </tr>
+}
+    </tbody>
+</table>

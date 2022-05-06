@@ -1,10 +1,13 @@
-﻿@model CoolBooks_NinjaExperts.ViewModels.ContributionPostsViewModel
+﻿@model CoolBooks_NinjaExperts.ViewModels.ContributionsViewModel
 
 @{
     ViewData["Title"] = "Index";
 }
 
 <h1>Books added</h1>
+<p>
+    <a class="btn btn-success" asp-controller="Books" asp-action="Create">Create book</a>
+</p>
 
 <table class="table">
     <thead>
