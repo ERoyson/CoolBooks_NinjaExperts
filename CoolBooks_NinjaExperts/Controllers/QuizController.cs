@@ -123,7 +123,7 @@ namespace CoolBooks_NinjaExperts.Controllers
         {
             var VM = new PlayQuizViewModel();
 
-            VM.Books = new SelectList(_context.Books.ToList(), "Id","Title");
+            VM.Books = new SelectList(_context.Books.Where(b=>b.Deleted==null).ToList(), "Id","Title");
             ViewBag.Message = "";
             return View(VM);
         }
@@ -134,7 +134,7 @@ namespace CoolBooks_NinjaExperts.Controllers
         public async Task<IActionResult> Create([Bind("Id,Name,Book")] Quiz quiz, int BookId)
         {
             var VM = new PlayQuizViewModel();
-            VM.Books = new SelectList(_context.Books.ToList(), "Id", "Title");
+            VM.Books = new SelectList(_context.Books.Where(b => b.Deleted == null).ToList(), "Id", "Title");
             var book = _context.Books.FirstOrDefault(x => x.Id == BookId);
             quiz.Book = book;
             quiz.User = _context.UserInfo.FirstOrDefault(x => x.Id == User.FindFirstValue(ClaimTypes.NameIdentifier));
