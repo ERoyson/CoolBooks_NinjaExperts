@@ -15,12 +15,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Book.Title)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Book.Authors)
-            </th>
-             <th>
-                 @Html.DisplayNameFor(model => model.Book.Genres)
-             </th>
              <th>
                 @Html.DisplayNameFor(model => model.Book.Description)
             </th>
@@ -35,22 +29,8 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(model => book.Title)
+                @Html.ActionLink(book.Title, "Details", "Books", new{ id = book.Id}, new{@style="text-decoration:none; color:DarkSlateBlue; font-weight:bold;"})
             </td>
-             <td>
-            @foreach(var author in book.Authors)
-                { 
-                  @Html.DisplayFor(book => author.FullName) 
-                  <p></p>
-                }
-                </td>
-                <td>
-            @foreach(var genres in book.Genres)
-                {
-                   @Html.DisplayFor(book => genres.Name) 
-                   <p></p>
-                }
-                </td>
             <td>
                 @Html.DisplayFor(model => book.Description)
             </td>

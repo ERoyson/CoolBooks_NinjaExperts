@@ -29,7 +29,8 @@ namespace CoolBooks_NinjaExperts.Controllers
             VM.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier); // will give the user's userId
             var books = _context.Books.Where(r => r.UserId == VM.UserId).ToList(); //books added by user
             VM.Books = books;
-
+            var notDeleted = books.Where(r => r.Deleted == null).ToList();
+            VM.Books = notDeleted;
             return View(VM);
         }
 

@@ -315,15 +315,17 @@ namespace CoolBooks_NinjaExperts.Models
                 book.Image = img;
              }
          }
-
-
-         if (ModelState.IsValid)
-         {
-            _context.Add(book);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-         }
-         return View(FormBook);
+        if (!_context.Books.Any(b=>b.ISBN == book.ISBN))
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(book);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+        }
+        ViewBag.ISBN = "ISBN already exists";
+        return View(FormBook);
       }
 
       // Covert to Thumbnail
@@ -572,10 +574,15 @@ namespace CoolBooks_NinjaExperts.Models
             books.Deleted = DateTime.Now;
              _context.Books.Update(books);
             await _context.SaveChangesAsync();
-             return RedirectToAction(nameof(Index));
-      }
+            if (User.IsInRole("Admin"))
+            { 
+                return RedirectToAction(nameof(Index));
+            }
+            else
+                return RedirectToAction("BooksAdded","Contributions");
+        }
 
-      private bool BooksExists(int id)
+        private bool BooksExists(int id)
       {
          return _context.Books.Any(e => e.Id == id);
       }

@@ -109,6 +109,12 @@ public class CoolBooks_NinjaExpertsContext : IdentityDbContext<UserInfo>
             .WithMany(x => x.FlaggedComments)
             .HasForeignKey(x => x.FlaggedId);
 
+
+        builder.Entity<Books>()
+        .HasIndex(u => u.ISBN)
+        .IsUnique();
+
+
         // --------- seed database here :) -------------------
 
         //Users & Roles

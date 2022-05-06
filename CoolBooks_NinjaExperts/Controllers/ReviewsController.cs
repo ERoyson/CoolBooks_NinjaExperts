@@ -67,20 +67,21 @@ namespace CoolBooks_NinjaExperts.Controllers
         {
             // Books totala rating skall ändras varje gång en review skapas...
             // calc total count of bookreviews and add it to Book.Rating...
-
+            Books books = _context.Books.Where(x => x.Id == review.BookId).FirstOrDefault();
             review.Rating = bookRating;
             if (ModelState.IsValid)
             {
-                double getRating = _context.Reviews.Where(r=>r.BookId == review.BookId).Select(x => x.Rating).Sum();
+                double getRating = _context.Reviews.Where(r=>r.BookId == review.BookId).Select(x => x.Rating).Sum() + bookRating;
                 int totalRating = bookRating;
                 if (getRating > 0)
                 {
-                    getRating = getRating / (_context.Reviews.Where(r=>r.BookId==review.BookId).Count()); // +1 review to be created.
+                    var nrOfRatings = _context.Reviews.Where(r => r.BookId == review.BookId).Count() + 1;
+                    getRating /= nrOfRatings; // +1 review to be created.
                     totalRating = (int)Math.Round(getRating);
                 }
                 
 
-                Books books = _context.Books.Where(x=>x.Id == review.BookId).FirstOrDefault();
+                //Books books = _context.Books.Where(x=>x.Id == review.BookId).FirstOrDefault();
                 books.Rating = totalRating;
                 _context.Books.Update(books);
                 _context.Add(review);
@@ -89,8 +90,7 @@ namespace CoolBooks_NinjaExperts.Controllers
                 //Response.Redirect("Details/Books/" + books.Id); 
                 return RedirectToAction("Details", "Books", books); //Skickar användaren till samma sida efter inskickad review
             }
-            
-            return View(review); //Ändra till annan sida ifall reviewn misslyckas.
+            return RedirectToAction("Details", "Books", books);
         }
 
         // GET: Reviews/Edit/5
