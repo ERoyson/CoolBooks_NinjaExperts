@@ -81,10 +81,11 @@ namespace CoolBooks_NinjaExperts.Controllers
             pagecount = Math.Ceiling(pagecount);
             VM.PageCount = (int)pagecount;
 
+            int[] bookIDs = _context.Books.Where(b => b.Deleted == null).Select(b=>b.Id).ToArray();
             Random random = new Random();
-            int rndmBook = random.Next(1,VM.Books.Count());
+            int rndmBook = random.Next(0,bookIDs.Count());
 
-            VM.RandomBooks = VM.Books.Where(b => b.Id == rndmBook).ToList();
+            VM.RandomBooks = VM.Books.Where(b => b.Id == bookIDs[rndmBook]).ToList();
             VM.CurrentPage = 0;
             VM.Books = VM.Books.Where(b => b.Id != rndmBook).Take(bookOnPages);
             return View(VM);
