@@ -182,14 +182,12 @@ namespace CoolBooks_NinjaExperts.Controllers
             {
                 questions.Quiz = _context.Quiz.FirstOrDefault(Quiz => Quiz.Id == QuizId);
                 questions.Answer = options[0]; //Om en fråga inte har ett svar får den automatiskt ett svar
-                //questions.QuizId = QuizId;
             }
             else
             {
                 questions.Quiz = _context.Quiz.FirstOrDefault(Quiz => Quiz.Id == QuizId);
                 int answer = int.Parse(questions.Answer);
                 questions.Answer = options[answer];
-                //questions.QuizId = QuizId;
             }
 
             foreach(var opt in options)

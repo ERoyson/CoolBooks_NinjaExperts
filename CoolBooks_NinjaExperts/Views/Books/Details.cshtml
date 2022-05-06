@@ -130,12 +130,12 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Review.Title" class="control-label"></label>
-                    <input asp-for="Review.Title" class="form-control" />
+                    <input asp-for="Review.Title" class="form-control" required/>
                     <span asp-validation-for="Review.Title" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="Review.Text" class="control-label"></label>
-                    <textarea id="desc-area" asp-for="Review.Text" class="form-control row-cols-6" rows="5" cols="75" maxlength="500"></textarea>
+                    <textarea id="desc-area" asp-for="Review.Text" class="form-control row-cols-6" rows="5" cols="75" maxlength="500" required></textarea>
                     <span id="count_message" asp-validation-for="Review.Text" class="text-danger"></span>
                     <div id="chars-remaining" style="text-align:right; font-weight:bold;">500 characters remaining</div>
                 </div>
