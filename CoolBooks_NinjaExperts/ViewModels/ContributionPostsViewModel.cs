@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace CoolBooks_NinjaExperts.ViewModels
 {
-    public class ContributionPostsViewModel
+    public class ContributionsViewModel
     {
         public Books? Book { get; set; }
         public int BookId { get; set; }
@@ -20,6 +20,8 @@ namespace CoolBooks_NinjaExperts.ViewModels
         public int ListId { get; set; }
         public Images? Image { get; set; }
         public int ImageId { get; set; }
+        public Quiz? Quiz { get; set; }
+        public int QuizId { get; set; }
 
 
         public List<Books>? Books { get; set; } = new List<Books>();
@@ -30,6 +32,7 @@ namespace CoolBooks_NinjaExperts.ViewModels
         public List<Comments>? Comments { get; set; } = new List<Comments>();
         public List<Replies>? Replies { get; set; } = new List<Replies>();
         public List<Lists>? Lists { get; set; } = new List<Lists>();
+        public List<Quiz>? Quizzes { get; set; } = new List<Quiz>();
 
     } 
 }

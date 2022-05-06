@@ -15,12 +15,9 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    
-
-        <p>
-            <a class="btn btn-success" asp-action="Create">Create Quiz</a>
-        </p>
-    
+    <p>
+        <a class="btn btn-success" asp-action="Create">Create Quiz</a>
+    </p>
 }
 <table class="table">
     <thead>
@@ -31,41 +28,50 @@
             <th>
                 Book
             </th>
+             <th>
+                Creator
+            </th>
             <th>
                 Created
             </th>
             <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Book.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Created)
-            </td>
-            <td>
-                @if (User.Identity.IsAuthenticated && (item.UserId == ViewBag.UserId || User.IsInRole("Admin")))
-                {
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                     </td>
-                 }
-                 @if(User.IsInRole("Moderator"))
-                 {
-                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                 }
-            <td>
-                    <a class="btn btn-primary" asp-action="PlayQuiz" asp-route-id="@item.Id">Play</a>
-                     <a class="btn btn-warning" asp-action="Scoreboard" asp-route-id="@item.Id">Scoreboard</a>
-            </td>
-        </tr>
+@foreach (var item in Model) 
+{
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Book.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Created)
+        </td>
+        <td>
+            @if (User.IsInRole("Admin"))
+            {
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            }
+            @if(User.IsInRole("Moderator"))
+            {
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+            }
+
+        <td>
+            <a class="btn btn-primary" asp-action="PlayQuiz" asp-route-id="@item.Id">Play</a>
+            <a class="btn btn-warning" asp-action="Scoreboard" asp-route-id="@item.Id">Scoreboard</a>
+        </td>
+    </tr>
 }
 
     </tbody>
